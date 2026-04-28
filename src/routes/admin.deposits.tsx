@@ -1,0 +1,97 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { Check, X, Copy } from "lucide-react";
+import { AdminGate } from "@/components/AdminLayout";
+import { useAdmin } from "@/context/AdminContext";
+import { toast } from "sonner";
+
+export const Route = createFileRoute("/admin/deposits")({
+  component: () => (<AdminGate><Deposits /></AdminGate>),
+});
+
+function Deposits() {
+  const { deposits, approveDeposit, rejectDeposit } = useAdmin();
+  const [pendingOnly, setPendingOnly] = useState(true);
+  const list = pendingOnly ? deposits.filter((d) => d.status === "Pending") : deposits;
+
+  const copy = (t: string) => { navigator.clipboard.writeText(t); toast.success("Copied to clipboard"); };
+
+  return (
+    <div className="space-y-5">
+      <header className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-100">Deposit Approvals</h1>
+          <p className="text-sm text-slate-400 mt-1">Review and credit incoming USDT deposits</p>
+        </div>
+        <label className="flex items-center gap-2 text-sm text-slate-300">
+          <input type="checkbox" checked={pendingOnly} onChange={(e) => setPendingOnly(e.target.checked)} className="accent-cyan-500" />
+          Pending only
+        </label>
+      </header>
+
+      <div className="rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="text-xs uppercase text-slate-500 bg-slate-900/80">
+              <tr>
+                <th className="text-left py-3 px-4">User</th>
+                <th className="text-left py-3 px-4">Phone</th>
+                <th className="text-left py-3 px-4">Amount</th>
+                <th className="text-left py-3 px-4">TXID</th>
+                <th className="text-left py-3 px-4">Date</th>
+                <th className="text-left py-3 px-4">Status</th>
+                <th className="text-right py-3 px-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((d) => (
+                <tr key={d.id} className="border-t border-slate-800/60 hover:bg-slate-800/30">
+                  <td className="py-3 px-4 font-mono text-xs">{d.userId}</td>
+                  <td className="py-3 px-4 text-slate-300">{d.phone}</td>
+                  <td className="py-3 px-4 font-bold text-emerald-300">${d.amount}</td>
+                  <td className="py-3 px-4">
+                    <button onClick={() => copy(d.txid)} className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-300 hover:text-cyan-300">
+                      {d.txid} <Copy size={12} />
+                    </button>
+                  </td>
+                  <td className="py-3 px-4 text-xs text-slate-400">{d.date}</td>
+                  <td className="py-3 px-4"><StatusBadge status={d.status} /></td>
+                  <td className="py-3 px-4">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        disabled={d.status !== "Pending"}
+                        onClick={() => { approveDeposit(d.id); toast.success(`Approved ${d.id}`); }}
+                        className="inline-flex items-center gap-1 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 text-xs font-semibold hover:bg-emerald-500/25 disabled:opacity-30"
+                      >
+                        <Check size={12} /> Approve
+                      </button>
+                      <button
+                        disabled={d.status !== "Pending"}
+                        onClick={() => { rejectDeposit(d.id); toast.error(`Rejected ${d.id}`); }}
+                        className="inline-flex items-center gap-1 rounded-md bg-red-500/15 text-red-300 border border-red-500/30 px-2.5 py-1 text-xs font-semibold hover:bg-red-500/25 disabled:opacity-30"
+                      >
+                        <X size={12} /> Reject
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {list.length === 0 && (
+                <tr><td colSpan={7} className="py-12 text-center text-sm text-slate-500">No deposits to display</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    Pending: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+    Approved: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+    Rejected: "bg-red-500/15 text-red-300 border-red-500/30",
+  };
+  return <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${map[status] || ""}`}>{status}</span>;
+}
