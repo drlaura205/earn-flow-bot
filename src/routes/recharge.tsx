@@ -4,7 +4,7 @@ import { AuthGate } from "@/components/AuthGate";
 import { PageHeader } from "@/components/PageHeader";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
-import QRCode from "react-qr-code";
+import { QRCodeSVG } from "qrcode.react";
 import { Copy, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/recharge")({
@@ -38,7 +38,7 @@ function Recharge() {
           <p className="mt-1 text-base font-bold text-[var(--blue-brand)]">USDT — BEP20 (Binance Smart Chain)</p>
 
           <div className="mx-auto mt-5 inline-block rounded-2xl bg-white p-4 shadow-md ring-1 ring-border">
-            <QRCode value={ADMIN_BEP20} size={180} />
+            <QRCodeSVG value={ADMIN_BEP20} size={180} />
           </div>
 
           <p className="mt-5 text-xs uppercase tracking-widest text-muted-foreground">Deposit Address</p>
