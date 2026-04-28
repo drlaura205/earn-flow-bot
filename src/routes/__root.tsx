@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { AppProvider } from "@/context/AppContext";
+import { AdminProvider } from "@/context/AdminContext";
 
 import appCss from "../styles.css?url";
 
@@ -69,8 +70,10 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <AppProvider>
-      <Outlet />
-      <Toaster position="top-center" richColors />
+      <AdminProvider>
+        <Outlet />
+        <Toaster position="top-center" richColors />
+      </AdminProvider>
     </AppProvider>
   );
 }
