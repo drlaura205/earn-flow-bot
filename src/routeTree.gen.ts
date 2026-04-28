@@ -9,8 +9,80 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WithdrawRouteImport } from './routes/withdraw'
+import { Route as TeamRouteImport } from './routes/team'
+import { Route as RobotRouteImport } from './routes/robot'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as RechargeRouteImport } from './routes/recharge'
+import { Route as PersonalInfoRouteImport } from './routes/personal-info'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as JobRouteImport } from './routes/job'
+import { Route as InviteRouteImport } from './routes/invite'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as FundPasswordRouteImport } from './routes/fund-password'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WithdrawRoute = WithdrawRouteImport.update({
+  id: '/withdraw',
+  path: '/withdraw',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotRoute = RobotRouteImport.update({
+  id: '/robot',
+  path: '/robot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RechargeRoute = RechargeRouteImport.update({
+  id: '/recharge',
+  path: '/recharge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonalInfoRoute = PersonalInfoRouteImport.update({
+  id: '/personal-info',
+  path: '/personal-info',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobRoute = JobRouteImport.update({
+  id: '/job',
+  path: '/job',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InviteRoute = InviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FundPasswordRoute = FundPasswordRouteImport.update({
+  id: '/fund-password',
+  path: '/fund-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +91,200 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/fund-password': typeof FundPasswordRoute
+  '/home': typeof HomeRoute
+  '/invite': typeof InviteRoute
+  '/job': typeof JobRoute
+  '/login': typeof LoginRoute
+  '/personal-info': typeof PersonalInfoRoute
+  '/recharge': typeof RechargeRoute
+  '/register': typeof RegisterRoute
+  '/robot': typeof RobotRoute
+  '/team': typeof TeamRoute
+  '/withdraw': typeof WithdrawRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/fund-password': typeof FundPasswordRoute
+  '/home': typeof HomeRoute
+  '/invite': typeof InviteRoute
+  '/job': typeof JobRoute
+  '/login': typeof LoginRoute
+  '/personal-info': typeof PersonalInfoRoute
+  '/recharge': typeof RechargeRoute
+  '/register': typeof RegisterRoute
+  '/robot': typeof RobotRoute
+  '/team': typeof TeamRoute
+  '/withdraw': typeof WithdrawRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
+  '/fund-password': typeof FundPasswordRoute
+  '/home': typeof HomeRoute
+  '/invite': typeof InviteRoute
+  '/job': typeof JobRoute
+  '/login': typeof LoginRoute
+  '/personal-info': typeof PersonalInfoRoute
+  '/recharge': typeof RechargeRoute
+  '/register': typeof RegisterRoute
+  '/robot': typeof RobotRoute
+  '/team': typeof TeamRoute
+  '/withdraw': typeof WithdrawRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/account'
+    | '/fund-password'
+    | '/home'
+    | '/invite'
+    | '/job'
+    | '/login'
+    | '/personal-info'
+    | '/recharge'
+    | '/register'
+    | '/robot'
+    | '/team'
+    | '/withdraw'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/account'
+    | '/fund-password'
+    | '/home'
+    | '/invite'
+    | '/job'
+    | '/login'
+    | '/personal-info'
+    | '/recharge'
+    | '/register'
+    | '/robot'
+    | '/team'
+    | '/withdraw'
+  id:
+    | '__root__'
+    | '/'
+    | '/account'
+    | '/fund-password'
+    | '/home'
+    | '/invite'
+    | '/job'
+    | '/login'
+    | '/personal-info'
+    | '/recharge'
+    | '/register'
+    | '/robot'
+    | '/team'
+    | '/withdraw'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRoute
+  FundPasswordRoute: typeof FundPasswordRoute
+  HomeRoute: typeof HomeRoute
+  InviteRoute: typeof InviteRoute
+  JobRoute: typeof JobRoute
+  LoginRoute: typeof LoginRoute
+  PersonalInfoRoute: typeof PersonalInfoRoute
+  RechargeRoute: typeof RechargeRoute
+  RegisterRoute: typeof RegisterRoute
+  RobotRoute: typeof RobotRoute
+  TeamRoute: typeof TeamRoute
+  WithdrawRoute: typeof WithdrawRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/withdraw': {
+      id: '/withdraw'
+      path: '/withdraw'
+      fullPath: '/withdraw'
+      preLoaderRoute: typeof WithdrawRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robot': {
+      id: '/robot'
+      path: '/robot'
+      fullPath: '/robot'
+      preLoaderRoute: typeof RobotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recharge': {
+      id: '/recharge'
+      path: '/recharge'
+      fullPath: '/recharge'
+      preLoaderRoute: typeof RechargeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/personal-info': {
+      id: '/personal-info'
+      path: '/personal-info'
+      fullPath: '/personal-info'
+      preLoaderRoute: typeof PersonalInfoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/job': {
+      id: '/job'
+      path: '/job'
+      fullPath: '/job'
+      preLoaderRoute: typeof JobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite': {
+      id: '/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof InviteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fund-password': {
+      id: '/fund-password'
+      path: '/fund-password'
+      fullPath: '/fund-password'
+      preLoaderRoute: typeof FundPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,16 +297,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRoute,
+  FundPasswordRoute: FundPasswordRoute,
+  HomeRoute: HomeRoute,
+  InviteRoute: InviteRoute,
+  JobRoute: JobRoute,
+  LoginRoute: LoginRoute,
+  PersonalInfoRoute: PersonalInfoRoute,
+  RechargeRoute: RechargeRoute,
+  RegisterRoute: RegisterRoute,
+  RobotRoute: RobotRoute,
+  TeamRoute: TeamRoute,
+  WithdrawRoute: WithdrawRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
