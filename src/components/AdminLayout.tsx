@@ -65,9 +65,15 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 export function AdminGate({ children }: { children: ReactNode }) {
   const { isAdmin } = useAdmin();
   const nav = useNavigate();
+  useEffect(() => {
+    if (!isAdmin) nav({ to: "/admin/login" });
+  }, [isAdmin, nav]);
   if (!isAdmin) {
-    nav({ to: "/admin/login" });
-    return null;
+    return (
+      <div className="dark min-h-screen flex items-center justify-center bg-slate-950 text-slate-400 text-sm">
+        Checking admin session…
+      </div>
+    );
   }
   return <AdminLayout>{children}</AdminLayout>;
 }
