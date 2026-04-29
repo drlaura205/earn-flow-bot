@@ -11,7 +11,7 @@ export interface TierInfo {
 }
 
 export const TIERS: TierInfo[] = [
-  { name: "Internship", price: 0, tasksPerDay: "1-2", rewardPerTask: 0.5, color: "from-emerald-400 to-teal-500" },
+  { name: "Internship", price: 0, tasksPerDay: "1", rewardPerTask: 3, color: "from-emerald-400 to-teal-500" },
   { name: "Silver", price: 200, tasksPerDay: "3-5", rewardPerTask: 4, color: "from-slate-300 to-slate-500" },
   { name: "Gold", price: 350, tasksPerDay: "5-8", rewardPerTask: 8, color: "from-amber-300 to-yellow-500" },
   { name: "Platinum", price: 500, tasksPerDay: "10+", rewardPerTask: 15, color: "from-cyan-300 to-blue-500" },
@@ -75,7 +75,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       password,
       invitationCode,
       myCode: genCode(),
-      balance: 5,
+      balance: 0,
       tier: "Internship",
       walletAddress: "",
       fundPassword: "",
