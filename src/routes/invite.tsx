@@ -61,7 +61,7 @@ function Invite() {
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Referral Link</p>
           <p className="mt-2 truncate text-sm font-medium text-foreground">{link}</p>
           <button
-            onClick={() => copy(`https://${link}`, "Link")}
+            onClick={() => copy(fullLink, "Link")}
             className="mt-3 w-full rounded-full bg-primary-gradient py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
           >
             Copy Invitation Link
