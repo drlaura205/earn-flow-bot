@@ -13,15 +13,19 @@ function Login() {
   const nav = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone || !password) return toast.error("Enter phone and password");
-    if (login(phone, password)) {
+    setBusy(true);
+    const r = await login(phone, password);
+    setBusy(false);
+    if (r.ok) {
       toast.success("Welcome back!");
       nav({ to: "/home" });
     } else {
-      toast.error("Invalid credentials. Try registering.");
+      toast.error(r.msg || "Invalid credentials");
     }
   };
 
@@ -42,9 +46,10 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
+            disabled={busy}
+            className="w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-60"
           >
-            Sign In
+            {busy ? "Signing in…" : "Sign In"}
           </button>
         </form>
 

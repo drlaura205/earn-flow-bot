@@ -9,22 +9,36 @@ export const Route = createFileRoute("/register")({
 });
 
 function Register() {
-  const { register } = useApp();
+  const { register, login } = useApp();
   const nav = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [code, setCode] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone) return toast.error("Phone number required");
     if (password.length < 6) return toast.error("Password must be 6+ characters");
     if (password !== confirm) return toast.error("Passwords do not match");
     if (!code) return toast.error("Invitation code required");
-    register({ phone, password, invitationCode: code });
-    toast.success("Account created! Complete your first task to earn $3.");
-    nav({ to: "/home" });
+    setBusy(true);
+    const r = await register({ phone, password, invitationCode: code });
+    if (!r.ok) {
+      setBusy(false);
+      return toast.error(r.msg);
+    }
+    // Auto-login (auto-confirm is on)
+    const l = await login(phone, password);
+    setBusy(false);
+    if (l.ok) {
+      toast.success("Account created! Complete your first task to earn $3.");
+      nav({ to: "/home" });
+    } else {
+      toast.success("Account created. Please log in.");
+      nav({ to: "/login" });
+    }
   };
 
   return (
@@ -43,9 +57,10 @@ function Register() {
 
           <button
             type="submit"
-            className="mt-2 w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
+            disabled={busy}
+            className="mt-2 w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-60"
           >
-            Register & Start Earning
+            {busy ? "Creating…" : "Register & Start Earning"}
           </button>
         </form>
 
