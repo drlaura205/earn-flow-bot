@@ -38,11 +38,11 @@ function Withdraw() {
   const n = parseFloat(amount) || 0;
   const { fee, net } = calcWithdrawal(n);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isNaN(n) || n <= 0) return toast.error("Enter a valid amount");
     if (pwd.length !== 6) return toast.error("Fund password must be 6 digits");
-    const r = withdraw(n, pwd);
+    const r = await withdraw(n, pwd);
     if (r.ok) {
       toast.success(r.msg);
       nav({ to: "/account" });
