@@ -14,16 +14,301 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      app_settings: {
+        Row: {
+          deposit_address: string
+          id: number
+          min_withdrawal: number
+          tier_rates: Json
+          updated_at: string
+          withdrawal_fee_rate: number
+        }
+        Insert: {
+          deposit_address?: string
+          id?: number
+          min_withdrawal?: number
+          tier_rates?: Json
+          updated_at?: string
+          withdrawal_fee_rate?: number
+        }
+        Update: {
+          deposit_address?: string
+          id?: number
+          min_withdrawal?: number
+          tier_rates?: Json
+          updated_at?: string
+          withdrawal_fee_rate?: number
+        }
+        Relationships: []
+      }
+      deposits: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          txid: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          txid?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          txid?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          balance: number
+          created_at: string
+          fund_password: string | null
+          id: string
+          invitation_code: string | null
+          last_task_date: string | null
+          my_code: string
+          phone: string
+          referral_rewards: number
+          suspended: boolean
+          task_count: number
+          task_rewards: number
+          tasks_completed_today: number
+          tier: string
+          today_earnings: number
+          total_earnings: number
+          updated_at: string
+          wallet_address: string | null
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          fund_password?: string | null
+          id: string
+          invitation_code?: string | null
+          last_task_date?: string | null
+          my_code: string
+          phone: string
+          referral_rewards?: number
+          suspended?: boolean
+          task_count?: number
+          task_rewards?: number
+          tasks_completed_today?: number
+          tier?: string
+          today_earnings?: number
+          total_earnings?: number
+          updated_at?: string
+          wallet_address?: string | null
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          fund_password?: string | null
+          id?: string
+          invitation_code?: string | null
+          last_task_date?: string | null
+          my_code?: string
+          phone?: string
+          referral_rewards?: number
+          suspended?: boolean
+          task_count?: number
+          task_rewards?: number
+          tasks_completed_today?: number
+          tier?: string
+          today_earnings?: number
+          total_earnings?: number
+          updated_at?: string
+          wallet_address?: string | null
+        }
+        Relationships: []
+      }
+      task_completions: {
+        Row: {
+          completed_at: string
+          id: string
+          reward: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          reward: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          reward?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      withdrawals: {
+        Row: {
+          address: string
+          amount: number
+          created_at: string
+          fee: number
+          id: string
+          net_amount: number
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          amount: number
+          created_at?: string
+          fee?: number
+          id?: string
+          net_amount?: number
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          amount?: number
+          created_at?: string
+          fee?: number
+          id?: string
+          net_amount?: number
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      admin_adjust_balance: {
+        Args: { _delta: number; _user_id: string }
+        Returns: undefined
+      }
+      admin_approve_deposit: {
+        Args: { _deposit_id: string }
+        Returns: undefined
+      }
+      admin_pay_withdrawal: { Args: { _id: string }; Returns: undefined }
+      admin_reject_deposit: {
+        Args: { _deposit_id: string }
+        Returns: undefined
+      }
+      admin_reject_withdrawal: { Args: { _id: string }; Returns: undefined }
+      admin_set_tier: {
+        Args: { _tier: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_toggle_suspend: { Args: { _user_id: string }; Returns: undefined }
+      complete_task: {
+        Args: { _reward: number }
+        Returns: {
+          balance: number
+          created_at: string
+          fund_password: string | null
+          id: string
+          invitation_code: string | null
+          last_task_date: string | null
+          my_code: string
+          phone: string
+          referral_rewards: number
+          suspended: boolean
+          task_count: number
+          task_rewards: number
+          tasks_completed_today: number
+          tier: string
+          today_earnings: number
+          total_earnings: number
+          updated_at: string
+          wallet_address: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      request_withdrawal: {
+        Args: { _amount: number; _fund_pwd: string }
+        Returns: {
+          address: string
+          amount: number
+          created_at: string
+          fee: number
+          id: string
+          net_amount: number
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "withdrawals"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +435,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
