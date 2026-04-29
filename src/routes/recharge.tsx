@@ -13,7 +13,7 @@ export const Route = createFileRoute("/recharge")({
   ),
 });
 
-const ADMIN_BEP20 = "0x9F8d2A4E7b3C1d56789aBcDeF0123456789Abcde";
+const ADMIN_TRC20 = "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8";
 
 function Recharge() {
   const { user } = useApp();
