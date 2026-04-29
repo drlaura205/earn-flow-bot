@@ -33,8 +33,14 @@ function Job() {
   if (!user) return null;
   const tierInfo = TIERS.find((t) => t.name === user.tier)!;
 
+  const dailyLimit = user.tier === "Internship" ? 1 : Infinity;
+
   const install = (idx: number) => {
     if (completed.has(idx) || installing !== null) return;
+    if (user.tasksCompletedToday >= dailyLimit) {
+      toast.error("Daily task limit reached. Upgrade your plan to earn more.");
+      return;
+    }
     setInstalling(idx);
     setTimeout(() => {
       setInstalling(null);

@@ -20,7 +20,7 @@ function Withdrawals() {
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-100">Withdrawal Requests</h1>
-          <p className="text-sm text-slate-400 mt-1">Process outgoing BEP-20 USDT payouts</p>
+          <p className="text-sm text-slate-400 mt-1">Process outgoing TRC-20 USDT payouts</p>
         </div>
         <label className="flex items-center gap-2 text-sm text-slate-300">
           <input type="checkbox" checked={pendingOnly} onChange={(e) => setPendingOnly(e.target.checked)} className="accent-cyan-500" />
@@ -35,7 +35,7 @@ function Withdrawals() {
               <tr>
                 <th className="text-left py-3 px-4">User</th>
                 <th className="text-left py-3 px-4">Amount</th>
-                <th className="text-left py-3 px-4">BEP-20 Address</th>
+                <th className="text-left py-3 px-4">TRC-20 Address</th>
                 <th className="text-left py-3 px-4">Network</th>
                 <th className="text-left py-3 px-4">Date</th>
                 <th className="text-left py-3 px-4">Status</th>

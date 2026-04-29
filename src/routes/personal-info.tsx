@@ -16,8 +16,8 @@ function PersonalInfo() {
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!/^0x[a-fA-F0-9]{40}$/.test(addr)) {
-      return toast.error("Invalid BEP-20 address. Must start with 0x and be 42 chars.");
+    if (!/^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(addr)) {
+      return toast.error("Invalid TRC-20 address. Must start with T and be 34 chars.");
     }
     updateUser({ walletAddress: addr });
     toast.success("USDT wallet address saved");
@@ -31,14 +31,14 @@ function PersonalInfo() {
       <div className="-mt-4 px-5">
         <form onSubmit={save} className="rounded-2xl bg-card p-5 shadow-elevated space-y-4">
           <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">USDT (BEP-20) Address</label>
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">USDT (TRC-20) Address</label>
             <input
               value={addr} onChange={(e) => setAddr(e.target.value.trim())}
-              placeholder="0x..."
+              placeholder="T..."
               className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm font-mono outline-none focus:ring-2 focus:ring-ring"
             />
             <p className="mt-2 text-[11px] text-muted-foreground">
-              Must be a valid 42-character address starting with 0x. Withdrawals will be sent here on the BSC network.
+              Must be a valid 34-character TRON address starting with T. Withdrawals will be sent here on the TRON network.
             </p>
           </div>
 

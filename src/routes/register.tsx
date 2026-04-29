@@ -23,7 +23,7 @@ function Register() {
     if (password !== confirm) return toast.error("Passwords do not match");
     if (!code) return toast.error("Invitation code required");
     register({ phone, password, invitationCode: code });
-    toast.success("Account created! $5 welcome bonus added.");
+    toast.success("Account created! Complete your first task to earn $3.");
     nav({ to: "/home" });
   };
 
@@ -31,7 +31,7 @@ function Register() {
     <div className="mx-auto min-h-screen w-full max-w-md bg-hero-gradient">
       <div className="px-6 pt-12 pb-8 text-white">
         <h1 className="text-3xl font-black tracking-tight">Create Account</h1>
-        <p className="mt-1 text-white/80">Get a $5 welcome bonus instantly</p>
+        <p className="mt-1 text-white/80">Earn $3 by completing your first task</p>
       </div>
 
       <div className="rounded-t-3xl bg-card px-6 pt-8 pb-12 shadow-elevated min-h-[70vh]">
@@ -45,7 +45,7 @@ function Register() {
             type="submit"
             className="mt-2 w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
           >
-            Register & Claim $5
+            Register & Start Earning
           </button>
         </form>
 

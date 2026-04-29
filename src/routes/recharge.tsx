@@ -13,14 +13,14 @@ export const Route = createFileRoute("/recharge")({
   ),
 });
 
-const ADMIN_BEP20 = "0x9F8d2A4E7b3C1d56789aBcDeF0123456789Abcde";
+const ADMIN_TRC20 = "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8";
 
 function Recharge() {
   const { user } = useApp();
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(ADMIN_BEP20);
+    await navigator.clipboard.writeText(ADMIN_TRC20);
     setCopied(true);
     toast.success("Address copied to clipboard");
     setTimeout(() => setCopied(false), 2000);
@@ -35,14 +35,14 @@ function Recharge() {
       <div className="-mt-4 px-5">
         <div className="rounded-2xl bg-card p-6 shadow-elevated text-center">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">Network</p>
-          <p className="mt-1 text-base font-bold text-[var(--blue-brand)]">USDT — BEP20 (Binance Smart Chain)</p>
+          <p className="mt-1 text-base font-bold text-[var(--blue-brand)]">USDT — TRC20 (TRON Network)</p>
 
           <div className="mx-auto mt-5 inline-block rounded-2xl bg-white p-4 shadow-md ring-1 ring-border">
-            <QRCodeSVG value={ADMIN_BEP20} size={180} />
+            <QRCodeSVG value={ADMIN_TRC20} size={180} />
           </div>
 
           <p className="mt-5 text-xs uppercase tracking-widest text-muted-foreground">Deposit Address</p>
-          <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{ADMIN_BEP20}</p>
+          <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{ADMIN_TRC20}</p>
 
           <button
             onClick={copy}
@@ -65,7 +65,7 @@ function Recharge() {
             <p className="text-sm font-bold">Warning</p>
           </div>
           <ul className="mt-2 list-disc pl-5 text-xs text-muted-foreground space-y-1">
-            <li>Send only USDT via BEP-20 (BSC) network. Other networks will result in permanent loss.</li>
+            <li>Send only USDT via TRC-20 (TRON) network. Other networks will result in permanent loss.</li>
             <li>Funds are credited after 1 network confirmation.</li>
             <li>Contact support if your deposit isn't credited within 30 minutes.</li>
           </ul>

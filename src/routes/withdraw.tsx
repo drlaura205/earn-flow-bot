@@ -93,7 +93,7 @@ function Withdraw() {
             <p className="text-sm font-bold">Warning</p>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">
-            Withdrawals are processed to your saved BEP-20 USDT wallet. Network fees may apply.
+            Withdrawals are processed to your saved TRC-20 USDT wallet. Network fees may apply.
           </p>
         </div>
       </div>
