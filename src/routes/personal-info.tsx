@@ -28,8 +28,12 @@ function PersonalInfo() {
     <div className="mx-auto min-h-screen w-full max-w-md bg-app-gradient pb-16">
       <PageHeader title="USDT Wallet Address" />
 
-      <div className="-mt-4 px-5">
+      <div className="-mt-4 px-5 space-y-4">
         <form onSubmit={save} className="rounded-2xl bg-card p-5 shadow-elevated space-y-4">
+          <div className="flex items-center justify-between rounded-lg bg-primary/10 px-3 py-2">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-primary">Network</span>
+            <span className="text-sm font-bold">USDT-TRC20</span>
+          </div>
           <div>
             <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">USDT (TRC-20) Address</label>
             <input
@@ -37,8 +41,8 @@ function PersonalInfo() {
               placeholder="T..."
               className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm font-mono outline-none focus:ring-2 focus:ring-ring"
             />
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              Must be a valid 34-character TRON address starting with T. Withdrawals will be sent here on the TRON network.
+            <p className="mt-2 text-[11px] text-destructive font-semibold">
+              Warning: Use only the TRON (TRC-20) network. Transfers from BEP-20 or ERC-20 addresses will result in permanent loss of funds.
             </p>
           </div>
 
