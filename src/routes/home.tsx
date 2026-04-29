@@ -3,6 +3,7 @@ import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import { Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, Bot, Users, Briefcase, TrendingUp, Bell } from "lucide-react";
+import { LiveActivityFeed } from "@/components/LiveActivityFeed";
 
 export const Route = createFileRoute("/home")({
   component: () => (
@@ -78,6 +79,11 @@ function Home() {
         <p className="truncate text-xs text-muted-foreground">
           Welcome to GIC! Daily AI returns paid out at 24:00 UTC.
         </p>
+      </div>
+
+      {/* Live deposit/withdrawal feed */}
+      <div className="mt-5 px-5">
+        <LiveActivityFeed />
       </div>
     </div>
   );
