@@ -15,7 +15,11 @@ function Invite() {
   // Generate a fresh random code on mount as requested, but fall back to user's code
   const code = useMemo(() => Math.floor(100000 + Math.random() * 900000).toString(), []);
   const displayCode = user?.myCode || code;
-  const link = `gic-invest.com/reg?code=${displayCode}`;
+  const origin = typeof window !== "undefined"
+    ? window.location.origin
+    : "https://earn-flow-bot.lovable.app";
+  const fullLink = `${origin}/register?code=${displayCode}`;
+  const link = fullLink.replace(/^https?:\/\//, "");
 
   const copy = async (text: string, label: string) => {
     await navigator.clipboard.writeText(text);
