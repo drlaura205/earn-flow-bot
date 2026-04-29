@@ -14,12 +14,12 @@ function PersonalInfo() {
   const nav = useNavigate();
   const [addr, setAddr] = useState(user?.walletAddress || "");
 
-  const save = (e: React.FormEvent) => {
+  const save = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!/^T[1-9A-HJ-NP-Za-km-z]{33}$/.test(addr)) {
       return toast.error("Invalid TRC-20 address. Must start with T and be 34 chars.");
     }
-    updateUser({ walletAddress: addr });
+    await updateUser({ walletAddress: addr });
     toast.success("USDT wallet address saved");
     nav({ to: "/account" });
   };
