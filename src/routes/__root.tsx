@@ -36,10 +36,14 @@ export const Route = createRootRoute({
       { name: "description", content: "Earn USDT through tasks, AI trading and team referrals on the GIC platform." },
       { name: "author", content: "GIC" },
       { property: "og:title", content: "GIC — Global Investment Company" },
-      { property: "og:description", content: "Earn USDT through tasks, AI trading and team referrals." },
+      { property: "og:description", content: "Earn USDT through tasks, AI trading and team referrals on the GIC platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "GIC — Global Investment Company" },
+      { name: "twitter:description", content: "Earn USDT through tasks, AI trading and team referrals on the GIC platform." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/1MPrhDgPmnOOY928pQRe1AOT88b2/social-images/social-1777474121436-Gemini_Generated_Image_w7ae2yw7ae2yw7ae.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/1MPrhDgPmnOOY928pQRe1AOT88b2/social-images/social-1777474121436-Gemini_Generated_Image_w7ae2yw7ae2yw7ae.webp" },
     ],
     links: [
       {
