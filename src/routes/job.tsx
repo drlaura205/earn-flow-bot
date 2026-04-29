@@ -42,21 +42,23 @@ function Job() {
       return;
     }
     setInstalling(idx);
-    setTimeout(() => {
+    setTimeout(async () => {
+      const r = await completeTask(tierInfo.rewardPerTask);
       setInstalling(null);
-      setCompleted((s) => new Set(s).add(idx));
-      completeTask(tierInfo.rewardPerTask);
-      toast.success(`Task Completed! +$${tierInfo.rewardPerTask.toFixed(2)} added`);
+      if (r.ok) {
+        setCompleted((s) => new Set(s).add(idx));
+        toast.success(`Task Completed! +$${tierInfo.rewardPerTask.toFixed(2)} added`);
+      } else {
+        toast.error(r.msg);
+      }
     }, 3000);
   };
 
-  const handleUpgrade = (tier: Tier) => {
+  const handleUpgrade = async (tier: Tier) => {
     if (tier === user.tier) return;
-    if (upgradeTier(tier)) {
-      toast.success(`Upgraded to ${tier}!`);
-    } else {
-      toast.error("Insufficient balance. Recharge first.");
-    }
+    const r = await upgradeTier(tier);
+    if (r.ok) toast.success(`Upgraded to ${tier}!`);
+    else toast.error(r.msg || "Insufficient balance. Recharge first.");
   };
 
   return (
