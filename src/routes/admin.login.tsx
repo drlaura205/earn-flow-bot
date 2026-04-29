@@ -12,12 +12,19 @@ function AdminLogin() {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const [busy, setBusy] = useState(false);
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(u, p)) {
-      toast.success("Welcome, Admin");
-      nav({ to: "/admin/dashboard" });
-    } else toast.error("Invalid credentials");
+    setBusy(true);
+    try {
+      const ok = await login(u, p);
+      if (ok) {
+        toast.success("Welcome, Admin");
+        nav({ to: "/admin/dashboard" });
+      } else toast.error("Invalid credentials");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
