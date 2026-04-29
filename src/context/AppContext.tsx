@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { isWithdrawWindowOpen } from "@/lib/withdrawWindow";
 
 export type Tier = "Internship" | "Silver" | "Gold" | "Platinum";
 
@@ -145,8 +146,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (amount < 2) return { ok: false, msg: "Minimum withdrawal is $2" };
     if (amount > user.balance) return { ok: false, msg: "Insufficient balance" };
     // Window check: Mon–Sat, 09:00–20:00 UK time
-    // Lazy import to avoid circular deps
-    const { isWithdrawWindowOpen } = require("@/lib/withdrawWindow");
     if (!isWithdrawWindowOpen()) {
       return { ok: false, msg: "Withdrawals are closed. Open Mon–Sat, 09:00–20:00 UK time." };
     }
