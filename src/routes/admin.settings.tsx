@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Save } from "lucide-react";
 import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin } from "@/context/AdminContext";
