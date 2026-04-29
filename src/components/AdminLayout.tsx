@@ -48,7 +48,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           })}
         </nav>
         <button
-          onClick={() => { logout(); nav({ to: "/admin/login" }); }}
+          onClick={async () => { await logout(); nav({ to: "/admin/login" }); }}
           className="m-2 flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-300 hover:bg-red-500/15 hover:text-red-300 transition"
         >
           <LogOut size={18} />
