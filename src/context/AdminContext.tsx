@@ -71,10 +71,10 @@ const seedDeposits: DepositReq[] = [
 ];
 
 const seedWithdrawals: WithdrawReq[] = [
-  { id: "W-2210", userId: "U-3287", phone: "+44 7700 900812", amount: 45.5, address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", network: "BEP-20", date: "2026-04-27 13:00", status: "Pending" },
-  { id: "W-2209", userId: "U-3210", phone: "+91 98220 12345", amount: 120, address: "0x8ba1f109551bD432803012645Ac136ddd64DBA72", network: "BEP-20", date: "2026-04-27 10:45", status: "Pending" },
-  { id: "W-2208", userId: "U-3155", phone: "+62 812 3456 7890", amount: 25, address: "0xdAC17F958D2ee523a2206206994597C13D831ec7", network: "BEP-20", date: "2026-04-26 19:20", status: "Paid" },
-  { id: "W-2207", userId: "U-3099", phone: "+1 555 0142", amount: 80, address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", network: "BEP-20", date: "2026-04-25 16:11", status: "Paid" },
+  { id: "W-2210", userId: "U-3287", phone: "+44 7700 900812", amount: 45.5, address: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e", network: "TRC-20", date: "2026-04-27 13:00", status: "Pending" },
+  { id: "W-2209", userId: "U-3210", phone: "+91 98220 12345", amount: 120, address: "0x8ba1f109551bD432803012645Ac136ddd64DBA72", network: "TRC-20", date: "2026-04-27 10:45", status: "Pending" },
+  { id: "W-2208", userId: "U-3155", phone: "+62 812 3456 7890", amount: 25, address: "0xdAC17F958D2ee523a2206206994597C13D831ec7", network: "TRC-20", date: "2026-04-26 19:20", status: "Paid" },
+  { id: "W-2207", userId: "U-3099", phone: "+1 555 0142", amount: 80, address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", network: "TRC-20", date: "2026-04-25 16:11", status: "Paid" },
 ];
 
 const seedUsers: AdminUser[] = [

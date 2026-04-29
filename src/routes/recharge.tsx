@@ -20,7 +20,7 @@ function Recharge() {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(ADMIN_BEP20);
+    await navigator.clipboard.writeText(ADMIN_TRC20);
     setCopied(true);
     toast.success("Address copied to clipboard");
     setTimeout(() => setCopied(false), 2000);
@@ -38,11 +38,11 @@ function Recharge() {
           <p className="mt-1 text-base font-bold text-[var(--blue-brand)]">USDT — BEP20 (Binance Smart Chain)</p>
 
           <div className="mx-auto mt-5 inline-block rounded-2xl bg-white p-4 shadow-md ring-1 ring-border">
-            <QRCodeSVG value={ADMIN_BEP20} size={180} />
+            <QRCodeSVG value={ADMIN_TRC20} size={180} />
           </div>
 
           <p className="mt-5 text-xs uppercase tracking-widest text-muted-foreground">Deposit Address</p>
-          <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{ADMIN_BEP20}</p>
+          <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{ADMIN_TRC20}</p>
 
           <button
             onClick={copy}

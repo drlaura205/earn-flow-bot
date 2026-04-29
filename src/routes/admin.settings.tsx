@@ -38,7 +38,7 @@ function SettingsPage() {
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="text-sm font-bold text-slate-200 mb-4">Wallet Settings</h2>
-        <label className="block text-xs uppercase tracking-wider text-slate-400 mb-1.5">Company BEP-20 Address (shown on Recharge page)</label>
+        <label className="block text-xs uppercase tracking-wider text-slate-400 mb-1.5">Company TRC-20 Address (shown on Recharge page)</label>
         <input value={s.walletAddress} onChange={(e) => setS({ ...s, walletAddress: e.target.value })}
           className="w-full rounded-lg bg-slate-800/60 border border-slate-700 px-3 py-2 text-sm font-mono text-slate-100 outline-none focus:border-cyan-500" />
       </section>
