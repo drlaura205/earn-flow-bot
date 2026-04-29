@@ -42,8 +42,8 @@ function AdminLogin() {
             className="w-full rounded-lg bg-slate-800/60 border border-slate-700 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:border-cyan-500" />
           <input value={p} onChange={(e) => setP(e.target.value)} type="password" placeholder="Password" autoComplete="current-password"
             className="w-full rounded-lg bg-slate-800/60 border border-slate-700 px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:border-cyan-500" />
-          <button className="w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 py-2.5 text-sm font-bold text-white shadow-lg active:scale-[0.98] transition">
-            Sign in
+          <button disabled={busy} className="w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 py-2.5 text-sm font-bold text-white shadow-lg active:scale-[0.98] transition disabled:opacity-50">
+            {busy ? "Signing in…" : "Sign in"}
           </button>
         </div>
         <p className="mt-6 text-[11px] text-center text-slate-500">Demo credentials: <span className="text-slate-300 font-mono">admin / admin123</span></p>
