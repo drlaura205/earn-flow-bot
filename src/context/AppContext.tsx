@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { isWithdrawWindowOpen } from "@/lib/withdrawWindow";
 
 export type Tier = "Internship" | "Silver" | "Gold" | "Platinum";
 
@@ -139,13 +140,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const withdraw: AppState["withdraw"] = (amount, fundPwd) => {
     if (!user) return { ok: false, msg: "Not logged in" };
-    if (!user.walletAddress) return { ok: false, msg: "Set USDT wallet address first" };
+    if (!user.walletAddress) return { ok: false, msg: "Set TRC-20 wallet address first" };
     if (!user.fundPassword) return { ok: false, msg: "Set fund password first" };
     if (user.fundPassword !== fundPwd) return { ok: false, msg: "Incorrect fund password" };
-    if (amount < 1) return { ok: false, msg: "Minimum withdrawal is $1" };
+    if (amount < 2) return { ok: false, msg: "Minimum withdrawal is $2" };
     if (amount > user.balance) return { ok: false, msg: "Insufficient balance" };
+    // Window check: Mon–Sat, 09:00–20:00 UK time
+    if (!isWithdrawWindowOpen()) {
+      return { ok: false, msg: "Withdrawals are closed. Open Mon–Sat, 09:00–20:00 UK time." };
+    }
     setUser({ ...user, balance: user.balance - amount });
-    return { ok: true, msg: "Withdrawal request submitted" };
+    return { ok: true, msg: "Withdrawal submitted. Processing time: 1–48 hours." };
   };
 
   return (
