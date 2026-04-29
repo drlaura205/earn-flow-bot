@@ -1,0 +1,442 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.5"
+  }
+  public: {
+    Tables: {
+      app_settings: {
+        Row: {
+          deposit_address: string
+          id: number
+          min_withdrawal: number
+          tier_rates: Json
+          updated_at: string
+          withdrawal_fee_rate: number
+        }
+        Insert: {
+          deposit_address?: string
+          id?: number
+          min_withdrawal?: number
+          tier_rates?: Json
+          updated_at?: string
+          withdrawal_fee_rate?: number
+        }
+        Update: {
+          deposit_address?: string
+          id?: number
+          min_withdrawal?: number
+          tier_rates?: Json
+          updated_at?: string
+          withdrawal_fee_rate?: number
+        }
+        Relationships: []
+      }
+      deposits: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          txid: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          txid?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          txid?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          balance: number
+          created_at: string
+          fund_password: string | null
+          id: string
+          invitation_code: string | null
+          last_task_date: string | null
+          my_code: string
+          phone: string
+          referral_rewards: number
+          suspended: boolean
+          task_count: number
+          task_rewards: number
+          tasks_completed_today: number
+          tier: string
+          today_earnings: number
+          total_earnings: number
+          updated_at: string
+          wallet_address: string | null
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          fund_password?: string | null
+          id: string
+          invitation_code?: string | null
+          last_task_date?: string | null
+          my_code: string
+          phone: string
+          referral_rewards?: number
+          suspended?: boolean
+          task_count?: number
+          task_rewards?: number
+          tasks_completed_today?: number
+          tier?: string
+          today_earnings?: number
+          total_earnings?: number
+          updated_at?: string
+          wallet_address?: string | null
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          fund_password?: string | null
+          id?: string
+          invitation_code?: string | null
+          last_task_date?: string | null
+          my_code?: string
+          phone?: string
+          referral_rewards?: number
+          suspended?: boolean
+          task_count?: number
+          task_rewards?: number
+          tasks_completed_today?: number
+          tier?: string
+          today_earnings?: number
+          total_earnings?: number
+          updated_at?: string
+          wallet_address?: string | null
+        }
+        Relationships: []
+      }
+      task_completions: {
+        Row: {
+          completed_at: string
+          id: string
+          reward: number
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          reward: number
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          reward?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      withdrawals: {
+        Row: {
+          address: string
+          amount: number
+          created_at: string
+          fee: number
+          id: string
+          net_amount: number
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          amount: number
+          created_at?: string
+          fee?: number
+          id?: string
+          net_amount?: number
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          amount?: number
+          created_at?: string
+          fee?: number
+          id?: string
+          net_amount?: number
+          network?: string
+          note?: string | null
+          reviewed_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      admin_adjust_balance: {
+        Args: { _delta: number; _user_id: string }
+        Returns: undefined
+      }
+      admin_approve_deposit: {
+        Args: { _deposit_id: string }
+        Returns: undefined
+      }
+      admin_pay_withdrawal: { Args: { _id: string }; Returns: undefined }
+      admin_reject_deposit: {
+        Args: { _deposit_id: string }
+        Returns: undefined
+      }
+      admin_reject_withdrawal: { Args: { _id: string }; Returns: undefined }
+      admin_set_tier: {
+        Args: { _tier: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_toggle_suspend: { Args: { _user_id: string }; Returns: undefined }
+      complete_task: {
+        Args: { _reward: number }
+        Returns: {
+          balance: number
+          created_at: string
+          fund_password: string | null
+          id: string
+          invitation_code: string | null
+          last_task_date: string | null
+          my_code: string
+          phone: string
+          referral_rewards: number
+          suspended: boolean
+          task_count: number
+          task_rewards: number
+          tasks_completed_today: number
+          tier: string
+          today_earnings: number
+          total_earnings: number
+          updated_at: string
+          wallet_address: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      request_withdrawal: {
+        Args: { _amount: number; _fund_pwd: string }
+        Returns: {
+          address: string
+          amount: number
+          created_at: string
+          fee: number
+          id: string
+          net_amount: number
+          network: string
+          note: string | null
+          reviewed_at: string | null
+          status: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "withdrawals"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+    }
+    Enums: {
+      app_role: "admin" | "user"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      app_role: ["admin", "user"],
+    },
+  },
+} as const

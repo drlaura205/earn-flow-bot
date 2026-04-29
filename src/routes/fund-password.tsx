@@ -17,11 +17,11 @@ function FundPwd() {
 
   if (!user) return null;
 
-  const save = (e: React.FormEvent) => {
+  const save = async (e: React.FormEvent) => {
     e.preventDefault();
     if (pwd.length !== 6) return toast.error("PIN must be 6 digits");
     if (pwd !== conf) return toast.error("PINs do not match");
-    updateUser({ fundPassword: pwd });
+    await updateUser({ fundPassword: pwd });
     toast.success("Fund password saved");
     nav({ to: "/account" });
   };
