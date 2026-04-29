@@ -15,6 +15,13 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [code, setCode] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const c = params.get("code");
+    if (c) setCode(c);
+  }, []);
   const [busy, setBusy] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
