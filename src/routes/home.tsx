@@ -4,6 +4,7 @@ import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import { Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, Bot, Users, Briefcase, TrendingUp, Bell } from "lucide-react";
 import { LiveActivityFeed } from "@/components/LiveActivityFeed";
+import { CompanySlider } from "@/components/CompanySlider";
 
 export const Route = createFileRoute("/home")({
   component: () => (
@@ -40,8 +41,13 @@ function Home() {
         </div>
       </div>
 
-      {/* Floating quick actions */}
+      {/* Company slider */}
       <div className="-mt-12 px-5">
+        <CompanySlider />
+      </div>
+
+      {/* Floating quick actions */}
+      <div className="mt-4 px-5">
         <div className="grid grid-cols-3 gap-3 rounded-2xl bg-card p-4 shadow-elevated">
           <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" />
           <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" />

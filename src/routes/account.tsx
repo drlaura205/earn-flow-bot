@@ -4,7 +4,7 @@ import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import {
   Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, KeyRound, ShieldCheck,
-  ChevronRight, LogOut, User as UserIcon,
+  ChevronRight, LogOut, User as UserIcon, History as HistoryIcon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
@@ -78,6 +78,7 @@ function Account() {
 
       <div className="mt-5 px-5">
         <div className="overflow-hidden rounded-2xl bg-card shadow-card">
+          <Row to="/history" icon={HistoryIcon} label="Deposit & Withdrawal History" />
           <Row to="/personal-info" icon={ShieldCheck} label="Set USDT Wallet Address" />
           <Row to="/fund-password" icon={KeyRound} label="Fund Password" />
           <Row to="/invite" icon={Gift} label="Invite Friends" />
