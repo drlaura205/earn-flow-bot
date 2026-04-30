@@ -19,6 +19,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as JobRouteImport } from './routes/job'
 import { Route as InviteRouteImport } from './routes/invite'
 import { Route as HomeRouteImport } from './routes/home'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FundPasswordRouteImport } from './routes/fund-password'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
@@ -80,6 +81,11 @@ const HomeRoute = HomeRouteImport.update({
   path: '/home',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FundPasswordRoute = FundPasswordRouteImport.update({
   id: '/fund-password',
   path: '/fund-password',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/fund-password': typeof FundPasswordRoute
+  '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/fund-password': typeof FundPasswordRoute
+  '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/fund-password': typeof FundPasswordRoute
+  '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/fund-password'
+    | '/history'
     | '/home'
     | '/invite'
     | '/job'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/fund-password'
+    | '/history'
     | '/home'
     | '/invite'
     | '/job'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/fund-password'
+    | '/history'
     | '/home'
     | '/invite'
     | '/job'
@@ -271,6 +283,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
   FundPasswordRoute: typeof FundPasswordRoute
+  HistoryRoute: typeof HistoryRoute
   HomeRoute: typeof HomeRoute
   InviteRoute: typeof InviteRoute
   JobRoute: typeof JobRoute
@@ -362,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fund-password': {
       id: '/fund-password'
       path: '/fund-password'
@@ -439,6 +459,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
   FundPasswordRoute: FundPasswordRoute,
+  HistoryRoute: HistoryRoute,
   HomeRoute: HomeRoute,
   InviteRoute: InviteRoute,
   JobRoute: JobRoute,
