@@ -62,7 +62,7 @@ function Invite() {
           <p className="mt-2 truncate text-sm font-medium text-foreground">{link}</p>
           <button
             onClick={() => copy(fullLink, "Link")}
-            className="mt-3 w-full rounded-full bg-primary-gradient py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
+            className="mt-3 w-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-fuchsia-600 py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
           >
             Copy Invitation Link
           </button>

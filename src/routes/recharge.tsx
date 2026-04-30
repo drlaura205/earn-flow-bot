@@ -82,7 +82,7 @@ function Recharge() {
             <input value={txid} onChange={(e) => setTxid(e.target.value)}
               className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm font-mono outline-none focus:ring-2 focus:ring-ring" placeholder="0x..." />
           </div>
-          <button type="submit" disabled={busy} className="w-full rounded-full bg-primary-gradient py-3 text-sm font-bold text-white shadow-md active:scale-[0.98] disabled:opacity-60">
+          <button type="submit" disabled={busy} className="w-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 py-3 text-sm font-bold text-white shadow-md active:scale-[0.98] disabled:opacity-60">
             {busy ? "Submitting…" : "Submit for Review"}
           </button>
         </form>
