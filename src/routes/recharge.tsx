@@ -64,7 +64,7 @@ function Recharge() {
           <p className="mt-5 text-xs uppercase tracking-widest text-muted-foreground">Deposit Address</p>
           <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{address}</p>
 
-          <button onClick={copy} className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-bold text-white shadow-elevated active:scale-95 transition-transform">
+          <button onClick={copy} className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-3 text-sm font-bold text-white shadow-elevated active:scale-95 transition-transform">
             <Copy size={16} /> {copied ? "Copied!" : "Copy Address"}
           </button>
         </div>
