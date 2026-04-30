@@ -95,10 +95,10 @@ function Home() {
   );
 }
 
-function QuickLink({ to, icon: Icon, label }: { to: string; icon: any; label: string }) {
+function QuickLink({ to, icon: Icon, label, tint = "from-cyan-500 to-blue-600" }: { to: string; icon: any; label: string; tint?: string }) {
   return (
     <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-gradient text-white shadow-md">
+      <span className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tint} text-white shadow-md`}>
         <Icon size={20} />
       </span>
       <span className="text-xs font-medium text-foreground">{label}</span>
