@@ -49,9 +49,9 @@ function Home() {
       {/* Floating quick actions */}
       <div className="mt-4 px-5">
         <div className="grid grid-cols-3 gap-3 rounded-2xl bg-card p-4 shadow-elevated">
-          <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" />
-          <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" />
-          <QuickLink to="/invite" icon={Gift} label="Invite" />
+          <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" tint="from-emerald-400 to-green-600" />
+          <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" tint="from-orange-400 to-red-500" />
+          <QuickLink to="/invite" icon={Gift} label="Invite" tint="from-fuchsia-500 to-purple-600" />
         </div>
       </div>
 
@@ -95,10 +95,10 @@ function Home() {
   );
 }
 
-function QuickLink({ to, icon: Icon, label }: { to: string; icon: any; label: string }) {
+function QuickLink({ to, icon: Icon, label, tint = "from-cyan-500 to-blue-600" }: { to: string; icon: any; label: string; tint?: string }) {
   return (
     <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-      <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-gradient text-white shadow-md">
+      <span className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tint} text-white shadow-md`}>
         <Icon size={20} />
       </span>
       <span className="text-xs font-medium text-foreground">{label}</span>

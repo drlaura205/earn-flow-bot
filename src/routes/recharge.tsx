@@ -64,7 +64,7 @@ function Recharge() {
           <p className="mt-5 text-xs uppercase tracking-widest text-muted-foreground">Deposit Address</p>
           <p className="mt-1 break-all rounded-lg bg-secondary px-3 py-2 text-xs font-mono">{address}</p>
 
-          <button onClick={copy} className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-primary-gradient px-6 py-3 text-sm font-bold text-white shadow-elevated active:scale-95 transition-transform">
+          <button onClick={copy} className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-3 text-sm font-bold text-white shadow-elevated active:scale-95 transition-transform">
             <Copy size={16} /> {copied ? "Copied!" : "Copy Address"}
           </button>
         </div>
@@ -82,7 +82,7 @@ function Recharge() {
             <input value={txid} onChange={(e) => setTxid(e.target.value)}
               className="w-full rounded-xl border border-input bg-background px-4 py-3 text-sm font-mono outline-none focus:ring-2 focus:ring-ring" placeholder="0x..." />
           </div>
-          <button type="submit" disabled={busy} className="w-full rounded-full bg-primary-gradient py-3 text-sm font-bold text-white shadow-md active:scale-[0.98] disabled:opacity-60">
+          <button type="submit" disabled={busy} className="w-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 py-3 text-sm font-bold text-white shadow-md active:scale-[0.98] disabled:opacity-60">
             {busy ? "Submitting…" : "Submit for Review"}
           </button>
         </form>

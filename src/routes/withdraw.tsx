@@ -135,7 +135,7 @@ function Withdraw() {
           <button
             type="submit"
             disabled={!open}
-            className="w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-50 disabled:active:scale-100"
+            className="w-full rounded-full bg-gradient-to-r from-orange-500 to-rose-600 py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-50 disabled:active:scale-100"
           >
             {open ? "Submit Withdrawal" : "Withdrawals Closed"}
           </button>

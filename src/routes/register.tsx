@@ -65,7 +65,7 @@ function Register() {
           <button
             type="submit"
             disabled={busy}
-            className="mt-2 w-full rounded-full bg-primary-gradient py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-60"
+            className="mt-2 w-full rounded-full bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 py-3.5 text-base font-bold text-white shadow-elevated active:scale-[0.98] transition-transform disabled:opacity-60"
           >
             {busy ? "Creating…" : "Register & Start Earning"}
           </button>
