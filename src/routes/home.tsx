@@ -49,9 +49,9 @@ function Home() {
       {/* Floating quick actions */}
       <div className="mt-4 px-5">
         <div className="grid grid-cols-3 gap-3 rounded-2xl bg-card p-4 shadow-elevated">
-          <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" />
-          <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" />
-          <QuickLink to="/invite" icon={Gift} label="Invite" />
+          <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" tint="from-emerald-400 to-green-600" />
+          <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" tint="from-orange-400 to-red-500" />
+          <QuickLink to="/invite" icon={Gift} label="Invite" tint="from-fuchsia-500 to-purple-600" />
         </div>
       </div>
 
