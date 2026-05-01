@@ -5,6 +5,7 @@ import { useApp } from "@/context/AppContext";
 import { Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, Bot, Users, Briefcase, TrendingUp, Bell } from "lucide-react";
 import { LiveActivityFeed } from "@/components/LiveActivityFeed";
 import { CompanySlider } from "@/components/CompanySlider";
+import gicLogo from "@/assets/gic-logo.png";
 
 export const Route = createFileRoute("/home")({
   component: () => (
@@ -19,8 +20,20 @@ function Home() {
   if (!user) return null;
   return (
     <div>
+      {/* Brand bar */}
+      <div className="flex items-center justify-center gap-2 pt-4 pb-2">
+        <img src={gicLogo} alt="GIC logo" width={36} height={36} className="h-9 w-9 drop-shadow" />
+        <h1 className="text-2xl font-black tracking-[0.35em] flex items-center">
+          <span className="bg-gradient-to-br from-cyan-400 to-blue-600 bg-clip-text text-transparent">G</span>
+          <span className="mx-1 inline-block h-1 w-1 rounded-full bg-amber-400/70" />
+          <span className="bg-gradient-to-br from-fuchsia-500 to-purple-600 bg-clip-text text-transparent">I</span>
+          <span className="mx-1 inline-block h-1 w-1 rounded-full bg-amber-400/70" />
+          <span className="bg-gradient-to-br from-amber-400 to-orange-500 bg-clip-text text-transparent">C</span>
+        </h1>
+      </div>
+
       {/* Header */}
-      <div className="bg-hero-gradient px-5 pt-12 pb-20 text-white rounded-b-[2rem]">
+      <div className="bg-hero-gradient px-5 pt-8 pb-20 text-white rounded-b-[2rem]">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-widest text-white/70">Welcome back</p>
