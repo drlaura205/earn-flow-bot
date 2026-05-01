@@ -4,7 +4,8 @@ import { AuthGate } from "@/components/AuthGate";
 import { PageHeader } from "@/components/PageHeader";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
-import { Copy, Users, Wallet, DollarSign, Gift } from "lucide-react";
+import { Copy, Users, Wallet, DollarSign, Gift, Lock } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/invite")({
   component: () => (<AuthGate><Invite /></AuthGate>),
