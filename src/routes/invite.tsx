@@ -21,6 +21,7 @@ function Invite() {
     : "https://earn-flow-bot.lovable.app";
   const fullLink = `${origin}/register?code=${displayCode}`;
   const link = fullLink.replace(/^https?:\/\//, "");
+  const isUpgraded = !!user && user.tier !== "Internship";
 
   const copy = async (text: string, label: string) => {
     await navigator.clipboard.writeText(text);
