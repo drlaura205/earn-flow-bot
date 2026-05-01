@@ -44,31 +44,51 @@ function Invite() {
       </div>
 
       <div className="px-5 space-y-4">
-        {/* Invitation Code */}
-        <div className="rounded-2xl bg-card p-5 shadow-elevated">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">My Invitation Code</p>
-          <div className="mt-2 flex items-center justify-between gap-3">
-            <p className="text-3xl font-black tracking-[0.25em] text-foreground">{displayCode}</p>
-            <button
-              onClick={() => copy(displayCode, "Code")}
-              className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-2 text-xs font-bold text-secondary-foreground active:scale-95 transition-transform"
+        {!isUpgraded ? (
+          <div className="rounded-2xl bg-card p-6 shadow-elevated text-center">
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+              <Lock size={26} />
+            </div>
+            <p className="text-base font-bold text-foreground">Upgrade Required</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Referrals are available for Silver, Gold, and Platinum members. Upgrade your plan to unlock your invitation code and start earning commissions.
+            </p>
+            <Link
+              to="/robot"
+              className="mt-4 inline-block w-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-fuchsia-600 py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
             >
-              <Copy size={14} /> Copy
-            </button>
+              Upgrade Now
+            </Link>
           </div>
-        </div>
+        ) : (
+          <>
+            {/* Invitation Code */}
+            <div className="rounded-2xl bg-card p-5 shadow-elevated">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">My Invitation Code</p>
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <p className="text-3xl font-black tracking-[0.25em] text-foreground">{displayCode}</p>
+                <button
+                  onClick={() => copy(displayCode, "Code")}
+                  className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-2 text-xs font-bold text-secondary-foreground active:scale-95 transition-transform"
+                >
+                  <Copy size={14} /> Copy
+                </button>
+              </div>
+            </div>
 
-        {/* Referral Link */}
-        <div className="rounded-2xl bg-card p-5 shadow-elevated">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Referral Link</p>
-          <p className="mt-2 truncate text-sm font-medium text-foreground">{link}</p>
-          <button
-            onClick={() => copy(fullLink, "Link")}
-            className="mt-3 w-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-fuchsia-600 py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
-          >
-            Copy Invitation Link
-          </button>
-        </div>
+            {/* Referral Link */}
+            <div className="rounded-2xl bg-card p-5 shadow-elevated">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Referral Link</p>
+              <p className="mt-2 truncate text-sm font-medium text-foreground">{link}</p>
+              <button
+                onClick={() => copy(fullLink, "Link")}
+                className="mt-3 w-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-fuchsia-600 py-3 text-sm font-bold text-white shadow-elevated active:scale-[0.98] transition-transform"
+              >
+                Copy Invitation Link
+              </button>
+            </div>
+          </>
+        )}
 
         {/* Reward steps */}
         <div className="rounded-2xl bg-card p-5 shadow-card">
