@@ -99,3 +99,8 @@
 @utility shadow-card { box-shadow: var(--shadow-card); }
 @utility shadow-elevated { box-shadow: var(--shadow-elevated); }
 @utility shadow-glow { box-shadow: var(--shadow-glow); }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
