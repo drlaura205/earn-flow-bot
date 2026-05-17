@@ -4,7 +4,7 @@ import { Home, LayoutGrid, Crown, TrendingUp, User } from "lucide-react";
 const items = [
   { to: "/home", label: "Home", icon: Home },
   { to: "/job", label: "Task Area", icon: LayoutGrid },
-  { to: "/job", label: "Join", icon: Crown },
+  { to: "/join", label: "Join", icon: Crown },
   { to: "/team", label: "Profit", icon: TrendingUp },
   { to: "/account", label: "My", icon: User },
 ] as const;
