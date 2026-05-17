@@ -4,6 +4,7 @@ import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
 import { ChevronLeft, Smartphone, Lock, ShieldCheck, Heart, Headphones } from "lucide-react";
 import bg from "@/assets/asm-login-bg.jpg";
+import logo from "@/assets/gic-logo.png";
 
 export const Route = createFileRoute("/register")({ component: Register });
 
@@ -54,7 +55,7 @@ function Register() {
           <button className="text-base text-slate-800/80">Language</button>
         </div>
 
-        <h1 className="mt-6 text-center text-5xl font-black tracking-tight text-slate-900">GIC</h1>
+        <img src={logo} alt="GIC" className="mt-6 mx-auto h-20 object-contain" />
 
         <form onSubmit={submit} className="mt-10 space-y-3">
           <div className="flex items-center gap-3 rounded-full bg-white px-5 py-4 shadow-sm">
