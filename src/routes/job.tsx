@@ -44,7 +44,7 @@ function Job() {
 
   if (!user) return null;
   const tierInfo = TIERS.find((t) => t.name === user.tier)!;
-  const dailyLimit = tierInfo.tasksPerDay;
+  const dailyLimit = parseInt(String(tierInfo.tasksPerDay).match(/\d+/)?.[0] || "5", 10);
   const progress = Math.min(user.tasksCompletedToday, dailyLimit);
 
   const startTask = () => {
