@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
+import { CompanyPhotoSlider } from "@/components/CompanyPhotoSlider";
 import { useApp } from "@/context/AppContext";
 import {
   Building2, PlaySquare, Wallet, Banknote,
@@ -40,6 +41,9 @@ function Home() {
           <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" />
         </div>
       </div>
+
+      {/* Company photo slider */}
+      <CompanyPhotoSlider />
 
       {/* Brand banner */}
       <div className="bg-gradient-to-b from-slate-100 to-slate-200 px-4 pt-4 pb-3">
