@@ -2,9 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
-import { Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, Bot, Users, Briefcase, TrendingUp, Bell } from "lucide-react";
-import { LiveActivityFeed } from "@/components/LiveActivityFeed";
-import { CompanySlider } from "@/components/CompanySlider";
+import {
+  Gift, User as UserIcon, ArrowDownToLine, ArrowUpFromLine,
+  FileText, ClipboardList, Users, BookOpen,
+} from "lucide-react";
 import gicLogo from "@/assets/gic-logo.png";
 
 export const Route = createFileRoute("/home")({
@@ -15,126 +16,105 @@ export const Route = createFileRoute("/home")({
   ),
 });
 
+function fmtDateRange() {
+  const start = new Date();
+  const end = new Date(); end.setDate(end.getDate() + 4);
+  const f = (d: Date) => d.toISOString().slice(0, 10);
+  return `${f(start)} ~ ${f(end)}`;
+}
+
 function Home() {
   const { user } = useApp();
   if (!user) return null;
+
   return (
-    <div>
-      {/* Brand bar */}
-      <div className="flex items-center justify-center gap-2 pt-4 pb-2">
-        <img src={gicLogo} alt="GIC logo" width={36} height={36} className="h-9 w-9 drop-shadow" />
-        <h1 className="text-2xl font-black tracking-[0.35em] flex items-center">
-          <span className="bg-gradient-to-br from-cyan-400 to-blue-600 bg-clip-text text-transparent">G</span>
-          <span className="mx-1 inline-block h-1 w-1 rounded-full bg-amber-400/70" />
-          <span className="bg-gradient-to-br from-fuchsia-500 to-purple-600 bg-clip-text text-transparent">I</span>
-          <span className="mx-1 inline-block h-1 w-1 rounded-full bg-amber-400/70" />
-          <span className="bg-gradient-to-br from-amber-400 to-orange-500 bg-clip-text text-transparent">C</span>
-        </h1>
-      </div>
-
-      {/* Header */}
-      <div className="bg-hero-gradient px-5 pt-8 pb-20 text-white rounded-b-[2rem]">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/70">Welcome back</p>
-            <p className="text-lg font-semibold">{user.phone}</p>
-          </div>
-          <button className="relative h-10 w-10 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center">
-            <Bell size={18} />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-amber-300" />
-          </button>
-        </div>
-
-        <div className="mt-6">
-          <p className="text-xs uppercase tracking-widest text-white/70">Total Balance (USDT)</p>
-          <p className="mt-1 text-4xl font-black">${user.balance.toFixed(2)}</p>
-          <span className="mt-2 inline-block rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-            {user.tier} Plan
+    <div className="px-4 pt-4 pb-4">
+      {/* Top bar: logo + user id + tier badge */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img src={gicLogo} alt="GIC" className="h-9 w-9 rounded-xl shadow" />
+          <span className="font-mono text-sm font-bold text-slate-700">
+            {user.myCode || user.phone}
           </span>
         </div>
+        <span className="rounded-full bg-gradient-to-r from-sky-400 to-blue-500 px-3 py-1 text-[11px] font-bold text-white shadow">
+          {user.tier}
+        </span>
       </div>
 
-      {/* Company slider */}
-      <div className="-mt-12 px-5">
-        <CompanySlider />
-      </div>
+      {/* Wallet card */}
+      <div className="mt-4 rounded-2xl bg-gradient-to-br from-sky-100 via-white to-pink-100 p-5 shadow-elevated border border-white/70">
+        <p className="text-[11px] uppercase tracking-widest text-slate-500">Main Wallet (USDT)</p>
+        <p className="mt-1 text-4xl font-black text-sky-600">{user.balance.toFixed(2)}</p>
 
-      {/* Floating quick actions */}
-      <div className="mt-4 px-5">
-        <div className="grid grid-cols-3 gap-3 rounded-2xl bg-card p-4 shadow-elevated">
-          <QuickLink to="/recharge" icon={ArrowDownToLine} label="Recharge" tint="from-emerald-400 to-green-600" />
-          <QuickLink to="/withdraw" icon={ArrowUpFromLine} label="Withdraw" tint="from-orange-400 to-red-500" />
-          <QuickLink to="/invite" icon={Gift} label="Invite" tint="from-fuchsia-500 to-purple-600" />
+        <div className="mt-4 flex items-end justify-between">
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-slate-500">Commission Wallet (USDT)</p>
+            <p className="mt-1 text-2xl font-extrabold text-teal-600">
+              {user.referralRewards.toFixed(4)}
+            </p>
+          </div>
+          <p className="text-[10px] text-slate-500">Effective date: {fmtDateRange()}</p>
         </div>
       </div>
 
-      {/* Earnings strip */}
-      <div className="mt-5 px-5">
-        <div className="grid grid-cols-3 gap-3">
-          <Stat label="Today" value={user.todayEarnings} />
-          <Stat label="Tasks Done" value={user.taskCount} prefix="" suffix="" />
-          <Stat label="Total" value={user.totalEarnings} />
+      {/* 2x2 stats grid */}
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <StatBox label="Yesterday's earnings" value={0} />
+        <StatBox label="Today's earnings" value={user.todayEarnings} />
+        <StatBox label="This month's earnings" value={user.totalEarnings} />
+        <StatBox label="This week's earnings" value={user.todayEarnings * 7} />
+      </div>
+
+      {/* 3 wide cards */}
+      <div className="mt-3 grid grid-cols-3 gap-3">
+        <WideCard label="Total revenue" value={user.totalEarnings.toFixed(2)} />
+        <WideCard label="Sub. task commission" value={(user.taskRewards * 0.1).toFixed(1)} />
+        <WideCard label="Referral rebate" value={user.referralRewards.toFixed(1)} />
+      </div>
+
+      {/* Icon menu 2x4 */}
+      <div className="mt-5 rounded-2xl bg-white/70 backdrop-blur p-4 shadow-card border border-white/70">
+        <div className="grid grid-cols-4 gap-y-5 gap-x-2">
+          <MenuIcon to="/invite" icon={Gift} label="Invite Friends" tint="from-pink-400 to-rose-500" />
+          <MenuIcon to="/personal-info" icon={UserIcon} label="Personal Info" tint="from-sky-400 to-blue-500" />
+          <MenuIcon to="/recharge" icon={ArrowDownToLine} label="Recharge" tint="from-emerald-400 to-teal-500" />
+          <MenuIcon to="/withdraw" icon={ArrowUpFromLine} label="Withdrawal" tint="from-orange-400 to-red-500" />
+          <MenuIcon to="/history" icon={FileText} label="Financial Records" tint="from-violet-400 to-fuchsia-500" />
+          <MenuIcon to="/history" icon={ClipboardList} label="Daily Statement" tint="from-amber-400 to-yellow-500" />
+          <MenuIcon to="/team" icon={Users} label="Team Reports" tint="from-cyan-400 to-sky-500" />
+          <MenuIcon to="/account" icon={BookOpen} label="Handbook" tint="from-lime-400 to-green-500" />
         </div>
-      </div>
-
-      {/* Feature grid */}
-      <div className="mt-6 px-5">
-        <h2 className="mb-3 text-base font-bold">Explore</h2>
-        <div className="grid grid-cols-4 gap-3">
-          <Feature to="/job" icon={Briefcase} label="Tasks" tint="from-cyan-400 to-blue-500" />
-          <Feature to="/robot" icon={Bot} label="AI Robot" tint="from-violet-400 to-fuchsia-500" />
-          <Feature to="/team" icon={Users} label="Team" tint="from-emerald-400 to-teal-500" />
-          <Feature to="/invite" icon={Gift} label="Invite" tint="from-amber-400 to-orange-500" />
-          <Feature to="/recharge" icon={Wallet} label="Wallet" tint="from-pink-400 to-rose-500" />
-          <Feature to="/job" icon={TrendingUp} label="VIP" tint="from-yellow-400 to-amber-500" />
-          <Feature to="/account" icon={Users} label="Profile" tint="from-sky-400 to-indigo-500" />
-          <Feature to="/account" icon={Bell} label="News" tint="from-lime-400 to-green-500" />
-        </div>
-      </div>
-
-      {/* Marquee notice */}
-      <div className="mt-5 mx-5 flex items-center gap-2 rounded-xl bg-card px-4 py-3 shadow-card">
-        <span className="rounded-md bg-destructive/10 px-2 py-0.5 text-[10px] font-bold text-destructive">NOTICE</span>
-        <p className="truncate text-xs text-muted-foreground">
-          Welcome to GIC! Daily AI returns paid out at 24:00 UTC.
-        </p>
-      </div>
-
-      {/* Live deposit/withdrawal feed */}
-      <div className="mt-5 px-5">
-        <LiveActivityFeed />
       </div>
     </div>
   );
 }
 
-function QuickLink({ to, icon: Icon, label, tint = "from-cyan-500 to-blue-600" }: { to: string; icon: any; label: string; tint?: string }) {
+function StatBox({ label, value }: { label: string; value: number }) {
   return (
-    <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-      <span className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tint} text-white shadow-md`}>
-        <Icon size={20} />
-      </span>
-      <span className="text-xs font-medium text-foreground">{label}</span>
-    </Link>
-  );
-}
-
-function Stat({ label, value, prefix = "$", suffix = "" }: { label: string; value: number; prefix?: string; suffix?: string }) {
-  return (
-    <div className="rounded-xl bg-card p-3 text-center shadow-card">
-      <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</p>
-      <p className="mt-1 text-base font-bold text-foreground">{prefix}{typeof value === "number" ? value.toFixed(prefix ? 2 : 0) : value}{suffix}</p>
+    <div className="rounded-2xl bg-slate-800/90 p-4 shadow-card text-white">
+      <p className="text-[11px] text-slate-300">{label}</p>
+      <p className="mt-2 text-2xl font-black text-teal-300">{value.toFixed(2)}</p>
     </div>
   );
 }
 
-function Feature({ to, icon: Icon, label, tint }: { to: string; icon: any; label: string; tint: string }) {
+function WideCard({ label, value }: { label: string; value: string }) {
   return (
-    <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition-transform">
-      <span className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${tint} text-white shadow-md`}>
+    <div className="rounded-2xl bg-gradient-to-br from-sky-50 to-pink-50 p-3 shadow-card border border-white/70 text-center">
+      <p className="text-[10px] text-slate-500 leading-tight">{label}</p>
+      <p className="mt-1 text-lg font-black text-sky-600">{value}</p>
+    </div>
+  );
+}
+
+function MenuIcon({ to, icon: Icon, label, tint }: { to: string; icon: any; label: string; tint: string }) {
+  return (
+    <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition">
+      <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${tint} text-white shadow-md`}>
         <Icon size={22} />
       </span>
-      <span className="text-[11px] font-medium text-foreground">{label}</span>
+      <span className="text-[10px] font-medium text-slate-700 text-center leading-tight">{label}</span>
     </Link>
   );
 }
