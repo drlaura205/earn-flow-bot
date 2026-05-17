@@ -4,6 +4,7 @@ import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
 import { ChevronLeft, Smartphone, Lock, ShieldCheck, Heart, Headphones } from "lucide-react";
 import bg from "@/assets/asm-login-bg.jpg";
+import logo from "@/assets/gic-logo.png";
 
 export const Route = createFileRoute("/register")({ component: Register });
 
