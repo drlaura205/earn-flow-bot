@@ -3,18 +3,16 @@ import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import {
-  Gift, User as UserIcon, ArrowDownToLine, ArrowUpFromLine,
-  FileText, ClipboardList, Users, BookOpen, Megaphone,
+  Building2, PlaySquare, Wallet, Banknote,
+  Crown, Music2, BookOpen, Users, Megaphone, Volume2, Globe,
 } from "lucide-react";
-import gicLogo from "@/assets/gic-logo.png";
 
 const MEMBERS = [
-  { id: "4041", tasks: 20, usdt: 15 },
-  { id: "1082", tasks: 18, usdt: 13.5 },
-  { id: "7732", tasks: 25, usdt: 21 },
-  { id: "2249", tasks: 12, usdt: 9 },
-  { id: "9981", tasks: 30, usdt: 28 },
-  { id: "5510", tasks: 8, usdt: 6 },
+  { id: "4041", brand: "IG", tasks: 20, usdt: 15, color: "from-pink-500 via-rose-500 to-orange-400" },
+  { id: "8247", brand: "AZ", tasks: 60, usdt: 135, color: "from-slate-100 to-slate-200 text-slate-800" },
+  { id: "3392", brand: "TT", tasks: 35, usdt: 45, color: "from-slate-800 to-black" },
+  { id: "5510", brand: "YT", tasks: 12, usdt: 9, color: "from-red-500 to-red-600" },
+  { id: "9981", brand: "SP", tasks: 30, usdt: 28, color: "from-emerald-500 to-green-600" },
 ];
 
 export const Route = createFileRoute("/home")({
@@ -25,139 +23,107 @@ export const Route = createFileRoute("/home")({
   ),
 });
 
-function fmtDateRange() {
-  const start = new Date();
-  const end = new Date(); end.setDate(end.getDate() + 4);
-  const f = (d: Date) => d.toISOString().slice(0, 10);
-  return `${f(start)} ~ ${f(end)}`;
-}
-
 function Home() {
   const { user } = useApp();
   if (!user) return null;
 
   return (
-    <div className="px-4 pt-4 pb-4">
-      {/* Top bar: logo + user id + tier badge */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <img src={gicLogo} alt="GIC" className="h-9 w-9 rounded-xl shadow" />
-          <span className="font-mono text-sm font-bold text-slate-700">
-            {user.myCode || user.phone}
-          </span>
+    <div className="pb-6">
+      {/* Top header bar */}
+      <div className="flex items-center justify-between bg-slate-400/70 px-4 py-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white shadow">
+          <Globe size={20} />
+        </div>
+        <h1 className="text-lg font-black tracking-wider text-slate-900">GIC</h1>
+        <div className="relative">
+          <Volume2 size={22} className="text-slate-700" />
+          <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" />
+        </div>
       </div>
 
       {/* Brand banner */}
-      <div className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-sky-300 via-indigo-300 to-pink-300 p-5 text-white shadow-elevated relative">
-        <p className="text-2xl font-black tracking-widest">GIC</p>
-        <p className="mt-1 text-[11px] leading-tight opacity-90">
-          Providing services to OEM operators &amp; enterprises worldwide.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2 text-[10px] font-bold">
-          {["Samsung", "Nokia", "Sony", "Verizon", "Huawei"].map((b) => (
-            <span key={b} className="rounded-md bg-white/25 px-2 py-0.5 backdrop-blur-sm">{b}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* Marquee */}
-      <div className="mt-3 flex items-center gap-2 rounded-full bg-white/70 border border-white/70 px-3 py-2 shadow-card overflow-hidden">
-        <Megaphone size={16} className="text-teal-500 shrink-0" />
-        <div className="relative flex-1 overflow-hidden">
-          <div className="whitespace-nowrap animate-[marquee_22s_linear_infinite] text-xs text-slate-700">
-            🎉 Congratulations to member ****1082 for recommending S1 &nbsp;·&nbsp;
-            ****4041 completed 20 tasks today &nbsp;·&nbsp;
-            ****9981 earned 28 USDT &nbsp;·&nbsp;
-            Daily payout at 24:00 UTC &nbsp;·&nbsp;
-          </div>
-        </div>
-      </div>
-        <span className="rounded-full bg-gradient-to-r from-sky-400 to-blue-500 px-3 py-1 text-[11px] font-bold text-white shadow">
-          {user.tier}
-        </span>
-      </div>
-
-      {/* Wallet card */}
-      <div className="mt-4 rounded-2xl bg-gradient-to-br from-sky-100 via-white to-pink-100 p-5 shadow-elevated border border-white/70">
-        <p className="text-[11px] uppercase tracking-widest text-slate-500">Main Wallet (USDT)</p>
-        <p className="mt-1 text-4xl font-black text-sky-600">{user.balance.toFixed(2)}</p>
-
-        <div className="mt-4 flex items-end justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-widest text-slate-500">Commission Wallet (USDT)</p>
-            <p className="mt-1 text-2xl font-extrabold text-teal-600">
-              {user.referralRewards.toFixed(4)}
+      <div className="bg-gradient-to-b from-slate-100 to-slate-200 px-4 pt-4 pb-3">
+        <div className="flex items-start gap-2">
+          <div className="flex-1">
+            <p className="text-4xl font-black tracking-wider text-slate-900">GIC</p>
+            <p className="mt-1 text-lg font-semibold text-slate-800 leading-tight">
+              Providing services to<br />
+              <span className="font-bold">OEM Operators</span><br />
+              <span className="font-bold">Enterprises</span>
             </p>
           </div>
-          <p className="text-[10px] text-slate-500">Effective date: {fmtDateRange()}</p>
+          <div className="grid grid-cols-4 gap-1 w-36 pt-1">
+            {["📱","💬","🎵","📷","🎬","📺","🎮","💼","🛒","📧","🌐","⭐","🔔","💎","🎯","🚀"].map((e, i) => (
+              <span key={i} className="text-lg leading-none">{e}</span>
+            ))}
+          </div>
         </div>
-      </div>
-
-      {/* 2x2 stats grid */}
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <StatBox label="Yesterday's earnings" value={0} />
-        <StatBox label="Today's earnings" value={user.todayEarnings} />
-        <StatBox label="This month's earnings" value={user.totalEarnings} />
-        <StatBox label="This week's earnings" value={user.todayEarnings * 7} />
-      </div>
-
-      {/* 3 wide cards */}
-      <div className="mt-3 grid grid-cols-3 gap-3">
-        <WideCard label="Total revenue" value={user.totalEarnings.toFixed(2)} />
-        <WideCard label="Sub. task commission" value={(user.taskRewards * 0.1).toFixed(1)} />
-        <WideCard label="Referral rebate" value={user.referralRewards.toFixed(1)} />
-      </div>
-
-      {/* Icon menu 2x4 */}
-      <div className="mt-5 rounded-2xl bg-white/70 backdrop-blur p-4 shadow-card border border-white/70">
-        <div className="grid grid-cols-4 gap-y-5 gap-x-2">
-          <MenuIcon to="/invite" icon={Gift} label="Invite Friends" tint="from-pink-400 to-rose-500" />
-          <MenuIcon to="/personal-info" icon={UserIcon} label="Personal Info" tint="from-sky-400 to-blue-500" />
-          <MenuIcon to="/recharge" icon={ArrowDownToLine} label="Recharge" tint="from-emerald-400 to-teal-500" />
-          <MenuIcon to="/withdraw" icon={ArrowUpFromLine} label="Withdrawal" tint="from-orange-400 to-red-500" />
-          <MenuIcon to="/history" icon={FileText} label="Financial Records" tint="from-violet-400 to-fuchsia-500" />
-          <MenuIcon to="/history" icon={ClipboardList} label="Daily Statement" tint="from-amber-400 to-yellow-500" />
-          <MenuIcon to="/team" icon={Users} label="Team Reports" tint="from-cyan-400 to-sky-500" />
-          <MenuIcon to="/account" icon={BookOpen} label="Handbook" tint="from-lime-400 to-green-500" />
-        </div>
-      </div>
-
-      {/* Membership list */}
-      <div className="mt-5 rounded-2xl bg-white/70 backdrop-blur p-4 shadow-card border border-white/70">
-        <p className="mb-3 text-sm font-bold text-slate-800">Membership list</p>
-        <ul className="space-y-2.5">
-          {MEMBERS.map((m) => (
-            <li key={m.id} className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-pink-400 text-white text-xs font-bold">
-                {m.id.slice(0, 2)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-slate-800">****{m.id}</p>
-                <p className="text-[10px] text-slate-500">Complete {m.tasks} tasks today</p>
-              </div>
-              <span className="text-xs font-black text-teal-600">+{m.usdt} USDT</span>
-            </li>
+        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-bold">
+          {["SAMSUNG","verizon","T-Mobile","cricket","AT&T","NOKIA","OPPO"].map((b) => (
+            <span key={b} className="text-blue-600">{b}</span>
           ))}
-        </ul>
+        </div>
+        <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-bold">
+          {["mi xiaomi","Karbonn","infinix","TECNO","Lenovo","HUAWEI","vivo"].map((b) => (
+            <span key={b} className="text-rose-600">{b}</span>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
 
-function StatBox({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="rounded-2xl bg-slate-800/90 p-4 shadow-card text-white">
-      <p className="text-[11px] text-slate-300">{label}</p>
-      <p className="mt-2 text-2xl font-black text-teal-300">{value.toFixed(2)}</p>
-    </div>
-  );
-}
+      {/* Body */}
+      <div className="bg-gradient-to-b from-sky-100 via-white to-pink-100 px-4 pt-4">
+        {/* Marquee */}
+        <div className="flex items-center gap-2 rounded-2xl bg-white/70 border border-white/80 px-3 py-3 shadow-card">
+          <Megaphone size={20} className="text-amber-500 shrink-0" />
+          <div className="flex-1 overflow-hidden">
+            <div className="whitespace-nowrap animate-[marquee_22s_linear_infinite] text-xs text-slate-700">
+              Congratulations to member ****1082 for recommending S1 and receiving 1.5U invitation reward.
+            </div>
+          </div>
+        </div>
 
-function WideCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-2xl bg-gradient-to-br from-sky-50 to-pink-50 p-3 shadow-card border border-white/70 text-center">
-      <p className="text-[10px] text-slate-500 leading-tight">{label}</p>
-      <p className="mt-1 text-lg font-black text-sky-600">{value}</p>
+        {/* Icon menu 2x4 */}
+        <div className="mt-5 grid grid-cols-4 gap-y-5">
+          <MenuIcon to="/account" icon={Building2} label="Company Profile" tint="from-amber-400 to-orange-500" />
+          <MenuIcon to="/account" icon={PlaySquare} label="Video tutorial" tint="from-rose-400 to-red-500" />
+          <MenuIcon to="/recharge" icon={Wallet} label="Recharge" tint="from-sky-400 to-blue-500" />
+          <MenuIcon to="/withdraw" icon={Banknote} label="Withdrawal" tint="from-emerald-400 to-green-500" />
+          <MenuIcon to="/job" icon={Crown} label="Join" tint="from-indigo-400 to-violet-500" />
+          <MenuIcon to="/account" icon={Music2} label="GIC Music" tint="from-fuchsia-400 to-pink-500" />
+          <MenuIcon to="/account" icon={BookOpen} label="Employee Handbook" tint="from-cyan-400 to-sky-500" />
+          <MenuIcon to="/invite" icon={Users} label="Invite Friends" tint="from-blue-400 to-indigo-500" />
+        </div>
+
+        {/* Membership list */}
+        <div className="mt-6">
+          <h2 className="text-3xl font-black text-slate-900">Membership list</h2>
+          <ul className="mt-3 space-y-4">
+            {MEMBERS.map((m) => (
+              <li key={m.id} className="flex items-center gap-3">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${m.color} text-white text-xs font-black shadow`}>
+                  {m.brand}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-slate-800">Congratulations ****{m.id}</p>
+                  <p className="text-xs text-sky-500">Complete {m.tasks} task today</p>
+                </div>
+                <span className="text-base font-black text-sky-500">{m.usdt}USDT</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Floating Online Service */}
+      <Link
+        to="/account"
+        className="fixed bottom-24 right-4 z-40 flex flex-col items-center"
+      >
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white shadow-lg">
+          🎧
+        </span>
+        <span className="mt-0.5 text-[10px] font-semibold text-slate-700">Online<br/>Service</span>
+      </Link>
     </div>
   );
 }
@@ -165,10 +131,10 @@ function WideCard({ label, value }: { label: string; value: string }) {
 function MenuIcon({ to, icon: Icon, label, tint }: { to: string; icon: any; label: string; tint: string }) {
   return (
     <Link to={to} className="flex flex-col items-center gap-1.5 active:scale-95 transition">
-      <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${tint} text-white shadow-md`}>
-        <Icon size={22} />
+      <span className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${tint} text-white shadow-md`}>
+        <Icon size={26} />
       </span>
-      <span className="text-[10px] font-medium text-slate-700 text-center leading-tight">{label}</span>
+      <span className="text-[11px] font-medium text-slate-700 text-center leading-tight px-1">{label}</span>
     </Link>
   );
 }
