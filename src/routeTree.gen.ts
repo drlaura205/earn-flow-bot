@@ -16,6 +16,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RechargeRouteImport } from './routes/recharge'
 import { Route as PersonalInfoRouteImport } from './routes/personal-info'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as JoinRouteImport } from './routes/join'
 import { Route as JobRouteImport } from './routes/job'
 import { Route as InviteRouteImport } from './routes/invite'
 import { Route as HomeRouteImport } from './routes/home'
@@ -64,6 +65,11 @@ const PersonalInfoRoute = PersonalInfoRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JobRoute = JobRouteImport.update({
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
+  '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
   '/recharge': typeof RechargeRoute
@@ -168,6 +175,7 @@ export interface FileRoutesByTo {
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
+  '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
   '/recharge': typeof RechargeRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/invite': typeof InviteRoute
   '/job': typeof JobRoute
+  '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
   '/recharge': typeof RechargeRoute
@@ -217,6 +226,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/invite'
     | '/job'
+    | '/join'
     | '/login'
     | '/personal-info'
     | '/recharge'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/invite'
     | '/job'
+    | '/join'
     | '/login'
     | '/personal-info'
     | '/recharge'
@@ -263,6 +274,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/invite'
     | '/job'
+    | '/join'
     | '/login'
     | '/personal-info'
     | '/recharge'
@@ -287,6 +299,7 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   InviteRoute: typeof InviteRoute
   JobRoute: typeof JobRoute
+  JoinRoute: typeof JoinRoute
   LoginRoute: typeof LoginRoute
   PersonalInfoRoute: typeof PersonalInfoRoute
   RechargeRoute: typeof RechargeRoute
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/job': {
@@ -463,6 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   InviteRoute: InviteRoute,
   JobRoute: JobRoute,
+  JoinRoute: JoinRoute,
   LoginRoute: LoginRoute,
   PersonalInfoRoute: PersonalInfoRoute,
   RechargeRoute: RechargeRoute,
