@@ -4,9 +4,18 @@ import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import {
   Gift, User as UserIcon, ArrowDownToLine, ArrowUpFromLine,
-  FileText, ClipboardList, Users, BookOpen,
+  FileText, ClipboardList, Users, BookOpen, Megaphone,
 } from "lucide-react";
 import gicLogo from "@/assets/gic-logo.png";
+
+const MEMBERS = [
+  { id: "4041", tasks: 20, usdt: 15 },
+  { id: "1082", tasks: 18, usdt: 13.5 },
+  { id: "7732", tasks: 25, usdt: 21 },
+  { id: "2249", tasks: 12, usdt: 9 },
+  { id: "9981", tasks: 30, usdt: 28 },
+  { id: "5510", tasks: 8, usdt: 6 },
+];
 
 export const Route = createFileRoute("/home")({
   component: () => (
