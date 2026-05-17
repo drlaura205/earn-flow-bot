@@ -39,7 +39,7 @@ function Login() {
           <button className="text-base text-slate-800/80">Language</button>
         </div>
 
-        <h1 className="mt-6 text-center text-5xl font-black tracking-tight text-slate-900">ASM</h1>
+        <h1 className="mt-6 text-center text-5xl font-black tracking-tight text-slate-900">GIC</h1>
 
         <form onSubmit={submit} className="mt-16 space-y-4">
           <div className="flex items-center gap-3 rounded-full bg-white px-5 py-4 shadow-sm">
