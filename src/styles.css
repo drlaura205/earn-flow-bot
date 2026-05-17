@@ -44,7 +44,7 @@
   --card-foreground: oklch(0.18 0.02 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.02 250);
-  --primary: oklch(0.65 0.16 220);
+  --primary: oklch(0.78 0.13 230);
   --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.95 0.04 165);
   --secondary-foreground: oklch(0.25 0.05 200);
@@ -64,9 +64,9 @@
   --blue-brand: oklch(0.55 0.2 255);
   --gold: oklch(0.82 0.16 85);
 
-  --gradient-app: linear-gradient(to bottom, oklch(0.95 0.07 160), oklch(1 0 0));
-  --gradient-primary: linear-gradient(135deg, oklch(0.78 0.14 200), oklch(0.55 0.2 255));
-  --gradient-hero: linear-gradient(to bottom, oklch(0.5 0.2 255), oklch(0.7 0.16 200) 50%, oklch(0.94 0.06 160));
+  --gradient-app: linear-gradient(170deg, #cfe0ec 0%, #e3dbe6 45%, #f4d6d6 100%);
+  --gradient-primary: linear-gradient(135deg, #6ec6e8, #4aa3d9);
+  --gradient-hero: linear-gradient(170deg, #b9d3e3 0%, #d6d2dd 50%, #f3d4cf 100%);
   --gradient-gold: linear-gradient(135deg, oklch(0.85 0.16 85), oklch(0.7 0.18 60));
 
   --shadow-card: 0 4px 6px rgba(0,0,0,0.05);
