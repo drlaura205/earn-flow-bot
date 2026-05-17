@@ -7,6 +7,7 @@ import {
   Building2, PlaySquare, Wallet, Banknote,
   Crown, Music2, BookOpen, Users, Megaphone, Volume2, Globe,
 } from "lucide-react";
+import logo from "@/assets/gic-logo.png";
 
 const MEMBERS = [
   { id: "4041", brand: "IG", tasks: 20, usdt: 15, color: "from-pink-500 via-rose-500 to-orange-400" },
@@ -35,7 +36,7 @@ function Home() {
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white shadow">
           <Globe size={20} />
         </div>
-        <h1 className="text-lg font-black tracking-wider text-slate-900">GIC</h1>
+        <img src={logo} alt="GIC" className="h-8 object-contain" />
         <div className="relative">
           <Volume2 size={22} className="text-slate-700" />
           <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" />
