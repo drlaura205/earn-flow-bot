@@ -113,6 +113,7 @@ function Job() {
   const { user, completeTask } = useApp();
   const [tab, setTab] = useState<Tab>("Doing");
   const [installing, setInstalling] = useState<number | null>(null);
+  const [progress, setProgress] = useState(0);
   const [completed, setCompleted] = useState<Set<number>>(new Set());
   const [audit, setAudit] = useState<Set<number>>(new Set());
 
@@ -127,20 +128,29 @@ function Job() {
       return;
     }
     setInstalling(idx);
-    setTimeout(() => {
-      setAudit((s) => new Set(s).add(idx));
-      setInstalling(null);
-      toast.success("Submitted to audit");
-      // After audit "approval", credit reward
-      setTimeout(async () => {
-        const r = await completeTask(tierInfo.rewardPerTask);
-        if (r.ok) {
-          setAudit((s) => { const n = new Set(s); n.delete(idx); return n; });
-          setCompleted((s) => new Set(s).add(idx));
-          toast.success(`+$${tierInfo.rewardPerTask.toFixed(2)} credited`);
-        }
-      }, 1500);
-    }, 1500);
+    setProgress(0);
+    const DURATION = 60000; // 1 minute
+    const STEP = 1000;
+    const started = Date.now();
+    const timer = setInterval(() => {
+      const pct = Math.min(100, Math.round(((Date.now() - started) / DURATION) * 100));
+      setProgress(pct);
+      if (pct >= 100) {
+        clearInterval(timer);
+        setAudit((s) => new Set(s).add(idx));
+        setInstalling(null);
+        setProgress(0);
+        toast.success("Submitted to audit");
+        setTimeout(async () => {
+          const r = await completeTask(tierInfo.rewardPerTask);
+          if (r.ok) {
+            setAudit((s) => { const n = new Set(s); n.delete(idx); return n; });
+            setCompleted((s) => new Set(s).add(idx));
+            toast.success(`+$${tierInfo.rewardPerTask.toFixed(2)} credited`);
+          }
+        }, 1500);
+      }
+    }, STEP);
   };
 
   const visible = TASKS.map((t, i) => ({ t, i })).filter(({ i }) => {
@@ -188,32 +198,48 @@ function Job() {
         ) : (
           <ul className="divide-y divide-slate-200/60">
             {visible.map(({ t, i }) => (
-              <li key={i} className="flex items-center gap-3 px-4 py-3.5">
-                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-sm">
-                  {t.icon}
+              <li key={i} className="px-4 py-3.5">
+                <div className="flex items-center gap-3">
+                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl shadow-sm">
+                    {t.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="truncate text-base font-semibold text-slate-900">
+                      {t.name}
+                    </p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      {t.downloads.toLocaleString()} downloads
+                    </p>
+                    <p className="text-xs text-slate-500 truncate">{t.short}</p>
+                  </div>
+                  {installing !== i && (
+                    <button
+                      onClick={() => tab === "Doing" && handleInstall(i)}
+                      disabled={tab !== "Doing"}
+                      className="rounded-md bg-teal-400 px-5 py-2 text-sm font-semibold text-white shadow active:scale-95 disabled:opacity-70"
+                    >
+                      {tab === "Completed"
+                        ? "Done"
+                        : tab === "Audit"
+                        ? "Auditing"
+                        : "Install"}
+                    </button>
+                  )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="truncate text-base font-semibold text-slate-900">
-                    {t.name}
-                  </p>
-                  <p className="mt-0.5 text-xs text-slate-500">
-                    {t.downloads.toLocaleString()} downloads
-                  </p>
-                  <p className="text-xs text-slate-500 truncate">{t.short}</p>
-                </div>
-                <button
-                  onClick={() => tab === "Doing" && handleInstall(i)}
-                  disabled={tab !== "Doing" || installing === i}
-                  className="rounded-md bg-teal-400 px-5 py-2 text-sm font-semibold text-white shadow active:scale-95 disabled:opacity-70"
-                >
-                  {installing === i
-                    ? "…"
-                    : tab === "Completed"
-                    ? "Done"
-                    : tab === "Audit"
-                    ? "Auditing"
-                    : "Install"}
-                </button>
+                {installing === i && (
+                  <div className="mt-3">
+                    <p className="text-center text-sm font-semibold text-sky-500">Downloading</p>
+                    <div className="mt-1.5 flex items-center gap-2">
+                      <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-slate-200">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-orange-500 via-orange-400 to-slate-200 transition-all duration-1000 ease-linear"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                      <span className="w-10 text-right text-xs text-slate-500">{progress}%</span>
+                    </div>
+                  </div>
+                )}
               </li>
             ))}
             <li className="py-6 text-center text-sm text-slate-400">No more data</li>
