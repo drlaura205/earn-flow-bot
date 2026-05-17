@@ -74,17 +74,20 @@ function Job() {
             <button
               key={t.name}
               onClick={() => handleUpgrade(t.name)}
-              className={`relative shrink-0 rounded-2xl bg-gradient-to-br ${t.color} p-4 text-left text-white shadow-md min-w-[150px] active:scale-95 transition-transform ${active ? "ring-4 ring-[var(--blue-brand)]/40" : ""}`}
+              className={`relative shrink-0 rounded-2xl bg-white/50 backdrop-blur-md border border-white/60 p-4 text-left text-slate-800 shadow-card min-w-[180px] active:scale-95 transition-transform ${active ? "ring-4 ring-sky-400/50" : ""}`}
             >
               {active && (
-                <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-white text-emerald-600">
+                <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-white">
                   <Check size={12} strokeWidth={3} />
                 </span>
               )}
-              <Crown size={18} />
-              <p className="mt-2 text-base font-bold">{t.name}</p>
-              <p className="text-xs opacity-90">${t.price} • {t.tasksPerDay} tasks/day</p>
-              <p className="mt-1 text-[11px] opacity-80">${t.rewardPerTask}/task</p>
+              <Crown size={18} className="text-sky-500" />
+              <p className="mt-2 text-base font-black">{t.name}</p>
+              <p className="text-xs text-slate-600">Per order <span className="font-bold text-slate-800">${t.rewardPerTask}</span></p>
+              <p className="text-xs text-slate-600">Daily Tasks: <span className="font-bold text-slate-800">{t.tasksPerDay}</span></p>
+              <span className={`mt-3 inline-block rounded-full px-4 py-1.5 text-xs font-bold text-white shadow-md ${active ? "bg-emerald-500" : "bg-gradient-to-r from-sky-400 to-blue-500"}`}>
+                {active ? "Joined" : "Join now"}
+              </span>
             </button>
           );
         })}
@@ -115,11 +118,11 @@ function Job() {
               <button
                 disabled={isInstalling || isDone}
                 onClick={() => install(idx)}
-                className={`rounded-full px-4 py-2 text-xs font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-70 ${
-                  isDone ? "bg-emerald-500" : "bg-primary-gradient"
+                className={`rounded-full px-5 py-2 text-xs font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-70 ${
+                  isDone ? "bg-emerald-500" : "bg-gradient-to-r from-sky-400 to-blue-500"
                 }`}
               >
-                {isDone ? "Completed" : isInstalling ? "Installing…" : "Install"}
+                {isDone ? "Completed" : isInstalling ? "Installing…" : "Start Task"}
               </button>
             </div>
           );
