@@ -42,6 +42,9 @@ function Home() {
         </div>
       </div>
 
+      {/* Company photo slider */}
+      <CompanyPhotoSlider />
+
       {/* Brand banner */}
       <div className="bg-gradient-to-b from-slate-100 to-slate-200 px-4 pt-4 pb-3">
         <div className="flex items-start gap-2">
