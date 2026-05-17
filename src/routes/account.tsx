@@ -3,8 +3,8 @@ import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import {
-  Wallet, ArrowDownToLine, ArrowUpFromLine, Gift, KeyRound, ShieldCheck,
-  ChevronRight, LogOut, History as HistoryIcon, Crown, Sparkles,
+  ArrowDownToLine, ArrowUpFromLine, Gift, KeyRound, ShieldCheck,
+  ChevronRight, LogOut, History as HistoryIcon,
 } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
