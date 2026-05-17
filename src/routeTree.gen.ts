@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WithdrawRouteImport } from './routes/withdraw'
+import { Route as WalletAddressRouteImport } from './routes/wallet-address'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as RobotRouteImport } from './routes/robot'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -35,6 +36,11 @@ import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 const WithdrawRoute = WithdrawRouteImport.update({
   id: '/withdraw',
   path: '/withdraw',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletAddressRoute = WalletAddressRouteImport.update({
+  id: '/wallet-address',
+  path: '/wallet-address',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeamRoute = TeamRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
   '/team': typeof TeamRoute
+  '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/deposits': typeof AdminDepositsRoute
@@ -182,6 +189,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
   '/team': typeof TeamRoute
+  '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/deposits': typeof AdminDepositsRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
   '/team': typeof TeamRoute
+  '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/deposits': typeof AdminDepositsRoute
@@ -233,6 +242,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/robot'
     | '/team'
+    | '/wallet-address'
     | '/withdraw'
     | '/admin/dashboard'
     | '/admin/deposits'
@@ -257,6 +267,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/robot'
     | '/team'
+    | '/wallet-address'
     | '/withdraw'
     | '/admin/dashboard'
     | '/admin/deposits'
@@ -281,6 +292,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/robot'
     | '/team'
+    | '/wallet-address'
     | '/withdraw'
     | '/admin/dashboard'
     | '/admin/deposits'
@@ -306,6 +318,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   RobotRoute: typeof RobotRoute
   TeamRoute: typeof TeamRoute
+  WalletAddressRoute: typeof WalletAddressRoute
   WithdrawRoute: typeof WithdrawRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDepositsRoute: typeof AdminDepositsRoute
@@ -323,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/withdraw'
       fullPath: '/withdraw'
       preLoaderRoute: typeof WithdrawRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wallet-address': {
+      id: '/wallet-address'
+      path: '/wallet-address'
+      fullPath: '/wallet-address'
+      preLoaderRoute: typeof WalletAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/team': {
@@ -490,6 +510,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   RobotRoute: RobotRoute,
   TeamRoute: TeamRoute,
+  WalletAddressRoute: WalletAddressRoute,
   WithdrawRoute: WithdrawRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDepositsRoute: AdminDepositsRoute,
