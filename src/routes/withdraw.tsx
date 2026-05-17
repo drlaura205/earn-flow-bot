@@ -11,7 +11,7 @@ export const Route = createFileRoute("/withdraw")({
   component: () => (<AuthGate><Withdraw /></AuthGate>),
 });
 
-const PRESETS = [5, 20, 50, 100, 300, 500, 1000, 3000, 5000, 10000, 30000, 50000];
+const PRESETS = [2, 15, 50, 100, 300, 500, 1000, 3000, 5000, 10000, 30000, 50000];
 
 function Withdraw() {
   const { user, withdraw } = useApp();
