@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
+import { CompanyPhotoSlider } from "@/components/CompanyPhotoSlider";
 import { useApp } from "@/context/AppContext";
 import {
   Building2, PlaySquare, Wallet, Banknote,
