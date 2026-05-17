@@ -129,7 +129,7 @@ function Job() {
     }
     setInstalling(idx);
     setProgress(0);
-    const DURATION = 60000; // 1 minute
+    const DURATION = 30000; // 30 seconds
     const STEP = 1000;
     const started = Date.now();
     const timer = setInterval(() => {
