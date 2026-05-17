@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { CompanyPhotoSlider } from "@/components/CompanyPhotoSlider";
+import { LiveMembershipList } from "@/components/LiveMembershipList";
 import { useApp } from "@/context/AppContext";
 import {
   Building2, PlaySquare, Wallet, Banknote,
@@ -100,23 +101,7 @@ function Home() {
         </div>
 
         {/* Membership list */}
-        <div className="mt-6">
-          <h2 className="text-3xl font-black text-slate-900">Membership list</h2>
-          <ul className="mt-3 space-y-4">
-            {MEMBERS.map((m) => (
-              <li key={m.id} className="flex items-center gap-3">
-                <div className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${m.color} text-white text-xs font-black shadow`}>
-                  {m.brand}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-800">Congratulations ****{m.id}</p>
-                  <p className="text-xs text-sky-500">Complete {m.tasks} task today</p>
-                </div>
-                <span className="text-base font-black text-sky-500">{m.usdt}USDT</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <LiveMembershipList />
       </div>
 
       {/* Floating Online Service */}
