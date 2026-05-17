@@ -1,12 +1,12 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, Briefcase, Users, Bot, User } from "lucide-react";
+import { Home, LayoutGrid, Crown, TrendingUp, User } from "lucide-react";
 
 const items = [
   { to: "/home", label: "Home", icon: Home },
-  { to: "/job", label: "Job", icon: Briefcase },
-  { to: "/team", label: "Team", icon: Users },
-  { to: "/robot", label: "Robot", icon: Bot },
-  { to: "/account", label: "Account", icon: User },
+  { to: "/job", label: "Task Area", icon: LayoutGrid },
+  { to: "/job", label: "Join", icon: Crown },
+  { to: "/team", label: "Profit", icon: TrendingUp },
+  { to: "/account", label: "My", icon: User },
 ] as const;
 
 export function BottomNav() {
@@ -24,12 +24,12 @@ export function BottomNav() {
               >
                 <Icon
                   size={22}
-                  className={active ? "text-[var(--blue-brand)]" : "text-muted-foreground"}
+                  className={active ? "text-teal-500" : "text-muted-foreground"}
                   strokeWidth={active ? 2.5 : 2}
                 />
                 <span
                   className={`text-[11px] font-medium ${
-                    active ? "text-[var(--blue-brand)]" : "text-muted-foreground"
+                    active ? "text-teal-500" : "text-muted-foreground"
                   }`}
                 >
                   {label}

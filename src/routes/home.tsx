@@ -4,9 +4,18 @@ import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import {
   Gift, User as UserIcon, ArrowDownToLine, ArrowUpFromLine,
-  FileText, ClipboardList, Users, BookOpen,
+  FileText, ClipboardList, Users, BookOpen, Megaphone,
 } from "lucide-react";
 import gicLogo from "@/assets/gic-logo.png";
+
+const MEMBERS = [
+  { id: "4041", tasks: 20, usdt: 15 },
+  { id: "1082", tasks: 18, usdt: 13.5 },
+  { id: "7732", tasks: 25, usdt: 21 },
+  { id: "2249", tasks: 12, usdt: 9 },
+  { id: "9981", tasks: 30, usdt: 28 },
+  { id: "5510", tasks: 8, usdt: 6 },
+];
 
 export const Route = createFileRoute("/home")({
   component: () => (
@@ -36,7 +45,33 @@ function Home() {
           <span className="font-mono text-sm font-bold text-slate-700">
             {user.myCode || user.phone}
           </span>
+      </div>
+
+      {/* Brand banner */}
+      <div className="mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-sky-300 via-indigo-300 to-pink-300 p-5 text-white shadow-elevated relative">
+        <p className="text-2xl font-black tracking-widest">GIC</p>
+        <p className="mt-1 text-[11px] leading-tight opacity-90">
+          Providing services to OEM operators &amp; enterprises worldwide.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2 text-[10px] font-bold">
+          {["Samsung", "Nokia", "Sony", "Verizon", "Huawei"].map((b) => (
+            <span key={b} className="rounded-md bg-white/25 px-2 py-0.5 backdrop-blur-sm">{b}</span>
+          ))}
         </div>
+      </div>
+
+      {/* Marquee */}
+      <div className="mt-3 flex items-center gap-2 rounded-full bg-white/70 border border-white/70 px-3 py-2 shadow-card overflow-hidden">
+        <Megaphone size={16} className="text-teal-500 shrink-0" />
+        <div className="relative flex-1 overflow-hidden">
+          <div className="whitespace-nowrap animate-[marquee_22s_linear_infinite] text-xs text-slate-700">
+            🎉 Congratulations to member ****1082 for recommending S1 &nbsp;·&nbsp;
+            ****4041 completed 20 tasks today &nbsp;·&nbsp;
+            ****9981 earned 28 USDT &nbsp;·&nbsp;
+            Daily payout at 24:00 UTC &nbsp;·&nbsp;
+          </div>
+        </div>
+      </div>
         <span className="rounded-full bg-gradient-to-r from-sky-400 to-blue-500 px-3 py-1 text-[11px] font-bold text-white shadow">
           {user.tier}
         </span>
@@ -85,6 +120,25 @@ function Home() {
           <MenuIcon to="/team" icon={Users} label="Team Reports" tint="from-cyan-400 to-sky-500" />
           <MenuIcon to="/account" icon={BookOpen} label="Handbook" tint="from-lime-400 to-green-500" />
         </div>
+      </div>
+
+      {/* Membership list */}
+      <div className="mt-5 rounded-2xl bg-white/70 backdrop-blur p-4 shadow-card border border-white/70">
+        <p className="mb-3 text-sm font-bold text-slate-800">Membership list</p>
+        <ul className="space-y-2.5">
+          {MEMBERS.map((m) => (
+            <li key={m.id} className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-pink-400 text-white text-xs font-bold">
+                {m.id.slice(0, 2)}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-800">****{m.id}</p>
+                <p className="text-[10px] text-slate-500">Complete {m.tasks} tasks today</p>
+              </div>
+              <span className="text-xs font-black text-teal-600">+{m.usdt} USDT</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
