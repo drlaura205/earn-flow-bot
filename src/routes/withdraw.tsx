@@ -34,6 +34,11 @@ function Withdraw() {
       setContactOpen(true);
       return;
     }
+    if (!user.fundPassword) {
+      toast.error("Please set a 6-digit fund password first");
+      nav({ to: "/fund-password" });
+      return;
+    }
     if (!isWithdrawWindowOpen()) {
       return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
     }
