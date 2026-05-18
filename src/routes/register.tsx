@@ -38,7 +38,12 @@ function Register() {
     if (verify !== captcha) return toast.error("Verification code is incorrect");
     if (!code) return toast.error("Invitation code required");
     setBusy(true);
-    const r = await register({ phone, password, invitationCode: code });
+    const { data: validCode, error: vErr } = await supabase.rpc("validate_invite_code", { _code: code.trim() });
+    if (vErr || !validCode) {
+      setBusy(false);
+      return toast.error("Invalid invitation code");
+    }
+    const r = await register({ phone, password, invitationCode: code.trim() });
     if (!r.ok) { setBusy(false); return toast.error(r.msg); }
     const l = await login(phone, password);
     setBusy(false);
