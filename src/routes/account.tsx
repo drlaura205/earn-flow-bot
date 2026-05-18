@@ -136,8 +136,8 @@ function Account() {
         {/* 3 wide cards */}
         <div className="mt-3 grid grid-cols-3 gap-3">
           <WideBox label="Total revenue" value={user.totalEarnings.toFixed(2)} />
-          <WideBox label={<>Subordinate<br/>task<br/>commission</>} value={(user.taskRewards * 0.1).toFixed(1)} />
-          <WideBox label={<>Referral<br/>rebate</>} value={user.referralRewards.toFixed(1)} />
+          <WideBox label={<>Subordinate<br/>task<br/>commission</>} value={(user.taskRewards * 0.1).toFixed(2)} />
+          <WideBox label={<>Referral<br/>rebate</>} value={user.referralRewards.toFixed(2)} />
         </div>
 
         {/* 3x3 icon menu */}
