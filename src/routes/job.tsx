@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { TIERS, useApp } from "@/context/AppContext";
