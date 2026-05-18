@@ -17,7 +17,6 @@ function Invite() {
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const fullLink = `${origin}/register?code=${displayCode}`;
   const shortLink = fullLink.replace(/^https?:\/\//, "");
-  const isUpgraded = !!user && user.tier !== "Intern";
   const friendName = user?.phone ? user.phone.replace("+591", "").slice(-9) : "";
 
   const copy = async (text: string, label: string) => {
