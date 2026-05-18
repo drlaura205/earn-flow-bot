@@ -6,7 +6,7 @@ import { InstallAppDialog } from "@/components/InstallAppDialog";
 import { useApp } from "@/context/AppContext";
 import {
   Users, IdCard, Wallet, Banknote,
-  FileText, ClipboardList, Network, BookOpen, LogOut, Download,
+  FileText, ClipboardList, Network, LogOut, Download,
 } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
