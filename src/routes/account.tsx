@@ -6,7 +6,7 @@ import { InstallAppDialog } from "@/components/InstallAppDialog";
 import { useApp } from "@/context/AppContext";
 import {
   Users, IdCard, Wallet, Banknote,
-  FileText, ClipboardList, Network, BookOpen, LogOut, Download,
+  FileText, ClipboardList, Network, LogOut, Download,
 } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
@@ -100,7 +100,7 @@ function Account() {
           <MenuIcon to="/history" icon={FileText} label={<>Financial<br/>Records</>} tint="from-rose-400 to-red-500" />
           <MenuIcon to="/history" icon={ClipboardList} label={<>Daily<br/>statement</>} tint="from-cyan-400 to-sky-500" />
           <MenuIcon to="/team" icon={Network} label={<>Team<br/>Reports</>} tint="from-fuchsia-400 to-pink-500" />
-          <MenuIcon to="/fund-password" icon={BookOpen} label={<>Employee<br/>Handbook</>} tint="from-indigo-400 to-violet-500" />
+          
           <button onClick={() => setInstallOpen(true)} className="flex flex-col items-center gap-1.5 active:scale-95 transition">
             <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-500 text-white shadow-md">
               <Download size={26} />
