@@ -22,23 +22,39 @@ function fmtDateRange() {
   return `${f(start)}~${f(end)}`;
 }
 
+const AVATAR_ICONS = [
+  { bg: "bg-black", el: <span className="text-white text-2xl">♪</span> }, // TikTok
+  { bg: "bg-emerald-500", el: <span className="text-white text-2xl">💬</span> }, // WhatsApp
+  { bg: "bg-gradient-to-tr from-yellow-400 via-pink-500 to-violet-600", el: <span className="text-white text-xl">📷</span> }, // Instagram
+  { bg: "bg-black", el: <span className="text-emerald-400 text-2xl">♫</span> }, // Spotify
+  { bg: "bg-orange-500", el: <span className="text-white text-xl">🛍</span> }, // Shopee
+  { bg: "bg-blue-600", el: <span className="text-white font-black text-xl">f</span> }, // Facebook
+  { bg: "bg-sky-500", el: <span className="text-white text-xl">✈</span> }, // Telegram
+  { bg: "bg-red-600", el: <span className="text-white text-xl">▶</span> }, // YouTube
+  { bg: "bg-gradient-to-br from-violet-500 to-fuchsia-500", el: <span className="h-6 w-6 rounded-full bg-white" /> },
+  { bg: "bg-white", el: <span className="text-emerald-500 font-serif italic text-3xl">e</span> },
+];
+
 function Account() {
   const { user, logout } = useApp();
   const nav = useNavigate();
   if (!user) return null;
+
+  // Stable per-user random icon
+  const seed = (user.id || user.phone || "x").split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+  const avatar = AVATAR_ICONS[seed % AVATAR_ICONS.length];
 
   return (
     <div className="pb-6">
       {/* Header with avatar + ID + tier */}
       <div className="bg-gradient-to-b from-slate-300 to-slate-200 px-5 pt-6 pb-4">
         <div className="flex flex-col items-center">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-fuchsia-500 via-pink-500 to-orange-400 p-[2px] shadow">
-            <span className="flex h-full w-full items-center justify-center rounded-2xl bg-white text-base font-black text-slate-800">
-              {user.phone.slice(-2)}
-            </span>
+          <span className={`flex h-14 w-14 items-center justify-center rounded-2xl shadow overflow-hidden ${avatar.bg}`}>
+            {avatar.el}
           </span>
           <p className="mt-2 text-lg font-black text-slate-900">{user.myCode || user.phone}</p>
         </div>
+
 
         <div className="mt-3 flex items-start justify-between">
           <div>
