@@ -282,6 +282,16 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_my_downline: {
+        Args: never
+        Returns: {
+          joined_at: string
+          level: string
+          phone: string
+          tier: string
+          user_id: string
+        }[]
+      }
       get_referrer: { Args: { _user_id: string }; Returns: string }
       has_role: {
         Args: {
