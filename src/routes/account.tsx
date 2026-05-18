@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { InstallAppDialog } from "@/components/InstallAppDialog";
 import { useApp } from "@/context/AppContext";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Users, IdCard, Wallet, Banknote,
   FileText, ClipboardList, Network, LogOut, Download,
