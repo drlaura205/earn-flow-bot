@@ -177,7 +177,7 @@ function History() {
             </div>
             <div className="mt-1 flex items-end justify-between">
               <p className="text-2xl font-bold text-cyan-300">
-                {row.amount.toFixed(row.amount % 1 === 0 ? 0 : 1)}
+                {row.amount.toFixed(2)}
               </p>
               <p className="text-base text-white">{row.status}</p>
             </div>
