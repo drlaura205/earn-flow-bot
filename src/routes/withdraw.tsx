@@ -151,6 +151,22 @@ function Withdraw() {
       </div>
 
       <BottomNav />
+
+      <Dialog open={contactOpen} onOpenChange={setContactOpen}>
+        <DialogContent className="max-w-xs rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center">Please contact the hiring manager</DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <button
+              onClick={() => setContactOpen(false)}
+              className="w-full rounded-md bg-sky-400 hover:bg-sky-500 py-2.5 text-sm font-semibold text-white"
+            >
+              OK
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
