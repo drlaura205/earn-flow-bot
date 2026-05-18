@@ -282,12 +282,17 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_referrer: { Args: { _user_id: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      pay_referral_commission: {
+        Args: { _amount: number; _to_user: string }
+        Returns: undefined
       }
       request_withdrawal: {
         Args: { _amount: number; _fund_pwd: string }
@@ -311,6 +316,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      tier_rank: { Args: { _tier: string }; Returns: number }
       upgrade_tier: {
         Args: { _price: number; _tier: string }
         Returns: {
