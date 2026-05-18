@@ -20,8 +20,31 @@ export function getUkParts(date = new Date()) {
 
 export function isWithdrawWindowOpen(date = new Date()) {
   const { weekday, hour } = getUkParts(date);
-  if (weekday === "Sun") return false;
+  // Withdrawals: Monday–Friday only
+  if (weekday === "Sat" || weekday === "Sun") return false;
   return hour >= 9 && hour < 20;
+}
+
+// Task availability days by tier (UK time)
+export function isTaskDayOpen(tier: string, date = new Date()) {
+  const { weekday } = getUkParts(date);
+  if (tier === "Intern") return true; // anytime during the 2-day trial
+  if (tier === "C1" || tier === "C2") {
+    // Monday–Friday
+    return weekday !== "Sat" && weekday !== "Sun";
+  }
+  if (tier === "C3") {
+    // Monday–Saturday
+    return weekday !== "Sun";
+  }
+  if (tier === "C4" || tier === "C5") return weekday !== "Sun";
+  return true;
+}
+
+export function taskDaysLabel(tier: string) {
+  if (tier === "C1" || tier === "C2") return "Monday–Friday";
+  if (tier === "C3") return "Monday–Saturday";
+  return "Monday–Saturday";
 }
 
 export function ukClockLabel(date = new Date()) {
