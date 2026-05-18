@@ -31,7 +31,8 @@ function Withdraw() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user.withdrawEnabled) {
-      return toast.error("Please contact the hiring manager");
+      setContactOpen(true);
+      return;
     }
     if (!isWithdrawWindowOpen()) {
       return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
