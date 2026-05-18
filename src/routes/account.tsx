@@ -91,8 +91,8 @@ function Account() {
           <WideBox label={<>Referral<br/>rebate</>} value={user.referralRewards.toFixed(1)} />
         </div>
 
-        {/* 2x4 icon menu */}
-        <div className="mt-6 grid grid-cols-4 gap-y-5">
+        {/* 3x3 icon menu */}
+        <div className="mt-6 grid grid-cols-3 gap-y-5">
           <MenuIcon to="/invite" icon={Users} label={<>Invite<br/>friends</>} tint="from-sky-400 to-blue-500" />
           <MenuIcon to="/personal-info" icon={IdCard} label={<>Personal<br/>information</>} tint="from-amber-400 to-orange-500" />
           <MenuIcon to="/recharge" icon={Wallet} label="Recharge" tint="from-blue-400 to-indigo-500" />
@@ -101,18 +101,17 @@ function Account() {
           <MenuIcon to="/history" icon={ClipboardList} label={<>Daily<br/>statement</>} tint="from-cyan-400 to-sky-500" />
           <MenuIcon to="/team" icon={Network} label={<>Team<br/>Reports</>} tint="from-fuchsia-400 to-pink-500" />
           <MenuIcon to="/fund-password" icon={BookOpen} label={<>Employee<br/>Handbook</>} tint="from-indigo-400 to-violet-500" />
+          <button onClick={() => setInstallOpen(true)} className="flex flex-col items-center gap-1.5 active:scale-95 transition">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-500 text-white shadow-md">
+              <Download size={26} />
+            </span>
+            <span className="text-[11px] font-medium text-slate-700 text-center leading-tight">App<br/>Download</span>
+          </button>
         </div>
 
         <button
-          onClick={() => setInstallOpen(true)}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 py-3 text-sm font-bold text-white shadow-lg active:scale-95"
-        >
-          <Download size={18} /> Download App (Android & iOS)
-        </button>
-
-        <button
           onClick={() => { logout(); nav({ to: "/login" }); }}
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-white/70 py-3 text-sm font-bold text-rose-600 shadow active:scale-95"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white/70 py-3 text-sm font-bold text-rose-600 shadow active:scale-95"
         >
           <LogOut size={18} /> Log out
         </button>
