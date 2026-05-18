@@ -34,6 +34,14 @@ export function InstallAppDialog({ open, onOpenChange }: { open: boolean; onOpen
     setDeferred(null);
   };
 
+  // Auto-fire Chrome's native install prompt the moment the user picks Android
+  useEffect(() => {
+    if (platform === "android" && deferred && !installed) {
+      triggerInstall();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [platform, deferred]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-sm rounded-2xl">
