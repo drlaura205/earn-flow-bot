@@ -175,6 +175,8 @@ function Job() {
           if (r.ok) {
             setCompleted((s) => new Set(s).add(idx));
             toast.success(`+$${tierInfo.rewardPerTask.toFixed(2)} credited`);
+          } else {
+            toast.error(r.msg || "Could not credit task");
           }
         })();
       }
