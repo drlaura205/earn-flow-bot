@@ -104,12 +104,21 @@ function Account() {
         </div>
 
         <button
+          onClick={() => setInstallOpen(true)}
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 py-3 text-sm font-bold text-white shadow-lg active:scale-95"
+        >
+          <Download size={18} /> Download App (Android & iOS)
+        </button>
+
+        <button
           onClick={() => { logout(); nav({ to: "/login" }); }}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-white/70 py-3 text-sm font-bold text-rose-600 shadow active:scale-95"
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-white/70 py-3 text-sm font-bold text-rose-600 shadow active:scale-95"
         >
           <LogOut size={18} /> Log out
         </button>
       </div>
+
+      <InstallAppDialog open={installOpen} onOpenChange={setInstallOpen} />
     </div>
   );
 }
