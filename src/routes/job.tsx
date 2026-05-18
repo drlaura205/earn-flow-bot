@@ -159,7 +159,9 @@ function Job() {
     }
     setInstalling(idx);
     setProgress(0);
-    const DURATION = 30000; // 30 seconds
+    // Fixed timings — identical for every task regardless of tier or index
+    const DURATION = 30000; // 30s download
+    const AUDIT_DURATION = 30000; // 30s audit before completion
     const STEP = 1000;
     const started = Date.now();
     const timer = setInterval(() => {
@@ -178,7 +180,7 @@ function Job() {
             setCompleted((s) => new Set(s).add(idx));
             toast.success(`+$${tierInfo.rewardPerTask.toFixed(2)} credited`);
           }
-        }, 7000);
+        }, AUDIT_DURATION);
       }
     }, STEP);
   };
