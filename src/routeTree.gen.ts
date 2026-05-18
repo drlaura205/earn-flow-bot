@@ -24,6 +24,7 @@ import { Route as InviteRouteImport } from './routes/invite'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as FundPasswordRouteImport } from './routes/fund-password'
+import { Route as CompanyProfileRouteImport } from './routes/company-profile'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -109,6 +110,11 @@ const FundPasswordRoute = FundPasswordRouteImport.update({
   path: '/fund-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompanyProfileRoute = CompanyProfileRouteImport.update({
+  id: '/company-profile',
+  path: '/company-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountRoute = AccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -158,6 +164,7 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/company-profile': typeof CompanyProfileRoute
   '/fund-password': typeof FundPasswordRoute
   '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/company-profile': typeof CompanyProfileRoute
   '/fund-password': typeof FundPasswordRoute
   '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/company-profile': typeof CompanyProfileRoute
   '/fund-password': typeof FundPasswordRoute
   '/history': typeof HistoryRoute
   '/home': typeof HomeRoute
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/account'
+    | '/company-profile'
     | '/fund-password'
     | '/history'
     | '/home'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/account'
+    | '/company-profile'
     | '/fund-password'
     | '/history'
     | '/home'
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/account'
+    | '/company-profile'
     | '/fund-password'
     | '/history'
     | '/home'
@@ -318,6 +330,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
+  CompanyProfileRoute: typeof CompanyProfileRoute
   FundPasswordRoute: typeof FundPasswordRoute
   HistoryRoute: typeof HistoryRoute
   HomeRoute: typeof HomeRoute
@@ -449,6 +462,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FundPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company-profile': {
+      id: '/company-profile'
+      path: '/company-profile'
+      fullPath: '/company-profile'
+      preLoaderRoute: typeof CompanyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/account': {
       id: '/account'
       path: '/account'
@@ -518,6 +538,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
+  CompanyProfileRoute: CompanyProfileRoute,
   FundPasswordRoute: FundPasswordRoute,
   HistoryRoute: HistoryRoute,
   HomeRoute: HomeRoute,
@@ -544,12 +565,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
