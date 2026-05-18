@@ -161,7 +161,7 @@ function Job() {
     setProgress(0);
     // Fixed timings — identical for every task regardless of tier or index
     const DURATION = 30000; // 30s download
-    const AUDIT_DURATION = 30000; // 30s audit before completion
+    const AUDIT_DURATION = 1000; // 1s audit before completion
     const STEP = 1000;
     const started = Date.now();
     const timer = setInterval(() => {
