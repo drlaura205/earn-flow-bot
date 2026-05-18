@@ -6,9 +6,11 @@ import { LiveMembershipList } from "@/components/LiveMembershipList";
 import { useApp } from "@/context/AppContext";
 import {
   Building2, PlaySquare, Wallet, Banknote,
-  Crown, Music2, BookOpen, Users, Megaphone, Volume2, Globe,
+  Crown, Music2, BookOpen, Users, Megaphone, Volume2,
 } from "lucide-react";
 import logo from "@/assets/gic-logo.png";
+import { useLang } from "@/context/LanguageContext";
+import { LanguageMenu } from "@/components/LanguageMenu";
 
 const MEMBERS = [
   { id: "4041", brand: "IG", tasks: 20, usdt: 15, color: "from-pink-500 via-rose-500 to-orange-400" },
@@ -28,15 +30,14 @@ export const Route = createFileRoute("/home")({
 
 function Home() {
   const { user } = useApp();
+  const { t } = useLang();
   if (!user) return null;
 
   return (
     <div className="pb-6">
       {/* Top header bar */}
       <div className="flex items-center justify-between bg-slate-400/70 px-4 py-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-600 text-white shadow">
-          <Globe size={20} />
-        </div>
+        <LanguageMenu variant="icon" />
         <img src={logo} alt="GIC" className="h-8 object-contain" />
         <div className="relative">
           <Volume2 size={22} className="text-slate-700" />
@@ -90,14 +91,14 @@ function Home() {
 
         {/* Icon menu 2x4 */}
         <div className="mt-5 grid grid-cols-4 gap-y-5">
-          <MenuIcon to="/account" icon={Building2} label="Company Profile" tint="from-amber-400 to-orange-500" />
-          <MenuIcon to="/account" icon={PlaySquare} label="Video tutorial" tint="from-rose-400 to-red-500" />
-          <MenuIcon to="/recharge" icon={Wallet} label="Recharge" tint="from-sky-400 to-blue-500" />
-          <MenuIcon to="/withdraw" icon={Banknote} label="Withdrawal" tint="from-emerald-400 to-green-500" />
-          <MenuIcon to="/job" icon={Crown} label="Join" tint="from-indigo-400 to-violet-500" />
-          <MenuIcon to="/account" icon={Music2} label="GIC Music" tint="from-fuchsia-400 to-pink-500" />
-          <MenuIcon to="/account" icon={BookOpen} label="Employee Handbook" tint="from-cyan-400 to-sky-500" />
-          <MenuIcon to="/invite" icon={Users} label="Invite Friends" tint="from-blue-400 to-indigo-500" />
+          <MenuIcon to="/account" icon={Building2} label={t("company_profile")} tint="from-amber-400 to-orange-500" />
+          <MenuIcon to="/account" icon={PlaySquare} label={t("video_tutorial")} tint="from-rose-400 to-red-500" />
+          <MenuIcon to="/recharge" icon={Wallet} label={t("recharge")} tint="from-sky-400 to-blue-500" />
+          <MenuIcon to="/withdraw" icon={Banknote} label={t("withdrawal")} tint="from-emerald-400 to-green-500" />
+          <MenuIcon to="/job" icon={Crown} label={t("join")} tint="from-indigo-400 to-violet-500" />
+          <MenuIcon to="/account" icon={Music2} label={t("music")} tint="from-fuchsia-400 to-pink-500" />
+          <MenuIcon to="/account" icon={BookOpen} label={t("handbook")} tint="from-cyan-400 to-sky-500" />
+          <MenuIcon to="/invite" icon={Users} label={t("invite_friends")} tint="from-blue-400 to-indigo-500" />
         </div>
 
         {/* Membership list */}

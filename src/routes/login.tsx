@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { useLang } from "@/context/LanguageContext";
+import { LanguageMenu } from "@/components/LanguageMenu";
 import { toast } from "sonner";
 import { ChevronLeft, Smartphone, Lock, Eye, EyeOff, Check, Headphones } from "lucide-react";
 import bg from "@/assets/asm-login-bg.jpg";
@@ -10,6 +12,7 @@ export const Route = createFileRoute("/login")({ component: Login });
 
 function Login() {
   const { login } = useApp();
+  const { t } = useLang();
   const nav = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -37,7 +40,7 @@ function Login() {
           <button onClick={() => history.back()} className="p-2 -ml-2 text-slate-800/80">
             <ChevronLeft size={26} />
           </button>
-          <button className="text-base text-slate-800/80">Language</button>
+          <LanguageMenu />
         </div>
 
         <img src={logo} alt="GIC" className="mt-6 mx-auto h-20 object-contain" />
@@ -50,7 +53,7 @@ function Login() {
             <input
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="Please enter your phone number"
+              placeholder={t("phone_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-400"
             />
           </div>
@@ -61,7 +64,7 @@ function Login() {
               type={show ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Please enter the login password"
+              placeholder={t("password_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-400"
             />
             <button type="button" onClick={() => setShow((v) => !v)} className="text-slate-400">
@@ -77,7 +80,7 @@ function Login() {
             <span className={`flex h-5 w-5 items-center justify-center rounded-full ${remember ? "bg-red-500" : "bg-white border border-slate-300"}`}>
               {remember && <Check size={14} className="text-white" strokeWidth={3} />}
             </span>
-            <span className="text-sm">Remember username/password</span>
+            <span className="text-sm">{t("remember")}</span>
           </button>
 
           <button
@@ -85,14 +88,14 @@ function Login() {
             disabled={busy}
             className="mt-4 w-full rounded-full bg-sky-400 py-4 text-lg font-medium text-white shadow-md active:scale-[0.99] transition disabled:opacity-60"
           >
-            {busy ? "Signing in…" : "Log in now"}
+            {busy ? t("signing_in") : t("login_now")}
           </button>
 
           <Link
             to="/register"
             className="block w-full rounded-full bg-white py-4 text-center text-lg font-medium text-slate-800 shadow-md"
           >
-            Register now
+            {t("register_now")}
           </Link>
         </form>
 

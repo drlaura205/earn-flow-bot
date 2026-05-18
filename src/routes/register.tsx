@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { useLang } from "@/context/LanguageContext";
+import { LanguageMenu } from "@/components/LanguageMenu";
 import { toast } from "sonner";
 import { ChevronLeft, Smartphone, Lock, ShieldCheck, Heart, Headphones } from "lucide-react";
 import bg from "@/assets/asm-login-bg.jpg";
@@ -10,6 +12,7 @@ export const Route = createFileRoute("/register")({ component: Register });
 
 function Register() {
   const { register, login } = useApp();
+  const { t } = useLang();
   const nav = useNavigate();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -52,7 +55,7 @@ function Register() {
           <Link to="/login" className="p-2 -ml-2 text-slate-800/80">
             <ChevronLeft size={26} />
           </Link>
-          <button className="text-base text-slate-800/80">Language</button>
+          <LanguageMenu />
         </div>
 
         <img src={logo} alt="GIC" className="mt-6 mx-auto h-20 object-contain" />
@@ -62,25 +65,25 @@ function Register() {
             <Smartphone size={20} className="text-sky-500" />
             <span className="text-slate-700">+591</span>
             <span className="h-4 w-px bg-slate-200" />
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Please enter your phone number"
+            <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t("phone_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-500" />
           </div>
 
           <div className="flex items-center gap-3 rounded-full bg-white px-5 py-4 shadow-sm">
             <Lock size={20} className="text-slate-700" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Please enter the login password"
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("password_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-500" />
           </div>
 
           <div className="flex items-center gap-3 rounded-full bg-white px-5 py-4 shadow-sm">
             <Lock size={20} className="text-slate-700" />
-            <input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="Please confirm your password"
+            <input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder={t("confirm_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-500" />
           </div>
 
           <div className="flex items-center gap-3 rounded-full bg-white px-5 py-4 shadow-sm">
             <ShieldCheck size={20} className="text-sky-500" />
-            <input value={verify} onChange={(e) => setVerify(e.target.value)} placeholder="Please enter the verification code"
+            <input value={verify} onChange={(e) => setVerify(e.target.value)} placeholder={t("captcha_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-500" />
             <span className="text-slate-700 font-medium tracking-widest">{captcha}</span>
           </div>
@@ -89,23 +92,23 @@ function Register() {
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-100">
               <Heart size={14} className="text-rose-400 fill-rose-400" />
             </span>
-            <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="Please enter the invitation code"
+            <input value={code} onChange={(e) => setCode(e.target.value)} placeholder={t("invite_ph")}
               className="w-full bg-transparent text-base outline-none placeholder:text-slate-500" />
           </div>
 
           <button type="submit" disabled={busy}
             className="mt-4 w-full rounded-full bg-sky-400 py-4 text-lg font-medium text-white shadow-md active:scale-[0.99] transition disabled:opacity-60">
-            {busy ? "Creating…" : "Register now"}
+            {busy ? t("creating") : t("register_now")}
           </button>
 
           <button type="button"
             className="w-full rounded-full bg-white py-4 text-lg font-medium text-slate-800 shadow-md">
-            Have an account,download APP
+            {t("download_app")}
           </button>
 
           <p className="pt-2 text-sm text-white">
-            Have an account?{" "}
-            <Link to="/login" className="text-blue-700 font-medium">Login</Link>
+            {t("have_account")}{" "}
+            <Link to="/login" className="text-blue-700 font-medium">{t("login")}</Link>
           </p>
         </form>
 
