@@ -34,6 +34,11 @@ function Withdraw() {
       setContactOpen(true);
       return;
     }
+    if (!user.fundPassword) {
+      toast.error("Please set a 6-digit fund password first");
+      nav({ to: "/fund-password" });
+      return;
+    }
     if (!isWithdrawWindowOpen()) {
       return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
     }
@@ -121,12 +126,16 @@ function Withdraw() {
         <form onSubmit={submit} className="space-y-3">
           <div className="bg-white rounded-xl px-5 py-5 flex items-start justify-between gap-4">
             <span className="text-gray-800 whitespace-nowrap">Fund<br/>password</span>
-            <input
-              type="password" inputMode="numeric" maxLength={6}
-              value={pwd} onChange={(e) => setPwd(e.target.value.replace(/\D/g, ""))}
-              placeholder="Please input fund password"
-              className="flex-1 text-right outline-none text-gray-700 placeholder:text-gray-500 bg-transparent"
-            />
+            {user.fundPassword ? (
+              <input
+                type="password" inputMode="numeric" maxLength={6}
+                value={pwd} onChange={(e) => setPwd(e.target.value.replace(/\D/g, ""))}
+                placeholder="Please input fund password"
+                className="flex-1 text-right outline-none text-gray-700 placeholder:text-gray-500 bg-transparent"
+              />
+            ) : (
+              <Link to="/fund-password" className="text-sky-500 text-sm">Set 6-digit fund password</Link>
+            )}
           </div>
 
           <button
