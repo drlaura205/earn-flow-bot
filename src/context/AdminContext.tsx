@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback 
 import { supabase } from "@/integrations/supabase/client";
 
 export type ReqStatus = "Pending" | "Approved" | "Rejected" | "Paid";
-export type AdminTier = "Internship" | "Silver" | "Gold" | "Platinum";
+export type AdminTier = "Intern" | "C1" | "C2" | "C3" | "C4" | "C5";
 
 export interface DepositReq {
   id: string;
@@ -40,7 +40,7 @@ export interface AdminUser {
 }
 
 export interface SystemSettings {
-  dailyRates: { Internship: number; Silver: number; Gold: number; Platinum: number };
+  dailyRates: { Intern: number; C1: number; C2: number; C3: number; C4: number; C5: number };
   walletAddress: string;
   minWithdrawal: number;
   feeRate: number;
@@ -79,7 +79,7 @@ const fmtDate = (iso: string | null) => {
 };
 
 const defaultSettings: SystemSettings = {
-  dailyRates: { Internship: 3, Silver: 4, Gold: 8, Platinum: 15 },
+  dailyRates: { Intern: 0.4, C1: 0.4, C2: 0.5, C3: 0.8, C4: 1.6, C5: 3.2 },
   walletAddress: "",
   minWithdrawal: 2,
   feeRate: 0.08,
@@ -121,7 +121,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
           id: p.id,
           phone: p.phone,
           balance: Number(p.balance) || 0,
-          tier: (p.tier || "Internship") as AdminTier,
+          tier: (p.tier || "Intern") as AdminTier,
           upline: p.invitation_code || "—",
           joined: (p.created_at || "").slice(0, 10),
           status: p.suspended ? "Suspended" : "Active",
@@ -162,10 +162,12 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         const rates = s.tier_rates || {};
         setSettings({
           dailyRates: {
-            Internship: Number(rates.Internship ?? 3),
-            Silver: Number(rates.Silver ?? 4),
-            Gold: Number(rates.Gold ?? 8),
-            Platinum: Number(rates.Platinum ?? 15),
+            Intern: Number(rates.Intern ?? 0.4),
+            C1: Number(rates.C1 ?? 0.4),
+            C2: Number(rates.C2 ?? 0.5),
+            C3: Number(rates.C3 ?? 0.8),
+            C4: Number(rates.C4 ?? 1.6),
+            C5: Number(rates.C5 ?? 3.2),
           },
           walletAddress: s.deposit_address || "",
           minWithdrawal: Number(s.min_withdrawal ?? 2),
