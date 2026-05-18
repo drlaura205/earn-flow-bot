@@ -158,11 +158,13 @@ function Job() {
     }, STEP);
   };
 
-  const visible = TASKS.map((t, i) => ({ t, i })).filter(({ i }) => {
-    if (tab === "Doing") return !audit.has(i) && !completed.has(i);
-    if (tab === "Audit") return audit.has(i);
-    return completed.has(i);
-  });
+  const visible = TASKS.slice(0, dailyLimit)
+    .map((t, i) => ({ t, i }))
+    .filter(({ i }) => {
+      if (tab === "Doing") return !audit.has(i) && !completed.has(i);
+      if (tab === "Audit") return audit.has(i);
+      return completed.has(i);
+    });
 
   return (
     <div className="pb-6">
