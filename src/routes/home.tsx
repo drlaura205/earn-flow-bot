@@ -5,7 +5,7 @@ import { CompanyPhotoSlider } from "@/components/CompanyPhotoSlider";
 import { LiveMembershipList } from "@/components/LiveMembershipList";
 import { useApp } from "@/context/AppContext";
 import {
-  Building2, PlaySquare, Wallet, Banknote,
+  Building2, Wallet, Banknote,
   Crown, Music2, BookOpen, Users, Megaphone, Volume2,
 } from "lucide-react";
 import logo from "@/assets/gic-logo.png";
