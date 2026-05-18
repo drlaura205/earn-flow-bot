@@ -19,6 +19,7 @@ function Withdraw() {
   const nav = useNavigate();
   const [amount, setAmount] = useState<number | null>(null);
   const [pwd, setPwd] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
 
   if (!user) return null;
 
