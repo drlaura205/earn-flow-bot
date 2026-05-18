@@ -82,19 +82,23 @@ function Team() {
       <div className="px-5 mt-5">
         <h2 className="mb-3 text-base font-bold">Level Breakdown</h2>
         <div className="grid grid-cols-3 gap-2">
-          {levels.map((l) => (
-            <button
-              key={l.key}
-              onClick={() => setTab(l.key)}
-              className={`rounded-xl p-3 text-left shadow-card transition ${
-                tab === l.key ? "bg-primary-gradient text-white" : "bg-card"
-              }`}
-            >
-              <p className="text-[11px] opacity-80">{l.name}</p>
-              <p className="text-2xl font-black">{grouped[l.key].length}</p>
-              <p className="text-[10px] opacity-75">Comm {l.commission}</p>
-            </button>
-          ))}
+          {levels.map((l) => {
+            const earned = grouped[l.key].reduce((s, m) => s + Number(m.commission_earned || 0), 0);
+            return (
+              <button
+                key={l.key}
+                onClick={() => setTab(l.key)}
+                className={`rounded-xl p-3 text-left shadow-card transition ${
+                  tab === l.key ? "bg-primary-gradient text-white" : "bg-card"
+                }`}
+              >
+                <p className="text-[11px] opacity-80">{l.name}</p>
+                <p className="text-2xl font-black">{grouped[l.key].length}</p>
+                <p className="text-[10px] opacity-75">Comm {l.commission}</p>
+                <p className="mt-1 text-[11px] font-bold">${earned.toFixed(2)}</p>
+              </button>
+            );
+          })}
         </div>
 
         <h2 className="mt-6 mb-3 text-base font-bold">
@@ -115,17 +119,33 @@ function Team() {
             {grouped[tab].map((m) => (
               <div
                 key={m.user_id}
-                className="flex items-center justify-between rounded-xl bg-card p-3 shadow-card"
+                className="rounded-xl bg-card p-3 shadow-card"
               >
-                <div>
-                  <p className="text-sm font-bold">{maskPhone(m.phone)}</p>
-                  <p className="text-[11px] text-muted-foreground">
-                    Joined {new Date(m.joined_at).toLocaleDateString()}
-                  </p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-bold">{maskPhone(m.phone)}</p>
+                    <p className="text-[11px] text-muted-foreground">
+                      Joined {new Date(m.joined_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-primary-gradient px-3 py-1 text-xs font-bold text-white">
+                    {m.tier}
+                  </span>
                 </div>
-                <span className="rounded-full bg-primary-gradient px-3 py-1 text-xs font-bold text-white">
-                  {m.tier}
-                </span>
+                <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-lg bg-secondary px-1 py-1">
+                    <p className="text-[9px] uppercase text-muted-foreground">Deposits</p>
+                    <p className="text-[12px] font-bold">${Number(m.deposits_total).toFixed(2)}</p>
+                  </div>
+                  <div className="rounded-lg bg-secondary px-1 py-1">
+                    <p className="text-[9px] uppercase text-muted-foreground">Tasks</p>
+                    <p className="text-[12px] font-bold">${Number(m.task_rewards_total).toFixed(2)}</p>
+                  </div>
+                  <div className="rounded-lg bg-primary-gradient px-1 py-1 text-white">
+                    <p className="text-[9px] uppercase opacity-90">You earned</p>
+                    <p className="text-[12px] font-bold">${Number(m.commission_earned).toFixed(2)}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
