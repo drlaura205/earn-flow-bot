@@ -18,12 +18,10 @@ export const Route = createFileRoute("/account")({
   ),
 });
 
-function fmtDateRange() {
-  const start = new Date();
-  const end = new Date(); end.setDate(end.getDate() + 4);
-  const f = (d: Date) => d.toISOString().slice(0, 10);
-  return `${f(start)}~${f(end)}`;
-}
+const fmtDay = (d: Date) => d.toISOString().slice(0, 10);
+const TIER_DAYS: Record<string, number> = {
+  Internship: 30, Intern: 30, Silver: 60, Gold: 90, Platinum: 365,
+};
 
 const AVATAR_ICONS = [
   { bg: "bg-black", el: <span className="text-white text-2xl">♪</span> }, // TikTok
