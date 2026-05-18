@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { InstallAppDialog } from "@/components/InstallAppDialog";
 import { useApp } from "@/context/AppContext";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Users, IdCard, Wallet, Banknote,
   FileText, ClipboardList, Network, LogOut, Download,
@@ -41,6 +42,34 @@ function Account() {
   const { user, logout } = useApp();
   const nav = useNavigate();
   const [installOpen, setInstallOpen] = useState(false);
+  const [earn, setEarn] = useState({ yesterday: 0, week: 0, month: 0 });
+
+  useEffect(() => {
+    if (!user) return;
+    const now = new Date();
+    const startToday = new Date(now); startToday.setHours(0, 0, 0, 0);
+    const startYest = new Date(startToday); startYest.setDate(startYest.getDate() - 1);
+    const startWeek = new Date(startToday); startWeek.setDate(startWeek.getDate() - 6);
+    const startMonth = new Date(startToday); startMonth.setDate(startMonth.getDate() - 29);
+    supabase
+      .from("task_completions")
+      .select("reward, completed_at")
+      .eq("user_id", user.id)
+      .gte("completed_at", startMonth.toISOString())
+      .then(({ data }) => {
+        if (!data) return;
+        let y = 0, w = 0, m = 0;
+        for (const r of data) {
+          const t = new Date(r.completed_at).getTime();
+          const rw = Number(r.reward);
+          m += rw;
+          if (t >= startWeek.getTime()) w += rw;
+          if (t >= startYest.getTime() && t < startToday.getTime()) y += rw;
+        }
+        setEarn({ yesterday: y, week: w, month: m });
+      });
+  }, [user?.id, user?.todayEarnings]);
+
   if (!user) return null;
 
   // Stable per-user random icon
@@ -78,11 +107,12 @@ function Account() {
       <div className="bg-gradient-to-b from-slate-200 via-slate-100 to-pink-100 px-4 pt-4">
         {/* 2x2 earnings */}
         <div className="grid grid-cols-2 gap-3">
-          <StatBox label="Yesterday's earnings" value={0} />
+          <StatBox label="Yesterday's earnings" value={earn.yesterday} />
           <StatBox label="Today's earnings" value={user.todayEarnings} />
-          <StatBox label="This month's earnings" value={user.totalEarnings} />
-          <StatBox label="This week's earnings" value={user.todayEarnings * 7} />
+          <StatBox label="This month's earnings" value={earn.month || user.todayEarnings} />
+          <StatBox label="This week's earnings" value={earn.week || user.todayEarnings} />
         </div>
+
 
         {/* 3 wide cards */}
         <div className="mt-3 grid grid-cols-3 gap-3">
