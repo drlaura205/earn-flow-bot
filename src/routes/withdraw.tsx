@@ -69,7 +69,7 @@ function Withdraw() {
             Main Wallet: {user.balance.toFixed(4)}
           </div>
           <div className="py-3 text-base text-gray-800">
-            Commission Wallet: {Number(user.referralRewards || 0).toFixed(4)}
+            Commission Wallet: {Number(user.referralRewards || 0).toFixed(2)}
           </div>
         </div>
 
