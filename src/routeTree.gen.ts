@@ -15,6 +15,7 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as RobotRouteImport } from './routes/robot'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RechargeRouteImport } from './routes/recharge'
+import { Route as ProfitRouteImport } from './routes/profit'
 import { Route as PersonalInfoRouteImport } from './routes/personal-info'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JoinRouteImport } from './routes/join'
@@ -61,6 +62,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const RechargeRoute = RechargeRouteImport.update({
   id: '/recharge',
   path: '/recharge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfitRoute = ProfitRouteImport.update({
+  id: '/profit',
+  path: '/profit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PersonalInfoRoute = PersonalInfoRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
+  '/profit': typeof ProfitRoute
   '/recharge': typeof RechargeRoute
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
+  '/profit': typeof ProfitRoute
   '/recharge': typeof RechargeRoute
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/join': typeof JoinRoute
   '/login': typeof LoginRoute
   '/personal-info': typeof PersonalInfoRoute
+  '/profit': typeof ProfitRoute
   '/recharge': typeof RechargeRoute
   '/register': typeof RegisterRoute
   '/robot': typeof RobotRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/login'
     | '/personal-info'
+    | '/profit'
     | '/recharge'
     | '/register'
     | '/robot'
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/login'
     | '/personal-info'
+    | '/profit'
     | '/recharge'
     | '/register'
     | '/robot'
@@ -288,6 +299,7 @@ export interface FileRouteTypes {
     | '/join'
     | '/login'
     | '/personal-info'
+    | '/profit'
     | '/recharge'
     | '/register'
     | '/robot'
@@ -314,6 +326,7 @@ export interface RootRouteChildren {
   JoinRoute: typeof JoinRoute
   LoginRoute: typeof LoginRoute
   PersonalInfoRoute: typeof PersonalInfoRoute
+  ProfitRoute: typeof ProfitRoute
   RechargeRoute: typeof RechargeRoute
   RegisterRoute: typeof RegisterRoute
   RobotRoute: typeof RobotRoute
@@ -371,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/recharge'
       fullPath: '/recharge'
       preLoaderRoute: typeof RechargeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profit': {
+      id: '/profit'
+      path: '/profit'
+      fullPath: '/profit'
+      preLoaderRoute: typeof ProfitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/personal-info': {
@@ -506,6 +526,7 @@ const rootRouteChildren: RootRouteChildren = {
   JoinRoute: JoinRoute,
   LoginRoute: LoginRoute,
   PersonalInfoRoute: PersonalInfoRoute,
+  ProfitRoute: ProfitRoute,
   RechargeRoute: RechargeRoute,
   RegisterRoute: RegisterRoute,
   RobotRoute: RobotRoute,
