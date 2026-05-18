@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AuthGate } from "@/components/AuthGate";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
-import { Copy, ChevronLeft, Lock } from "lucide-react";
+import { Copy, ChevronLeft } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "@tanstack/react-router";
 
