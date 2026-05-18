@@ -285,9 +285,12 @@ export type Database = {
       get_my_downline: {
         Args: never
         Returns: {
+          commission_earned: number
+          deposits_total: number
           joined_at: string
           level: string
           phone: string
+          task_rewards_total: number
           tier: string
           user_id: string
         }[]
