@@ -6,6 +6,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
 import { MIN_WITHDRAWAL, isWithdrawWindowOpen } from "@/lib/withdrawWindow";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/withdraw")({
   component: () => (<AuthGate><Withdraw /></AuthGate>),
