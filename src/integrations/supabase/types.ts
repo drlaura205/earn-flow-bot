@@ -311,6 +311,36 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      upgrade_tier: {
+        Args: { _price: number; _tier: string }
+        Returns: {
+          balance: number
+          created_at: string
+          fund_password: string | null
+          id: string
+          invitation_code: string | null
+          last_task_date: string | null
+          my_code: string
+          phone: string
+          referral_rewards: number
+          suspended: boolean
+          task_count: number
+          task_rewards: number
+          tasks_completed_today: number
+          tier: string
+          today_earnings: number
+          total_earnings: number
+          updated_at: string
+          wallet_address: string | null
+          withdraw_enabled: boolean
+        }
+        SetofOptions: {
+          from: "*"
+          to: "profiles"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       validate_invite_code: { Args: { _code: string }; Returns: boolean }
     }
     Enums: {
