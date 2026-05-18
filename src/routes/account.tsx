@@ -69,6 +69,25 @@ function Account() {
       });
   }, [user?.id, user?.todayEarnings]);
 
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("deposits")
+      .select("created_at, reviewed_at, status")
+      .eq("user_id", user.id)
+      .eq("status", "Approved")
+      .order("reviewed_at", { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (!data || !data.length) { setPurchase(null); return; }
+        const d = data[0];
+        const start = new Date(d.reviewed_at || d.created_at);
+        const days = TIER_DAYS[user.tier] ?? 30;
+        const end = new Date(start); end.setDate(end.getDate() + days);
+        setPurchase({ start, end });
+      });
+  }, [user?.id, user?.tier]);
+
   if (!user) return null;
 
   // Stable per-user random icon
