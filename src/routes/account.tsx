@@ -116,7 +116,8 @@ function Account() {
 
         <div className="mt-2">
           <p className="text-sm text-slate-700">Commission Wallet(USDT)</p>
-          <p className="text-3xl font-black text-sky-500">{user.referralRewards.toFixed(4)}</p>
+          <p className="text-3xl font-black text-sky-500">{user.referralRewards.toFixed(2)}</p>
+
           <p className="mt-1 text-xs text-slate-600">Effective date:{purchase ? `${fmtDay(purchase.start)}~${fmtDay(purchase.end)}` : " —"}</p>
         </div>
       </div>
