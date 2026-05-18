@@ -20,7 +20,7 @@ export const Route = createFileRoute("/account")({
 
 const fmtDay = (d: Date) => d.toISOString().slice(0, 10);
 const TIER_DAYS: Record<string, number> = {
-  Internship: 30, Intern: 30, Silver: 60, Gold: 90, Platinum: 365,
+  Intern: 2, C1: 365, C2: 365, C3: 365, C4: 365, C5: 365,
 };
 
 const AVATAR_ICONS = [
