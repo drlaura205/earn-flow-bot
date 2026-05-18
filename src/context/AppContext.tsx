@@ -2,21 +2,26 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback 
 import { supabase } from "@/integrations/supabase/client";
 import type { Session } from "@supabase/supabase-js";
 
-export type Tier = "Internship" | "Silver" | "Gold" | "Platinum";
+export type Tier = "Intern" | "C1" | "C2" | "C3" | "C4" | "C5";
 
 export interface TierInfo {
   name: Tier;
   price: number;
   tasksPerDay: string;
   rewardPerTask: number;
+  dailyIncome: number;
+  durationDays: number;
   color: string;
+  locked?: boolean;
 }
 
 export const TIERS: TierInfo[] = [
-  { name: "Internship", price: 0, tasksPerDay: "1", rewardPerTask: 3, color: "from-emerald-400 to-teal-500" },
-  { name: "Silver", price: 200, tasksPerDay: "3-5", rewardPerTask: 4, color: "from-slate-300 to-slate-500" },
-  { name: "Gold", price: 350, tasksPerDay: "3", rewardPerTask: 7, color: "from-amber-300 to-yellow-500" },
-  { name: "Platinum", price: 500, tasksPerDay: "10+", rewardPerTask: 15, color: "from-cyan-300 to-blue-500" },
+  { name: "Intern", price: 0, tasksPerDay: "3", rewardPerTask: 0.4, dailyIncome: 1.2, durationDays: 2, color: "from-emerald-400 to-teal-500" },
+  { name: "C1", price: 40, tasksPerDay: "3", rewardPerTask: 0.4, dailyIncome: 1.2, durationDays: 365, color: "from-slate-300 to-slate-500" },
+  { name: "C2", price: 75, tasksPerDay: "5", rewardPerTask: 0.5, dailyIncome: 2.5, durationDays: 365, color: "from-amber-300 to-yellow-500" },
+  { name: "C3", price: 120, tasksPerDay: "5", rewardPerTask: 0.8, dailyIncome: 4, durationDays: 365, color: "from-cyan-300 to-blue-500" },
+  { name: "C4", price: 250, tasksPerDay: "5", rewardPerTask: 1.6, dailyIncome: 8, durationDays: 365, color: "from-fuchsia-400 to-pink-500", locked: true },
+  { name: "C5", price: 500, tasksPerDay: "5", rewardPerTask: 3.2, dailyIncome: 16, durationDays: 365, color: "from-indigo-400 to-purple-600", locked: true },
 ];
 
 // UI shape kept compatible with existing pages
