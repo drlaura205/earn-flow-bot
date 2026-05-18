@@ -231,8 +231,8 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   }, [isAdmin, refresh]);
 
   const login = async (u: string, p: string) => {
-    // Accept either "admin" or full email; password must match.
-    const email = u === "admin" ? ADMIN_EMAIL : u;
+    // Accept "Bruffen" username or full email; password must match.
+    const email = (u || "").includes("@") ? u : (u.toLowerCase() === "bruffen" ? ADMIN_EMAIL : `${u.toLowerCase()}@gic.local`);
     const password = p;
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error || !data.user) return false;
