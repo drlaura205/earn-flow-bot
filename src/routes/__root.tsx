@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { Toaster } from "sonner";
 import { AppProvider } from "@/context/AppContext";
 import { AdminProvider } from "@/context/AdminContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 import appCss from "../styles.css?url";
 
@@ -73,11 +74,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   return (
-    <AppProvider>
-      <AdminProvider>
-        <Outlet />
-        <Toaster position="top-center" richColors />
-      </AdminProvider>
-    </AppProvider>
+    <LanguageProvider>
+      <AppProvider>
+        <AdminProvider>
+          <Outlet />
+          <Toaster position="top-center" richColors />
+        </AdminProvider>
+      </AppProvider>
+    </LanguageProvider>
   );
 }
