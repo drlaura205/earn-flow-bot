@@ -97,7 +97,7 @@ function Home() {
           <MenuIcon to="/withdraw" icon={Banknote} label={t("withdrawal")} tint="from-emerald-400 to-green-500" />
           <MenuIcon to="/job" icon={Crown} label={t("join")} tint="from-indigo-400 to-violet-500" />
           <MenuIcon to="/account" icon={Music2} label={t("music")} tint="from-fuchsia-400 to-pink-500" />
-          <MenuIcon to="/account" icon={BookOpen} label={t("handbook")} tint="from-cyan-400 to-sky-500" />
+          
           <MenuIcon to="/invite" icon={Users} label={t("invite_friends")} tint="from-blue-400 to-indigo-500" />
         </div>
 
