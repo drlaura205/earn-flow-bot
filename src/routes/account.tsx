@@ -18,12 +18,10 @@ export const Route = createFileRoute("/account")({
   ),
 });
 
-function fmtDateRange() {
-  const start = new Date();
-  const end = new Date(); end.setDate(end.getDate() + 4);
-  const f = (d: Date) => d.toISOString().slice(0, 10);
-  return `${f(start)}~${f(end)}`;
-}
+const fmtDay = (d: Date) => d.toISOString().slice(0, 10);
+const TIER_DAYS: Record<string, number> = {
+  Internship: 30, Intern: 30, Silver: 60, Gold: 90, Platinum: 365,
+};
 
 const AVATAR_ICONS = [
   { bg: "bg-black", el: <span className="text-white text-2xl">♪</span> }, // TikTok
@@ -43,6 +41,7 @@ function Account() {
   const nav = useNavigate();
   const [installOpen, setInstallOpen] = useState(false);
   const [earn, setEarn] = useState({ yesterday: 0, week: 0, month: 0 });
+  const [purchase, setPurchase] = useState<{ start: Date; end: Date } | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -69,6 +68,25 @@ function Account() {
         setEarn({ yesterday: y, week: w, month: m });
       });
   }, [user?.id, user?.todayEarnings]);
+
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("deposits")
+      .select("created_at, reviewed_at, status")
+      .eq("user_id", user.id)
+      .eq("status", "Approved")
+      .order("reviewed_at", { ascending: false })
+      .limit(1)
+      .then(({ data }) => {
+        if (!data || !data.length) { setPurchase(null); return; }
+        const d = data[0];
+        const start = new Date(d.reviewed_at || d.created_at);
+        const days = TIER_DAYS[user.tier] ?? 30;
+        const end = new Date(start); end.setDate(end.getDate() + days);
+        setPurchase({ start, end });
+      });
+  }, [user?.id, user?.tier]);
 
   if (!user) return null;
 
@@ -99,7 +117,7 @@ function Account() {
         <div className="mt-2">
           <p className="text-sm text-slate-700">Commission Wallet(USDT)</p>
           <p className="text-3xl font-black text-sky-500">{user.referralRewards.toFixed(4)}</p>
-          <p className="mt-1 text-xs text-slate-600">Effective date:{fmtDateRange()}</p>
+          <p className="mt-1 text-xs text-slate-600">Effective date:{purchase ? `${fmtDay(purchase.start)}~${fmtDay(purchase.end)}` : " —"}</p>
         </div>
       </div>
 
