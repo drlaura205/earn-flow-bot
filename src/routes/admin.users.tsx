@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, Plus, Minus, Ban, ShieldCheck } from "lucide-react";
+import { Search, Plus, Minus, Ban, ShieldCheck, Wallet, WalletMinimal } from "lucide-react";
 import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin, AdminTier } from "@/context/AdminContext";
 import { toast } from "sonner";
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/admin/users")({
 const TIERS: AdminTier[] = ["Intern", "C1", "C2", "C3", "C4", "C5"];
 
 function UsersPage() {
-  const { users, adjustBalance, setUserTier, toggleSuspend } = useAdmin();
+  const { users, adjustBalance, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
   const [q, setQ] = useState("");
   const filtered = users.filter((u) => u.id.toLowerCase().includes(q.toLowerCase()) || u.phone.toLowerCase().includes(q.toLowerCase()));
 
@@ -51,6 +51,7 @@ function UsersPage() {
                 <th className="text-left py-3 px-4">Upline</th>
                 <th className="text-left py-3 px-4">Joined</th>
                 <th className="text-left py-3 px-4">Status</th>
+                <th className="text-left py-3 px-4">Withdraw</th>
                 <th className="text-right py-3 px-4">Actions</th>
               </tr>
             </thead>
@@ -72,9 +73,16 @@ function UsersPage() {
                     <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${u.status === "Active" ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30" : "bg-red-500/15 text-red-300 border-red-500/30"}`}>{u.status}</span>
                   </td>
                   <td className="py-3 px-4">
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${u.withdrawEnabled ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30" : "bg-slate-500/15 text-slate-300 border-slate-500/30"}`}>{u.withdrawEnabled ? "Enabled" : "Disabled"}</span>
+                  </td>
+                  <td className="py-3 px-4">
                     <div className="flex justify-end gap-1.5">
                       <button onClick={() => adjust(u.id, 1)} title="Add balance" className="p-1.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"><Plus size={12} /></button>
                       <button onClick={() => adjust(u.id, -1)} title="Subtract balance" className="p-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25"><Minus size={12} /></button>
+                      <button onClick={() => { toggleWithdraw(u.id); toast.success(`Withdraw ${u.withdrawEnabled ? "disabled" : "enabled"} for ${u.phone}`); }} title={u.withdrawEnabled ? "Disable withdrawals" : "Enable withdrawals"}
+                        className={`p-1.5 rounded ${u.withdrawEnabled ? "bg-slate-500/15 text-slate-300 hover:bg-slate-500/25" : "bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"}`}>
+                        {u.withdrawEnabled ? <WalletMinimal size={12} /> : <Wallet size={12} />}
+                      </button>
                       <button onClick={() => { toggleSuspend(u.id); toast.success(`Status toggled for ${u.id}`); }} title="Suspend / Activate"
                         className={`p-1.5 rounded ${u.status === "Active" ? "bg-red-500/15 text-red-300 hover:bg-red-500/25" : "bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25"}`}>
                         {u.status === "Active" ? <Ban size={12} /> : <ShieldCheck size={12} />}
@@ -84,7 +92,7 @@ function UsersPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={8} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
+                <tr><td colSpan={9} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
               )}
             </tbody>
           </table>

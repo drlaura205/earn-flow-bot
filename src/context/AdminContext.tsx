@@ -37,6 +37,7 @@ export interface AdminUser {
   status: "Active" | "Suspended";
   totalEarnings: number;
   taskCount: number;
+  withdrawEnabled: boolean;
 }
 
 export interface SystemSettings {
@@ -62,6 +63,7 @@ interface AdminState {
   adjustBalance: (userId: string, delta: number) => Promise<void>;
   setUserTier: (userId: string, tier: AdminTier) => Promise<void>;
   toggleSuspend: (userId: string) => Promise<void>;
+  toggleWithdraw: (userId: string) => Promise<void>;
   updateSettings: (s: Partial<SystemSettings>) => Promise<void>;
   refresh: () => Promise<void>;
 }
@@ -127,6 +129,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
           status: p.suspended ? "Suspended" : "Active",
           totalEarnings: Number(p.total_earnings) || 0,
           taskCount: Number(p.task_count) || 0,
+          withdrawEnabled: !!p.withdraw_enabled,
         })),
       );
 
@@ -273,6 +276,10 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     await supabase.rpc("admin_toggle_suspend", { _user_id: userId });
     await refresh();
   };
+  const toggleWithdraw = async (userId: string) => {
+    await supabase.rpc("admin_toggle_withdraw", { _user_id: userId });
+    await refresh();
+  };
   const updateSettings = async (s: Partial<SystemSettings>) => {
     const merged = { ...settings, ...s };
     await supabase
@@ -294,7 +301,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         isAdmin, loading, login, logout,
         deposits, withdrawals, users, settings,
         approveDeposit, rejectDeposit, payWithdrawal, rejectWithdrawal,
-        adjustBalance, setUserTier, toggleSuspend, updateSettings, refresh,
+        adjustBalance, setUserTier, toggleSuspend, toggleWithdraw, updateSettings, refresh,
       }}
     >
       {children}
