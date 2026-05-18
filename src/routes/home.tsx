@@ -5,7 +5,7 @@ import { CompanyPhotoSlider } from "@/components/CompanyPhotoSlider";
 import { LiveMembershipList } from "@/components/LiveMembershipList";
 import { useApp } from "@/context/AppContext";
 import {
-  Building2, PlaySquare, Wallet, Banknote,
+  Building2, Wallet, Banknote,
   Crown, Music2, BookOpen, Users, Megaphone, Volume2,
 } from "lucide-react";
 import logo from "@/assets/gic-logo.png";
@@ -92,7 +92,7 @@ function Home() {
         {/* Icon menu 2x4 */}
         <div className="mt-5 grid grid-cols-4 gap-y-5">
           <MenuIcon to="/company-profile" icon={Building2} label={t("company_profile")} tint="from-amber-400 to-orange-500" />
-          <MenuIcon to="/account" icon={PlaySquare} label={t("video_tutorial")} tint="from-rose-400 to-red-500" />
+          
           <MenuIcon to="/recharge" icon={Wallet} label={t("recharge")} tint="from-sky-400 to-blue-500" />
           <MenuIcon to="/withdraw" icon={Banknote} label={t("withdrawal")} tint="from-emerald-400 to-green-500" />
           <MenuIcon to="/job" icon={Crown} label={t("join")} tint="from-indigo-400 to-violet-500" />
