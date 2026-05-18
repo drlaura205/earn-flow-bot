@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
 import { TIERS, useApp } from "@/context/AppContext";
@@ -115,12 +115,37 @@ function Job() {
   const [tab, setTab] = useState<Tab>("Doing");
   const [installing, setInstalling] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
-  const [completed, setCompleted] = useState<Set<number>>(new Set());
-  const [audit, setAudit] = useState<Set<number>>(new Set());
+
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const storageKey = user ? `job-state:${user.id}:${todayKey}` : "";
+
+  const [completed, setCompleted] = useState<Set<number>>(() => {
+    if (typeof window === "undefined" || !storageKey) return new Set();
+    try {
+      const raw = localStorage.getItem(storageKey);
+      return new Set<number>(raw ? (JSON.parse(raw).completed ?? []) : []);
+    } catch { return new Set(); }
+  });
+  const [audit, setAudit] = useState<Set<number>>(() => {
+    if (typeof window === "undefined" || !storageKey) return new Set();
+    try {
+      const raw = localStorage.getItem(storageKey);
+      return new Set<number>(raw ? (JSON.parse(raw).audit ?? []) : []);
+    } catch { return new Set(); }
+  });
+
+  useEffect(() => {
+    if (!storageKey) return;
+    localStorage.setItem(storageKey, JSON.stringify({
+      completed: Array.from(completed),
+      audit: Array.from(audit),
+    }));
+  }, [completed, audit, storageKey]);
 
   if (!user) return null;
   const tierInfo = TIERS.find((t) => t.name === user.tier)!;
   const dailyLimit = parseInt(String(tierInfo.tasksPerDay).match(/\d+/)?.[0] || "5", 10);
+
 
   const handleInstall = (idx: number) => {
     if (installing !== null) return;
