@@ -6,6 +6,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
 import { MIN_WITHDRAWAL, isWithdrawWindowOpen } from "@/lib/withdrawWindow";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/withdraw")({
   component: () => (<AuthGate><Withdraw /></AuthGate>),
@@ -18,6 +19,7 @@ function Withdraw() {
   const nav = useNavigate();
   const [amount, setAmount] = useState<number | null>(null);
   const [pwd, setPwd] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
 
   if (!user) return null;
 
@@ -29,7 +31,8 @@ function Withdraw() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user.withdrawEnabled) {
-      return toast.error("Please contact the hiring manager");
+      setContactOpen(true);
+      return;
     }
     if (!isWithdrawWindowOpen()) {
       return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
@@ -54,11 +57,7 @@ function Withdraw() {
       </div>
 
       <div className="p-3 space-y-3">
-        {!user.withdrawEnabled && (
-          <div className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            Please contact the hiring manager to enable your first withdrawal.
-          </div>
-        )}
+
         {/* Balances */}
         <div className="bg-white rounded-xl px-5 py-4">
           <div className="py-3 border-b border-gray-100 text-base text-gray-800">
@@ -152,6 +151,22 @@ function Withdraw() {
       </div>
 
       <BottomNav />
+
+      <Dialog open={contactOpen} onOpenChange={setContactOpen}>
+        <DialogContent className="max-w-xs rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center">Please contact the hiring manager</DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <button
+              onClick={() => setContactOpen(false)}
+              className="w-full rounded-md bg-sky-400 hover:bg-sky-500 py-2.5 text-sm font-semibold text-white"
+            >
+              OK
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
