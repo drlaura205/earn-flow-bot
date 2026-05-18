@@ -178,11 +178,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (!user) return { ok: false, msg: "Not logged in" };
     const info = TIERS.find((t) => t.name === tier)!;
     if (user.balance < info.price) return { ok: false, msg: "Insufficient balance" };
-    const { error } = await supabase
-      .from("profiles")
-      .update({ balance: user.balance - info.price, tier })
-      .eq("id", user.id);
+    const { error } = await supabase.rpc("upgrade_tier", { _tier: tier, _price: info.price });
     if (error) return { ok: false, msg: error.message };
+    // Clear today's local job state so the task list reflects the new allowance
+    try {
+      const todayKey = new Date().toISOString().slice(0, 10);
+      localStorage.removeItem(`job-state:${user.id}:${todayKey}`);
+    } catch {}
     await refresh();
     return { ok: true, msg: `Upgraded to ${tier}` };
   };
