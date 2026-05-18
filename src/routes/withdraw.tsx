@@ -28,6 +28,9 @@ function Withdraw() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user.withdrawEnabled) {
+      return toast.error("Please contact the hiring manager");
+    }
     if (!isWithdrawWindowOpen()) {
       return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
     }
@@ -51,6 +54,11 @@ function Withdraw() {
       </div>
 
       <div className="p-3 space-y-3">
+        {!user.withdrawEnabled && (
+          <div className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            Please contact the hiring manager to enable your first withdrawal.
+          </div>
+        )}
         {/* Balances */}
         <div className="bg-white rounded-xl px-5 py-4">
           <div className="py-3 border-b border-gray-100 text-base text-gray-800">

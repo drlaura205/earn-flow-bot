@@ -97,6 +97,7 @@ export type Database = {
           total_earnings: number
           updated_at: string
           wallet_address: string | null
+          withdraw_enabled: boolean
         }
         Insert: {
           balance?: number
@@ -117,6 +118,7 @@ export type Database = {
           total_earnings?: number
           updated_at?: string
           wallet_address?: string | null
+          withdraw_enabled?: boolean
         }
         Update: {
           balance?: number
@@ -137,6 +139,7 @@ export type Database = {
           total_earnings?: number
           updated_at?: string
           wallet_address?: string | null
+          withdraw_enabled?: boolean
         }
         Relationships: []
       }
@@ -248,6 +251,7 @@ export type Database = {
         Returns: undefined
       }
       admin_toggle_suspend: { Args: { _user_id: string }; Returns: undefined }
+      admin_toggle_withdraw: { Args: { _user_id: string }; Returns: undefined }
       complete_task: {
         Args: { _reward: number }
         Returns: {
@@ -269,6 +273,7 @@ export type Database = {
           total_earnings: number
           updated_at: string
           wallet_address: string | null
+          withdraw_enabled: boolean
         }
         SetofOptions: {
           from: "*"
