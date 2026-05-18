@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { useLang } from "@/context/LanguageContext";
 import { LanguageMenu } from "@/components/LanguageMenu";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChevronLeft, Smartphone, Lock, ShieldCheck, Heart, Headphones } from "lucide-react";
 import bg from "@/assets/asm-login-bg.jpg";
