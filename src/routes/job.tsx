@@ -153,7 +153,7 @@ function Job() {
             setCompleted((s) => new Set(s).add(idx));
             toast.success(`+$${tierInfo.rewardPerTask.toFixed(2)} credited`);
           }
-        }, 1500);
+        }, 7000);
       }
     }, STEP);
   };
