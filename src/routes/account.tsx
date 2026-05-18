@@ -1,10 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { MobileShell } from "@/components/MobileShell";
 import { AuthGate } from "@/components/AuthGate";
+import { InstallAppDialog } from "@/components/InstallAppDialog";
 import { useApp } from "@/context/AppContext";
 import {
   Users, IdCard, Wallet, Banknote,
-  FileText, ClipboardList, Network, BookOpen, LogOut,
+  FileText, ClipboardList, Network, BookOpen, LogOut, Download,
 } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
@@ -38,6 +40,7 @@ const AVATAR_ICONS = [
 function Account() {
   const { user, logout } = useApp();
   const nav = useNavigate();
+  const [installOpen, setInstallOpen] = useState(false);
   if (!user) return null;
 
   // Stable per-user random icon
