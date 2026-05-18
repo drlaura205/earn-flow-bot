@@ -41,6 +41,7 @@ function Account() {
   const nav = useNavigate();
   const [installOpen, setInstallOpen] = useState(false);
   const [earn, setEarn] = useState({ yesterday: 0, week: 0, month: 0 });
+  const [purchase, setPurchase] = useState<{ start: Date; end: Date } | null>(null);
 
   useEffect(() => {
     if (!user) return;
