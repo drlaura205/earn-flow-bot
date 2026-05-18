@@ -109,7 +109,7 @@ function Account() {
         <div className="mt-3 flex items-start justify-between">
           <div>
             <p className="text-sm text-slate-700">Main Wallet(USDT)</p>
-            <p className="text-3xl font-black text-sky-500">{user.balance.toFixed(0)}</p>
+            <p className="text-3xl font-black text-sky-500">{user.balance.toFixed(2)}</p>
           </div>
           <p className="text-3xl font-black text-sky-500">{user.tier}</p>
         </div>
