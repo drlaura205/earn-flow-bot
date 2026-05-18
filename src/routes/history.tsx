@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
-import { PageHeader } from "@/components/PageHeader";
 import { useApp } from "@/context/AppContext";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowDownToLine, ArrowUpFromLine } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 export const Route = createFileRoute("/history")({
   component: () => (<AuthGate><History /></AuthGate>),
@@ -19,14 +18,38 @@ interface Withdrawal {
   status: string; address: string; network: string; created_at: string;
 }
 
-function statusClass(s: string) {
-  if (s === "Approved" || s === "Paid") return "bg-emerald-500/10 text-emerald-600";
-  if (s === "Rejected") return "bg-destructive/10 text-destructive";
-  return "bg-amber-500/10 text-amber-600";
+function formatRef(id: string, created_at: string) {
+  // Build a numeric-looking ref like 20251028090945xxxxx...
+  const d = new Date(created_at);
+  const pad = (n: number, l = 2) => String(n).padStart(l, "0");
+  const head =
+    d.getFullYear().toString() +
+    pad(d.getMonth() + 1) + pad(d.getDate()) +
+    pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds());
+  const tail = id.replace(/\D/g, "").padEnd(6, "0").slice(0, 6);
+  return `${head}${tail}…`;
+}
+
+function formatDate(s: string) {
+  const d = new Date(s);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+function statusLabel(s: string, kind: "d" | "w") {
+  if (kind === "w") {
+    if (s === "Approved" || s === "Paid" || s === "Completed") return "Paid";
+    if (s === "Rejected") return "Rejected";
+    return "Pending";
+  }
+  if (s === "Approved" || s === "Completed" || s === "Paid") return "Completed";
+  if (s === "Rejected") return "Rejected";
+  return "Pending";
 }
 
 function History() {
   const { user } = useApp();
+  const navigate = useNavigate();
   const [tab, setTab] = useState<"deposits" | "withdrawals">("deposits");
   const [deposits, setDeposits] = useState<Deposit[]>([]);
   const [withdrawals, setWithdrawals] = useState<Withdrawal[]>([]);
@@ -51,61 +74,119 @@ function History() {
 
   if (!user) return null;
 
-  return (
-    <div className="mx-auto min-h-screen w-full max-w-md bg-app-gradient pb-16">
-      <PageHeader title="Transaction History" />
+  const mainBalance = Number(user.balance || 0);
+  const commission = Number(user.referralRewards || 0);
 
-      <div className="px-5 -mt-4">
-        <div className="grid grid-cols-2 rounded-full bg-card p-1 shadow-card">
-          <button
-            onClick={() => setTab("deposits")}
-            className={`flex items-center justify-center gap-1.5 rounded-full py-2 text-sm font-bold transition-colors ${tab === "deposits" ? "bg-primary-gradient text-white" : "text-muted-foreground"}`}
-          >
-            <ArrowDownToLine size={14} /> Deposits
-          </button>
-          <button
-            onClick={() => setTab("withdrawals")}
-            className={`flex items-center justify-center gap-1.5 rounded-full py-2 text-sm font-bold transition-colors ${tab === "withdrawals" ? "bg-primary-gradient text-white" : "text-muted-foreground"}`}
-          >
-            <ArrowUpFromLine size={14} /> Withdrawals
-          </button>
+  const list = tab === "deposits"
+    ? deposits.map((d) => ({
+        key: d.id,
+        ref: formatRef(d.id, d.created_at),
+        amount: Number(d.amount),
+        date: formatDate(d.created_at),
+        status: statusLabel(d.status, "d"),
+      }))
+    : withdrawals.map((w) => ({
+        key: w.id,
+        ref: formatRef(w.id, w.created_at),
+        amount: Number(w.amount),
+        date: formatDate(w.created_at),
+        status: statusLabel(w.status, "w"),
+      }));
+
+  return (
+    <div className="mx-auto min-h-screen w-full max-w-md bg-gradient-to-br from-sky-100 via-rose-50 to-rose-100 pb-16">
+      {/* Header */}
+      <div className="relative flex items-center bg-white px-4 py-3.5">
+        <button onClick={() => navigate({ to: "/account" })}>
+          <ChevronLeft size={26} className="text-slate-500" />
+        </button>
+        <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold text-slate-900">
+          My wallet
+        </h1>
+      </div>
+
+      {/* Balance + Actions card */}
+      <div className="px-4 pt-3">
+        <div className="rounded-2xl bg-slate-400/60 backdrop-blur-sm p-4 shadow-sm">
+          <div className="grid grid-cols-2 gap-2 text-center">
+            <div>
+              <p className="text-3xl font-black text-blue-700 tracking-tight">
+                {mainBalance.toFixed(4)}
+              </p>
+              <p className="mt-1 text-sm text-slate-100">Main Wallet</p>
+            </div>
+            <div>
+              <p className="text-3xl font-black text-blue-700 tracking-tight">
+                {commission.toFixed(4)}
+              </p>
+              <p className="mt-1 text-sm text-slate-100">Commission Wallet</p>
+            </div>
+          </div>
+          <div className="mt-3 border-t border-white/40" />
+          <div className="grid grid-cols-2 mt-3 text-center text-base font-bold">
+            <Link to="/recharge" className="text-yellow-300 hover:opacity-90">
+              Recharge
+            </Link>
+            <Link to="/withdraw" className="text-white hover:opacity-90 border-l border-white/40">
+              Withdrawal
+            </Link>
+          </div>
         </div>
       </div>
 
-      <div className="px-5 mt-4 space-y-3">
-        {loading && <p className="text-center text-sm text-muted-foreground py-10">Loading…</p>}
+      {/* Sub tabs */}
+      <div className="mt-4 grid grid-cols-2 bg-slate-300/30 backdrop-blur-sm">
+        {(["deposits", "withdrawals"] as const).map((t) => {
+          const active = tab === t;
+          const label = t === "deposits" ? "Recharge record" : "Withdrawal record";
+          return (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className="relative py-3 text-center text-[15px] font-semibold"
+            >
+              <span className={active ? "text-blue-700 font-bold" : "text-slate-500"}>
+                {label}
+              </span>
+              {active && (
+                <span className="absolute bottom-1.5 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-blue-700" />
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-        {!loading && tab === "deposits" && deposits.length === 0 && (
-          <p className="text-center text-sm text-muted-foreground py-10">No deposits yet.</p>
+      {/* List */}
+      <div className="px-3 mt-3 space-y-2.5">
+        {loading && (
+          <p className="text-center text-sm text-slate-500 py-10">Loading…</p>
         )}
-        {!loading && tab === "deposits" && deposits.map((d) => (
-          <div key={d.id} className="rounded-2xl bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between">
-              <p className="text-lg font-black">+${Number(d.amount).toFixed(2)}</p>
-              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${statusClass(d.status)}`}>{d.status}</span>
+
+        {!loading && list.length === 0 && (
+          <p className="text-center text-sm text-slate-400 py-10">No more data</p>
+        )}
+
+        {!loading && list.map((row) => (
+          <div
+            key={row.key}
+            className="rounded-2xl bg-slate-400/40 backdrop-blur-sm px-4 py-3 shadow-sm"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <p className="text-[15px] font-medium text-white truncate">{row.ref}</p>
+              <p className="text-[15px] font-medium text-white whitespace-nowrap">{row.date}</p>
             </div>
-            <p className="mt-1 text-[11px] text-muted-foreground">{new Date(d.created_at).toLocaleString()} • {d.network}</p>
-            {d.txid && <p className="mt-1 text-[11px] font-mono text-muted-foreground break-all">TXID: {d.txid}</p>}
+            <div className="mt-1 flex items-end justify-between">
+              <p className="text-2xl font-bold text-cyan-300">
+                {row.amount.toFixed(row.amount % 1 === 0 ? 0 : 1)}
+              </p>
+              <p className="text-base text-white">{row.status}</p>
+            </div>
           </div>
         ))}
 
-        {!loading && tab === "withdrawals" && withdrawals.length === 0 && (
-          <p className="text-center text-sm text-muted-foreground py-10">No withdrawals yet.</p>
+        {!loading && list.length > 0 && (
+          <p className="text-center text-xs text-slate-400 py-4">No more data</p>
         )}
-        {!loading && tab === "withdrawals" && withdrawals.map((w) => (
-          <div key={w.id} className="rounded-2xl bg-card p-4 shadow-card">
-            <div className="flex items-center justify-between">
-              <p className="text-lg font-black">-${Number(w.amount).toFixed(2)}</p>
-              <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${statusClass(w.status)}`}>{w.status}</span>
-            </div>
-            <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
-              <span>Fee: ${Number(w.fee).toFixed(2)}</span>
-              <span>Net: ${Number(w.net_amount).toFixed(2)}</span>
-            </div>
-            <p className="mt-1 text-[11px] text-muted-foreground">{new Date(w.created_at).toLocaleString()} • {w.network}</p>
-            <p className="mt-1 text-[11px] font-mono text-muted-foreground break-all">To: {w.address}</p>
-          </div>
-        ))}
       </div>
     </div>
   );
