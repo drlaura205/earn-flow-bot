@@ -9,7 +9,8 @@ export const Route = createFileRoute("/admin/dashboard")({
 
 function Dashboard() {
   const { users, deposits, withdrawals } = useAdmin();
-  const activeInvest = users.reduce((s, u) => s + (u.tier === "Silver" ? 200 : u.tier === "Gold" ? 350 : u.tier === "Platinum" ? 500 : 0), 0);
+  const TIER_PRICE: Record<string, number> = { Intern: 0, C1: 40, C2: 75, C3: 120, C4: 250, C5: 500 };
+  const activeInvest = users.reduce((s, u) => s + (TIER_PRICE[u.tier] || 0), 0);
   const sysBal = users.reduce((s, u) => s + u.balance, 0);
   const pending = deposits.filter((d) => d.status === "Pending").length + withdrawals.filter((w) => w.status === "Pending").length;
 

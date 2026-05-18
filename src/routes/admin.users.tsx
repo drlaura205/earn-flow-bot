@@ -9,7 +9,7 @@ export const Route = createFileRoute("/admin/users")({
   component: () => (<AdminGate><UsersPage /></AdminGate>),
 });
 
-const TIERS: AdminTier[] = ["Internship", "Silver", "Gold", "Platinum"];
+const TIERS: AdminTier[] = ["Intern", "C1", "C2", "C3", "C4", "C5"];
 
 function UsersPage() {
   const { users, adjustBalance, setUserTier, toggleSuspend } = useAdmin();

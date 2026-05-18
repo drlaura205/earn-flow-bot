@@ -17,7 +17,7 @@ function Invite() {
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const fullLink = `${origin}/register?code=${displayCode}`;
   const shortLink = fullLink.replace(/^https?:\/\//, "");
-  const isUpgraded = !!user && user.tier !== "Internship";
+  const isUpgraded = !!user && user.tier !== "Intern";
   const friendName = user?.phone ? user.phone.replace("+591", "").slice(-9) : "";
 
   const copy = async (text: string, label: string) => {
@@ -45,7 +45,7 @@ function Invite() {
             </div>
             <p className="text-base font-bold">Upgrade Required</p>
             <p className="mt-2 text-sm text-white/85">
-              Referrals are available for Silver, Gold, and Platinum members.
+              Referrals are available for C1 members and above.
             </p>
             <Link
               to="/robot"

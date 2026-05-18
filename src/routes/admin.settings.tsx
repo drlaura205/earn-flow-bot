@@ -34,10 +34,10 @@ function SettingsPage() {
       <section className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="text-sm font-bold text-slate-200 mb-4">Daily Earnings per Tier (USDT)</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {(["Internship", "Silver", "Gold", "Platinum"] as const).map((t) => (
+          {(["Intern", "C1", "C2", "C3", "C4", "C5"] as const).map((t) => (
             <div key={t}>
               <label className="block text-xs uppercase tracking-wider text-slate-400 mb-1.5">{t}</label>
-              <input type="number" step="0.5" value={s.dailyRates[t]}
+              <input type="number" step="0.1" value={s.dailyRates[t]}
                 onChange={(e) => setS({ ...s, dailyRates: { ...s.dailyRates, [t]: parseFloat(e.target.value) || 0 } })}
                 className="w-full rounded-lg bg-slate-800/60 border border-slate-700 px-3 py-2 text-sm text-slate-100 outline-none focus:border-cyan-500" />
             </div>
