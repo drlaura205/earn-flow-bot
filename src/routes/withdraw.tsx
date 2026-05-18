@@ -5,7 +5,7 @@ import { AuthGate } from "@/components/AuthGate";
 import { BottomNav } from "@/components/BottomNav";
 import { useApp } from "@/context/AppContext";
 import { toast } from "sonner";
-import { MIN_WITHDRAWAL } from "@/lib/withdrawWindow";
+import { MIN_WITHDRAWAL, isWithdrawWindowOpen } from "@/lib/withdrawWindow";
 
 export const Route = createFileRoute("/withdraw")({
   component: () => (<AuthGate><Withdraw /></AuthGate>),
@@ -28,6 +28,9 @@ function Withdraw() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isWithdrawWindowOpen()) {
+      return toast.error("Withdrawals are open Monday–Friday, 09:00–20:00 UK time.");
+    }
     const n = amount || 0;
     if (n < MIN_WITHDRAWAL) return toast.error(`Minimum withdrawal is $${MIN_WITHDRAWAL}`);
     if (pwd.length !== 6) return toast.error("Fund password must be 6 digits");

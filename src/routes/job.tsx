@@ -5,6 +5,7 @@ import { AuthGate } from "@/components/AuthGate";
 import { TIERS, useApp } from "@/context/AppContext";
 import { toast } from "sonner";
 import { ChevronLeft } from "lucide-react";
+import { isTaskDayOpen, taskDaysLabel } from "@/lib/withdrawWindow";
 
 export const Route = createFileRoute("/job")({
   component: () => (
@@ -123,6 +124,10 @@ function Job() {
 
   const handleInstall = (idx: number) => {
     if (installing !== null) return;
+    if (!isTaskDayOpen(user.tier)) {
+      toast.error(`Tasks for ${user.tier} are only available ${taskDaysLabel(user.tier)}.`);
+      return;
+    }
     if (user.tasksCompletedToday >= dailyLimit) {
       toast.error("Daily task limit reached. Upgrade your plan to earn more.");
       return;
