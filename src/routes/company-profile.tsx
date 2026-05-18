@@ -46,7 +46,7 @@ const BRANCHES = [
 function CompanyProfile() {
   return (
     <div className="pb-8 bg-white">
-      <PageHeader title="Company Profile" />
+      <PageHeader title="Company Profile" back="/home" gradient={false} />
 
       {/* Top gallery 3x2 */}
       <div className="grid grid-cols-3 gap-0.5">
