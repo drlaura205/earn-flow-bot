@@ -6,7 +6,7 @@ import { LiveMembershipList } from "@/components/LiveMembershipList";
 import { useApp } from "@/context/AppContext";
 import {
   Building2, Wallet, Banknote,
-  Crown, Music2, BookOpen, Users, Megaphone, Volume2,
+  Crown, Music2, Users, Megaphone, Volume2,
 } from "lucide-react";
 import logo from "@/assets/gic-logo.png";
 import { useLang } from "@/context/LanguageContext";
