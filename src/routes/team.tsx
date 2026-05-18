@@ -20,6 +20,9 @@ type Member = {
   tier: string;
   level: "A" | "B" | "C";
   joined_at: string;
+  deposits_total: number;
+  task_rewards_total: number;
+  commission_earned: number;
 };
 
 function maskPhone(p: string) {
