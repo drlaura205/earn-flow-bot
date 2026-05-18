@@ -46,7 +46,7 @@ function AdminLogin() {
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </div>
-        <p className="mt-6 text-[11px] text-center text-slate-500">Demo credentials: <span className="text-slate-300 font-mono">admin / admin123</span></p>
+        <p className="mt-6 text-[11px] text-center text-slate-500">Authorized personnel only.</p>
       </form>
     </div>
   );
