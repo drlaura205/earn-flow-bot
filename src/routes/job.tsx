@@ -193,7 +193,8 @@ function Job() {
     }, STEP);
   };
 
-  const visible = TASKS.slice(0, dailyLimit)
+  const listLimit = user.tier === "Intern" ? TASKS.length : dailyLimit;
+  const visible = TASKS.slice(0, listLimit)
     .map((t, i) => ({ t, i }))
     .filter(({ i }) => {
       if (tab === "Doing") return !audit.has(i) && !completed.has(i);
