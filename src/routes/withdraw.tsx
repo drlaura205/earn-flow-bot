@@ -187,6 +187,35 @@ function Withdraw() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={walletPickerOpen} onOpenChange={setWalletPickerOpen}>
+        <DialogContent className="max-w-xs rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center">Select wallet</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            {(["Main", "Commission"] as const).map((w) => {
+              const bal = w === "Commission" ? commissionBal : mainBal;
+              const active = walletType === w;
+              return (
+                <button
+                  key={w}
+                  onClick={() => { setWalletType(w); setWalletPickerOpen(false); }}
+                  className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left ${
+                    active ? "border-sky-400 bg-sky-50" : "border-gray-200 bg-white"
+                  }`}
+                >
+                  <span className="font-semibold text-gray-800">{w} Wallet</span>
+                  <span className="text-sm text-gray-600">{bal.toFixed(2)} USDT</span>
+                </button>
+              );
+            })}
+            <p className="text-[11px] text-gray-400 text-center pt-1">
+              One withdrawal per wallet per day
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
