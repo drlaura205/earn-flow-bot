@@ -43,6 +43,7 @@ export interface User {
   lastTaskDate: string;
   suspended: boolean;
   withdrawEnabled: boolean;
+  createdAt: string;
 }
 
 interface AppState {
@@ -87,6 +88,7 @@ function rowToUser(row: any): User {
     lastTaskDate: row.last_task_date || "",
     suspended: !!row.suspended,
     withdrawEnabled: !!row.withdraw_enabled,
+    createdAt: row.created_at || "",
   };
 }
 

@@ -71,6 +71,12 @@ function Account() {
 
   useEffect(() => {
     if (!user) return;
+    if (user.tier === "Intern") {
+      const start = user.createdAt ? new Date(user.createdAt) : new Date();
+      const end = new Date(start); end.setDate(end.getDate() + (TIER_DAYS.Intern ?? 2));
+      setPurchase({ start, end });
+      return;
+    }
     supabase
       .from("deposits")
       .select("created_at, reviewed_at, status")
@@ -86,7 +92,7 @@ function Account() {
         const end = new Date(start); end.setDate(end.getDate() + days);
         setPurchase({ start, end });
       });
-  }, [user?.id, user?.tier]);
+  }, [user?.id, user?.tier, user?.createdAt]);
 
   if (!user) return null;
 
