@@ -193,7 +193,7 @@ function Job() {
     }, STEP);
   };
 
-  const listLimit = user.tier === "Intern" ? TASKS.length : dailyLimit;
+  const listLimit = dailyLimit;
   const visible = TASKS.slice(0, listLimit)
     .map((t, i) => ({ t, i }))
     .filter(({ i }) => {
