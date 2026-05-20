@@ -153,10 +153,19 @@ function Job() {
       toast.error(`Tasks for ${user.tier} are only available ${taskDaysLabel(user.tier)}.`);
       return;
     }
-    const doneToday = user.lastTaskDate === todayKey ? user.tasksCompletedToday : 0;
-    if (doneToday >= dailyLimit) {
-      toast.error("Daily task limit reached. Upgrade your plan to earn more.");
-      return;
+    if (user.tier === "Intern") {
+      const start = user.createdAt ? new Date(user.createdAt) : new Date();
+      const end = new Date(start); end.setDate(end.getDate() + 2);
+      if (Date.now() > end.getTime() + 24 * 60 * 60 * 1000) {
+        toast.error("Intern trial expired. Upgrade to continue.");
+        return;
+      }
+    } else {
+      const doneToday = user.lastTaskDate === todayKey ? user.tasksCompletedToday : 0;
+      if (doneToday >= dailyLimit) {
+        toast.error("Daily task limit reached. Upgrade your plan to earn more.");
+        return;
+      }
     }
     setInstalling(idx);
     setProgress(0);
