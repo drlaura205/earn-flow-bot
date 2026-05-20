@@ -198,6 +198,7 @@ export type Database = {
           reviewed_at: string | null
           status: string
           user_id: string
+          wallet_type: string
         }
         Insert: {
           address: string
@@ -211,6 +212,7 @@ export type Database = {
           reviewed_at?: string | null
           status?: string
           user_id: string
+          wallet_type?: string
         }
         Update: {
           address?: string
@@ -224,6 +226,7 @@ export type Database = {
           reviewed_at?: string | null
           status?: string
           user_id?: string
+          wallet_type?: string
         }
         Relationships: []
       }
@@ -307,28 +310,53 @@ export type Database = {
         Args: { _amount: number; _to_user: string }
         Returns: undefined
       }
-      request_withdrawal: {
-        Args: { _amount: number; _fund_pwd: string }
-        Returns: {
-          address: string
-          amount: number
-          created_at: string
-          fee: number
-          id: string
-          net_amount: number
-          network: string
-          note: string | null
-          reviewed_at: string | null
-          status: string
-          user_id: string
-        }
-        SetofOptions: {
-          from: "*"
-          to: "withdrawals"
-          isOneToOne: true
-          isSetofReturn: false
-        }
-      }
+      request_withdrawal:
+        | {
+            Args: { _amount: number; _fund_pwd: string }
+            Returns: {
+              address: string
+              amount: number
+              created_at: string
+              fee: number
+              id: string
+              net_amount: number
+              network: string
+              note: string | null
+              reviewed_at: string | null
+              status: string
+              user_id: string
+              wallet_type: string
+            }
+            SetofOptions: {
+              from: "*"
+              to: "withdrawals"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
+        | {
+            Args: { _amount: number; _fund_pwd: string; _wallet_type?: string }
+            Returns: {
+              address: string
+              amount: number
+              created_at: string
+              fee: number
+              id: string
+              net_amount: number
+              network: string
+              note: string | null
+              reviewed_at: string | null
+              status: string
+              user_id: string
+              wallet_type: string
+            }
+            SetofOptions: {
+              from: "*"
+              to: "withdrawals"
+              isOneToOne: true
+              isSetofReturn: false
+            }
+          }
       tier_rank: { Args: { _tier: string }; Returns: number }
       upgrade_tier: {
         Args: { _price: number; _tier: string }
