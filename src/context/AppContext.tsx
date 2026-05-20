@@ -55,7 +55,7 @@ interface AppState {
   updateUser: (patch: Partial<User>) => Promise<void>;
   upgradeTier: (tier: Tier) => Promise<{ ok: boolean; msg: string }>;
   completeTask: (reward: number) => Promise<{ ok: boolean; msg: string }>;
-  withdraw: (amount: number, fundPwd: string) => Promise<{ ok: boolean; msg: string }>;
+  withdraw: (amount: number, fundPwd: string, walletType?: "Main" | "Commission") => Promise<{ ok: boolean; msg: string }>;
   submitDeposit: (amount: number, txid: string) => Promise<{ ok: boolean; msg: string }>;
   refresh: () => Promise<void>;
 }
