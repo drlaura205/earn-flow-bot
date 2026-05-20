@@ -196,8 +196,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return { ok: true, msg: `+$${reward.toFixed(2)} earned` };
   };
 
-  const withdraw: AppState["withdraw"] = async (amount, fundPwd) => {
-    const { error } = await supabase.rpc("request_withdrawal", { _amount: amount, _fund_pwd: fundPwd });
+  const withdraw: AppState["withdraw"] = async (amount, fundPwd, walletType = "Main") => {
+    const { error } = await supabase.rpc("request_withdrawal", { _amount: amount, _fund_pwd: fundPwd, _wallet_type: walletType });
     if (error) return { ok: false, msg: error.message };
     await refresh();
     return { ok: true, msg: "Withdrawal submitted. Processing 1–48 hours." };
