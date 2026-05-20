@@ -43,6 +43,7 @@ export interface User {
   lastTaskDate: string;
   suspended: boolean;
   withdrawEnabled: boolean;
+  createdAt: string;
 }
 
 interface AppState {
