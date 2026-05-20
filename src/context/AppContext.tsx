@@ -55,7 +55,7 @@ interface AppState {
   updateUser: (patch: Partial<User>) => Promise<void>;
   upgradeTier: (tier: Tier) => Promise<{ ok: boolean; msg: string }>;
   completeTask: (reward: number) => Promise<{ ok: boolean; msg: string }>;
-  withdraw: (amount: number, fundPwd: string) => Promise<{ ok: boolean; msg: string }>;
+  withdraw: (amount: number, fundPwd: string, walletType?: "Main" | "Commission") => Promise<{ ok: boolean; msg: string }>;
   submitDeposit: (amount: number, txid: string) => Promise<{ ok: boolean; msg: string }>;
   refresh: () => Promise<void>;
 }
@@ -196,8 +196,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return { ok: true, msg: `+$${reward.toFixed(2)} earned` };
   };
 
-  const withdraw: AppState["withdraw"] = async (amount, fundPwd) => {
-    const { error } = await supabase.rpc("request_withdrawal", { _amount: amount, _fund_pwd: fundPwd });
+  const withdraw: AppState["withdraw"] = async (amount, fundPwd, walletType = "Main") => {
+    const { error } = await supabase.rpc("request_withdrawal", { _amount: amount, _fund_pwd: fundPwd, _wallet_type: walletType });
     if (error) return { ok: false, msg: error.message };
     await refresh();
     return { ok: true, msg: "Withdrawal submitted. Processing 1–48 hours." };

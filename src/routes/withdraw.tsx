@@ -19,6 +19,8 @@ function Withdraw() {
   const nav = useNavigate();
   const [amount, setAmount] = useState<number | null>(null);
   const [pwd, setPwd] = useState("");
+  const [walletType, setWalletType] = useState<"Main" | "Commission">("Main");
+  const [walletPickerOpen, setWalletPickerOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
 
   if (!user) return null;
@@ -27,6 +29,10 @@ function Withdraw() {
   const walletDisplay = wallet
     ? wallet.match(/.{1,18}/g)?.slice(0, 3).join("\n") || wallet
     : "Not set";
+
+  const commissionBal = Number(user.referralRewards || 0);
+  const mainBal = Math.max(0, Number(user.balance || 0) - commissionBal);
+  const availableBal = walletType === "Commission" ? commissionBal : mainBal;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +50,9 @@ function Withdraw() {
     }
     const n = amount || 0;
     if (n < MIN_WITHDRAWAL) return toast.error(`Minimum withdrawal is $${MIN_WITHDRAWAL}`);
+    if (n > availableBal) return toast.error(`Insufficient ${walletType} Wallet balance`);
     if (pwd.length !== 6) return toast.error("Fund password must be 6 digits");
-    const r = await withdraw(n, pwd);
+    const r = await withdraw(n, pwd, walletType);
     if (r.ok) { toast.success(r.msg); nav({ to: "/account" }); }
     else toast.error(r.msg);
   };
@@ -66,22 +73,26 @@ function Withdraw() {
         {/* Balances */}
         <div className="bg-white rounded-xl px-5 py-4">
           <div className="py-3 border-b border-gray-100 text-base text-gray-800">
-            Main Wallet: {user.balance.toFixed(4)}
+            Main Wallet: {mainBal.toFixed(2)}
           </div>
           <div className="py-3 text-base text-gray-800">
-            Commission Wallet: {Number(user.referralRewards || 0).toFixed(2)}
+            Commission Wallet: {commissionBal.toFixed(2)}
           </div>
         </div>
 
         {/* Wallet Type + Method */}
         <div className="bg-white rounded-xl px-5 py-2">
-          <div className="flex items-center justify-between py-4 border-b border-gray-100">
+          <button
+            type="button"
+            onClick={() => setWalletPickerOpen(true)}
+            className="w-full flex items-center justify-between py-4 border-b border-gray-100"
+          >
             <span className="text-gray-800">Wallet Type</span>
             <div className="flex items-center gap-1 text-gray-500">
-              <span>Main Wallet</span>
+              <span>{walletType} Wallet</span>
               <ChevronRight size={18} />
             </div>
-          </div>
+          </button>
           <div className="flex items-start justify-between py-4 gap-3">
             <span className="text-gray-800 pt-1">Withdrawal method</span>
             <div className="flex items-start gap-1 flex-1 justify-end">
@@ -174,6 +185,35 @@ function Withdraw() {
               OK
             </button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={walletPickerOpen} onOpenChange={setWalletPickerOpen}>
+        <DialogContent className="max-w-xs rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-center">Select wallet</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            {(["Main", "Commission"] as const).map((w) => {
+              const bal = w === "Commission" ? commissionBal : mainBal;
+              const active = walletType === w;
+              return (
+                <button
+                  key={w}
+                  onClick={() => { setWalletType(w); setWalletPickerOpen(false); }}
+                  className={`w-full flex items-center justify-between rounded-lg border px-4 py-3 text-left ${
+                    active ? "border-sky-400 bg-sky-50" : "border-gray-200 bg-white"
+                  }`}
+                >
+                  <span className="font-semibold text-gray-800">{w} Wallet</span>
+                  <span className="text-sm text-gray-600">{bal.toFixed(2)} USDT</span>
+                </button>
+              );
+            })}
+            <p className="text-[11px] text-gray-400 text-center pt-1">
+              One withdrawal per wallet per day
+            </p>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
