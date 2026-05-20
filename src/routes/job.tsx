@@ -153,7 +153,8 @@ function Job() {
       toast.error(`Tasks for ${user.tier} are only available ${taskDaysLabel(user.tier)}.`);
       return;
     }
-    if (user.tasksCompletedToday >= dailyLimit) {
+    const doneToday = user.lastTaskDate === todayKey ? user.tasksCompletedToday : 0;
+    if (doneToday >= dailyLimit) {
       toast.error("Daily task limit reached. Upgrade your plan to earn more.");
       return;
     }
