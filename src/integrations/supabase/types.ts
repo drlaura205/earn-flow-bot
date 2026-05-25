@@ -143,6 +143,30 @@ export type Database = {
         }
         Relationships: []
       }
+      referral_earnings: {
+        Row: {
+          amount: number
+          created_at: string
+          from_user_id: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          from_user_id?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          from_user_id?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       task_completions: {
         Row: {
           completed_at: string
