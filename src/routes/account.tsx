@@ -48,7 +48,7 @@ function Account() {
     const now = new Date();
     const startToday = new Date(now); startToday.setHours(0, 0, 0, 0);
     const startYest = new Date(startToday); startYest.setDate(startYest.getDate() - 1);
-    const startWeek = new Date(startToday); startWeek.setDate(startWeek.getDate() - 6);
+    const startWeek = new Date(startToday); startWeek.setDate(startWeek.getDate() - ((startToday.getDay() + 6) % 7));
     const startMonth = new Date(startToday); startMonth.setDate(startMonth.getDate() - 29);
     Promise.all([
       supabase
