@@ -134,9 +134,9 @@ function Account() {
         {/* 2x2 earnings */}
         <div className="grid grid-cols-2 gap-3">
           <StatBox label="Yesterday's earnings" value={earn.yesterday} />
-          <StatBox label="Today's earnings" value={user.todayEarnings} />
-          <StatBox label="This month's earnings" value={earn.month || user.todayEarnings} />
-          <StatBox label="This week's earnings" value={earn.week || user.todayEarnings} />
+          <StatBox label="Today's earnings" value={earn.today} />
+          <StatBox label="This month's earnings" value={earn.month} />
+          <StatBox label="This week's earnings" value={earn.week} />
         </div>
 
 
