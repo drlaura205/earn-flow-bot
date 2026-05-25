@@ -50,25 +50,30 @@ function Account() {
     const startYest = new Date(startToday); startYest.setDate(startYest.getDate() - 1);
     const startWeek = new Date(startToday); startWeek.setDate(startWeek.getDate() - 6);
     const startMonth = new Date(startToday); startMonth.setDate(startMonth.getDate() - 29);
-    supabase
-      .from("task_completions")
-      .select("reward, completed_at")
-      .eq("user_id", user.id)
-      .gte("completed_at", startMonth.toISOString())
-      .then(({ data }) => {
-        if (!data) { setEarn({ today: 0, yesterday: 0, week: 0, month: 0 }); return; }
-        let t = 0, y = 0, w = 0, m = 0;
-        for (const r of data) {
-          const ts = new Date(r.completed_at).getTime();
-          const rw = Number(r.reward);
-          m += rw;
-          if (ts >= startWeek.getTime()) w += rw;
-          if (ts >= startToday.getTime()) t += rw;
-          else if (ts >= startYest.getTime()) y += rw;
-        }
-        setEarn({ today: t, yesterday: y, week: w, month: m });
-      });
-  }, [user?.id, user?.todayEarnings]);
+    Promise.all([
+      supabase
+        .from("task_completions")
+        .select("reward, completed_at")
+        .eq("user_id", user.id)
+        .gte("completed_at", startMonth.toISOString()),
+      supabase
+        .from("referral_earnings")
+        .select("amount, created_at")
+        .eq("user_id", user.id)
+        .gte("created_at", startMonth.toISOString()),
+    ]).then(([tc, re]) => {
+      let t = 0, y = 0, w = 0, m = 0;
+      const add = (ts: number, rw: number) => {
+        m += rw;
+        if (ts >= startWeek.getTime()) w += rw;
+        if (ts >= startToday.getTime()) t += rw;
+        else if (ts >= startYest.getTime()) y += rw;
+      };
+      for (const r of tc.data || []) add(new Date(r.completed_at).getTime(), Number(r.reward));
+      for (const r of re.data || []) add(new Date(r.created_at).getTime(), Number(r.amount));
+      setEarn({ today: t, yesterday: y, week: w, month: m });
+    });
+  }, [user?.id, user?.todayEarnings, user?.referralRewards]);
 
   useEffect(() => {
     if (!user) return;
