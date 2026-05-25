@@ -40,7 +40,7 @@ function Account() {
   const { user, logout } = useApp();
   const nav = useNavigate();
   const [installOpen, setInstallOpen] = useState(false);
-  const [earn, setEarn] = useState({ yesterday: 0, week: 0, month: 0 });
+  const [earn, setEarn] = useState({ today: 0, yesterday: 0, week: 0, month: 0 });
   const [purchase, setPurchase] = useState<{ start: Date; end: Date } | null>(null);
 
   useEffect(() => {
@@ -56,16 +56,17 @@ function Account() {
       .eq("user_id", user.id)
       .gte("completed_at", startMonth.toISOString())
       .then(({ data }) => {
-        if (!data) return;
-        let y = 0, w = 0, m = 0;
+        if (!data) { setEarn({ today: 0, yesterday: 0, week: 0, month: 0 }); return; }
+        let t = 0, y = 0, w = 0, m = 0;
         for (const r of data) {
-          const t = new Date(r.completed_at).getTime();
+          const ts = new Date(r.completed_at).getTime();
           const rw = Number(r.reward);
           m += rw;
-          if (t >= startWeek.getTime()) w += rw;
-          if (t >= startYest.getTime() && t < startToday.getTime()) y += rw;
+          if (ts >= startWeek.getTime()) w += rw;
+          if (ts >= startToday.getTime()) t += rw;
+          else if (ts >= startYest.getTime()) y += rw;
         }
-        setEarn({ yesterday: y, week: w, month: m });
+        setEarn({ today: t, yesterday: y, week: w, month: m });
       });
   }, [user?.id, user?.todayEarnings]);
 
@@ -133,9 +134,9 @@ function Account() {
         {/* 2x2 earnings */}
         <div className="grid grid-cols-2 gap-3">
           <StatBox label="Yesterday's earnings" value={earn.yesterday} />
-          <StatBox label="Today's earnings" value={user.todayEarnings} />
-          <StatBox label="This month's earnings" value={earn.month || user.todayEarnings} />
-          <StatBox label="This week's earnings" value={earn.week || user.todayEarnings} />
+          <StatBox label="Today's earnings" value={earn.today} />
+          <StatBox label="This month's earnings" value={earn.month} />
+          <StatBox label="This week's earnings" value={earn.week} />
         </div>
 
 
