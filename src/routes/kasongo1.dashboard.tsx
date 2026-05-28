@@ -3,7 +3,7 @@ import { Users, Wallet, TrendingUp, AlertCircle } from "lucide-react";
 import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin } from "@/context/AdminContext";
 
-export const Route = createFileRoute("/admin/dashboard")({
+export const Route = createFileRoute("/kasongo1/dashboard")({
   component: () => (<AdminGate><Dashboard /></AdminGate>),
 });
 
