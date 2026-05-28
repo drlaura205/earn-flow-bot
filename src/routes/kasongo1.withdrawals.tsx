@@ -79,7 +79,8 @@ function Withdrawals() {
                 </tr>
               ))}
               {list.length === 0 && (
-                <tr><td colSpan={7} className="py-12 text-center text-sm text-slate-500">No withdrawals to display</td></tr>
+                <tr><td colSpan={8} className="py-12 text-center text-sm text-slate-500">No withdrawals to display</td></tr>
+
               )}
             </tbody>
           </table>
