@@ -4,7 +4,7 @@ import { ShieldCheck } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/login")({ component: AdminLogin });
+export const Route = createFileRoute("/kasongo1/login")({ component: AdminLogin });
 
 function AdminLogin() {
   const { login } = useAdmin();
@@ -20,7 +20,7 @@ function AdminLogin() {
       const ok = await login(u, p);
       if (ok) {
         toast.success("Welcome, Admin");
-        nav({ to: "/admin/dashboard" });
+        nav({ to: "/kasongo1/dashboard" });
       } else toast.error("Invalid credentials");
     } finally {
       setBusy(false);
