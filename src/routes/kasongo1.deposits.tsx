@@ -5,7 +5,7 @@ import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin } from "@/context/AdminContext";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/deposits")({
+export const Route = createFileRoute("/kasongo1/deposits")({
   component: () => (<AdminGate><Deposits /></AdminGate>),
 });
 

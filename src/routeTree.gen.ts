@@ -27,13 +27,13 @@ import { Route as FundPasswordRouteImport } from './routes/fund-password'
 import { Route as CompanyProfileRouteImport } from './routes/company-profile'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminWithdrawalsRouteImport } from './routes/admin.withdrawals'
-import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
-import { Route as AdminLoginRouteImport } from './routes/admin.login'
-import { Route as AdminDepositsRouteImport } from './routes/admin.deposits'
-import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as Kasongo1IndexRouteImport } from './routes/kasongo1.index'
+import { Route as Kasongo1WithdrawalsRouteImport } from './routes/kasongo1.withdrawals'
+import { Route as Kasongo1UsersRouteImport } from './routes/kasongo1.users'
+import { Route as Kasongo1SettingsRouteImport } from './routes/kasongo1.settings'
+import { Route as Kasongo1LoginRouteImport } from './routes/kasongo1.login'
+import { Route as Kasongo1DepositsRouteImport } from './routes/kasongo1.deposits'
+import { Route as Kasongo1DashboardRouteImport } from './routes/kasongo1.dashboard'
 
 const WithdrawRoute = WithdrawRouteImport.update({
   id: '/withdraw',
@@ -125,39 +125,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
+const Kasongo1IndexRoute = Kasongo1IndexRouteImport.update({
+  id: '/kasongo1/',
+  path: '/kasongo1/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminWithdrawalsRoute = AdminWithdrawalsRouteImport.update({
-  id: '/admin/withdrawals',
-  path: '/admin/withdrawals',
+const Kasongo1WithdrawalsRoute = Kasongo1WithdrawalsRouteImport.update({
+  id: '/kasongo1/withdrawals',
+  path: '/kasongo1/withdrawals',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
+const Kasongo1UsersRoute = Kasongo1UsersRouteImport.update({
+  id: '/kasongo1/users',
+  path: '/kasongo1/users',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/admin/settings',
-  path: '/admin/settings',
+const Kasongo1SettingsRoute = Kasongo1SettingsRouteImport.update({
+  id: '/kasongo1/settings',
+  path: '/kasongo1/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin/login',
-  path: '/admin/login',
+const Kasongo1LoginRoute = Kasongo1LoginRouteImport.update({
+  id: '/kasongo1/login',
+  path: '/kasongo1/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminDepositsRoute = AdminDepositsRouteImport.update({
-  id: '/admin/deposits',
-  path: '/admin/deposits',
+const Kasongo1DepositsRoute = Kasongo1DepositsRouteImport.update({
+  id: '/kasongo1/deposits',
+  path: '/kasongo1/deposits',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminDashboardRoute = AdminDashboardRouteImport.update({
-  id: '/admin/dashboard',
-  path: '/admin/dashboard',
+const Kasongo1DashboardRoute = Kasongo1DashboardRouteImport.update({
+  id: '/kasongo1/dashboard',
+  path: '/kasongo1/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -180,13 +180,13 @@ export interface FileRoutesByFullPath {
   '/team': typeof TeamRoute
   '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin/': typeof AdminIndexRoute
+  '/kasongo1/dashboard': typeof Kasongo1DashboardRoute
+  '/kasongo1/deposits': typeof Kasongo1DepositsRoute
+  '/kasongo1/login': typeof Kasongo1LoginRoute
+  '/kasongo1/settings': typeof Kasongo1SettingsRoute
+  '/kasongo1/users': typeof Kasongo1UsersRoute
+  '/kasongo1/withdrawals': typeof Kasongo1WithdrawalsRoute
+  '/kasongo1/': typeof Kasongo1IndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -207,13 +207,13 @@ export interface FileRoutesByTo {
   '/team': typeof TeamRoute
   '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin': typeof AdminIndexRoute
+  '/kasongo1/dashboard': typeof Kasongo1DashboardRoute
+  '/kasongo1/deposits': typeof Kasongo1DepositsRoute
+  '/kasongo1/login': typeof Kasongo1LoginRoute
+  '/kasongo1/settings': typeof Kasongo1SettingsRoute
+  '/kasongo1/users': typeof Kasongo1UsersRoute
+  '/kasongo1/withdrawals': typeof Kasongo1WithdrawalsRoute
+  '/kasongo1': typeof Kasongo1IndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -235,13 +235,13 @@ export interface FileRoutesById {
   '/team': typeof TeamRoute
   '/wallet-address': typeof WalletAddressRoute
   '/withdraw': typeof WithdrawRoute
-  '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/deposits': typeof AdminDepositsRoute
-  '/admin/login': typeof AdminLoginRoute
-  '/admin/settings': typeof AdminSettingsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/withdrawals': typeof AdminWithdrawalsRoute
-  '/admin/': typeof AdminIndexRoute
+  '/kasongo1/dashboard': typeof Kasongo1DashboardRoute
+  '/kasongo1/deposits': typeof Kasongo1DepositsRoute
+  '/kasongo1/login': typeof Kasongo1LoginRoute
+  '/kasongo1/settings': typeof Kasongo1SettingsRoute
+  '/kasongo1/users': typeof Kasongo1UsersRoute
+  '/kasongo1/withdrawals': typeof Kasongo1WithdrawalsRoute
+  '/kasongo1/': typeof Kasongo1IndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -264,13 +264,13 @@ export interface FileRouteTypes {
     | '/team'
     | '/wallet-address'
     | '/withdraw'
-    | '/admin/dashboard'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/settings'
-    | '/admin/users'
-    | '/admin/withdrawals'
-    | '/admin/'
+    | '/kasongo1/dashboard'
+    | '/kasongo1/deposits'
+    | '/kasongo1/login'
+    | '/kasongo1/settings'
+    | '/kasongo1/users'
+    | '/kasongo1/withdrawals'
+    | '/kasongo1/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -291,13 +291,13 @@ export interface FileRouteTypes {
     | '/team'
     | '/wallet-address'
     | '/withdraw'
-    | '/admin/dashboard'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/settings'
-    | '/admin/users'
-    | '/admin/withdrawals'
-    | '/admin'
+    | '/kasongo1/dashboard'
+    | '/kasongo1/deposits'
+    | '/kasongo1/login'
+    | '/kasongo1/settings'
+    | '/kasongo1/users'
+    | '/kasongo1/withdrawals'
+    | '/kasongo1'
   id:
     | '__root__'
     | '/'
@@ -318,13 +318,13 @@ export interface FileRouteTypes {
     | '/team'
     | '/wallet-address'
     | '/withdraw'
-    | '/admin/dashboard'
-    | '/admin/deposits'
-    | '/admin/login'
-    | '/admin/settings'
-    | '/admin/users'
-    | '/admin/withdrawals'
-    | '/admin/'
+    | '/kasongo1/dashboard'
+    | '/kasongo1/deposits'
+    | '/kasongo1/login'
+    | '/kasongo1/settings'
+    | '/kasongo1/users'
+    | '/kasongo1/withdrawals'
+    | '/kasongo1/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -346,13 +346,13 @@ export interface RootRouteChildren {
   TeamRoute: typeof TeamRoute
   WalletAddressRoute: typeof WalletAddressRoute
   WithdrawRoute: typeof WithdrawRoute
-  AdminDashboardRoute: typeof AdminDashboardRoute
-  AdminDepositsRoute: typeof AdminDepositsRoute
-  AdminLoginRoute: typeof AdminLoginRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AdminWithdrawalsRoute: typeof AdminWithdrawalsRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+  Kasongo1DashboardRoute: typeof Kasongo1DashboardRoute
+  Kasongo1DepositsRoute: typeof Kasongo1DepositsRoute
+  Kasongo1LoginRoute: typeof Kasongo1LoginRoute
+  Kasongo1SettingsRoute: typeof Kasongo1SettingsRoute
+  Kasongo1UsersRoute: typeof Kasongo1UsersRoute
+  Kasongo1WithdrawalsRoute: typeof Kasongo1WithdrawalsRoute
+  Kasongo1IndexRoute: typeof Kasongo1IndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -483,53 +483,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
-      path: '/admin'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
+    '/kasongo1/': {
+      id: '/kasongo1/'
+      path: '/kasongo1'
+      fullPath: '/kasongo1/'
+      preLoaderRoute: typeof Kasongo1IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/withdrawals': {
-      id: '/admin/withdrawals'
-      path: '/admin/withdrawals'
-      fullPath: '/admin/withdrawals'
-      preLoaderRoute: typeof AdminWithdrawalsRouteImport
+    '/kasongo1/withdrawals': {
+      id: '/kasongo1/withdrawals'
+      path: '/kasongo1/withdrawals'
+      fullPath: '/kasongo1/withdrawals'
+      preLoaderRoute: typeof Kasongo1WithdrawalsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/admin/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
+    '/kasongo1/users': {
+      id: '/kasongo1/users'
+      path: '/kasongo1/users'
+      fullPath: '/kasongo1/users'
+      preLoaderRoute: typeof Kasongo1UsersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/admin/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
+    '/kasongo1/settings': {
+      id: '/kasongo1/settings'
+      path: '/kasongo1/settings'
+      fullPath: '/kasongo1/settings'
+      preLoaderRoute: typeof Kasongo1SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/admin/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
+    '/kasongo1/login': {
+      id: '/kasongo1/login'
+      path: '/kasongo1/login'
+      fullPath: '/kasongo1/login'
+      preLoaderRoute: typeof Kasongo1LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/deposits': {
-      id: '/admin/deposits'
-      path: '/admin/deposits'
-      fullPath: '/admin/deposits'
-      preLoaderRoute: typeof AdminDepositsRouteImport
+    '/kasongo1/deposits': {
+      id: '/kasongo1/deposits'
+      path: '/kasongo1/deposits'
+      fullPath: '/kasongo1/deposits'
+      preLoaderRoute: typeof Kasongo1DepositsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/dashboard': {
-      id: '/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AdminDashboardRouteImport
+    '/kasongo1/dashboard': {
+      id: '/kasongo1/dashboard'
+      path: '/kasongo1/dashboard'
+      fullPath: '/kasongo1/dashboard'
+      preLoaderRoute: typeof Kasongo1DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -554,14 +554,23 @@ const rootRouteChildren: RootRouteChildren = {
   TeamRoute: TeamRoute,
   WalletAddressRoute: WalletAddressRoute,
   WithdrawRoute: WithdrawRoute,
-  AdminDashboardRoute: AdminDashboardRoute,
-  AdminDepositsRoute: AdminDepositsRoute,
-  AdminLoginRoute: AdminLoginRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
-  AdminUsersRoute: AdminUsersRoute,
-  AdminWithdrawalsRoute: AdminWithdrawalsRoute,
-  AdminIndexRoute: AdminIndexRoute,
+  Kasongo1DashboardRoute: Kasongo1DashboardRoute,
+  Kasongo1DepositsRoute: Kasongo1DepositsRoute,
+  Kasongo1LoginRoute: Kasongo1LoginRoute,
+  Kasongo1SettingsRoute: Kasongo1SettingsRoute,
+  Kasongo1UsersRoute: Kasongo1UsersRoute,
+  Kasongo1WithdrawalsRoute: Kasongo1WithdrawalsRoute,
+  Kasongo1IndexRoute: Kasongo1IndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

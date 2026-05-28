@@ -4,11 +4,11 @@ import { LayoutDashboard, ArrowDownToLine, ArrowUpFromLine, Users, Settings, Log
 import { useAdmin } from "@/context/AdminContext";
 
 const NAV = [
-  { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/deposits", label: "Deposits", icon: ArrowDownToLine },
-  { to: "/admin/withdrawals", label: "Withdrawals", icon: ArrowUpFromLine },
-  { to: "/admin/users", label: "Users", icon: Users },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
+  { to: "/kasongo1/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/kasongo1/deposits", label: "Deposits", icon: ArrowDownToLine },
+  { to: "/kasongo1/withdrawals", label: "Withdrawals", icon: ArrowUpFromLine },
+  { to: "/kasongo1/users", label: "Users", icon: Users },
+  { to: "/kasongo1/settings", label: "Settings", icon: Settings },
 ];
 
 export function AdminLayout({ children }: { children: ReactNode }) {
@@ -32,7 +32,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         <nav className="flex-1 p-2 space-y-1">
           {NAV.map(({ to, label, icon: Icon }) => {
             const active = path === to;
-            const showBadge = to === "/admin/dashboard" && pending > 0;
+            const showBadge = to === "/kasongo1/dashboard" && pending > 0;
             return (
               <Link
                 key={to} to={to}
@@ -48,7 +48,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           })}
         </nav>
         <button
-          onClick={async () => { await logout(); nav({ to: "/admin/login" }); }}
+          onClick={async () => { await logout(); nav({ to: "/kasongo1/login" }); }}
           className="m-2 flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-slate-300 hover:bg-red-500/15 hover:text-red-300 transition"
         >
           <LogOut size={18} />
@@ -66,7 +66,7 @@ export function AdminGate({ children }: { children: ReactNode }) {
   const { isAdmin } = useAdmin();
   const nav = useNavigate();
   useEffect(() => {
-    if (!isAdmin) nav({ to: "/admin/login" });
+    if (!isAdmin) nav({ to: "/kasongo1/login" });
   }, [isAdmin, nav]);
   if (!isAdmin) {
     return (
