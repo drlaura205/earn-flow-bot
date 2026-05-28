@@ -229,6 +229,11 @@ function Profit() {
           bonuses from them. You can only receive task management rewards from subordinates of
           equal or lower level than you.
         </p>
+        <p>
+          Intern tasks do not generate any task management bonus. Management bonuses are only
+          paid when a subordinate completes tasks as a regular employee (C1 or higher).
+        </p>
+
       </div>
     </div>
   );
