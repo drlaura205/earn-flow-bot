@@ -33,7 +33,8 @@ function Withdrawals() {
           <table className="w-full text-sm">
             <thead className="text-xs uppercase text-slate-500 bg-slate-900/80">
               <tr>
-                <th className="text-left py-3 px-4">User</th>
+                <th className="text-left py-3 px-4">User ID</th>
+                <th className="text-left py-3 px-4">Phone</th>
                 <th className="text-left py-3 px-4">Amount</th>
                 <th className="text-left py-3 px-4">TRC-20 Address</th>
                 <th className="text-left py-3 px-4">Network</th>
@@ -46,6 +47,8 @@ function Withdrawals() {
               {list.map((w) => (
                 <tr key={w.id} className="border-t border-slate-800/60 hover:bg-slate-800/30">
                   <td className="py-3 px-4 font-mono text-xs">{w.userId}</td>
+                  <td className="py-3 px-4 text-slate-300">{w.phone}</td>
+
                   <td className="py-3 px-4 font-bold text-amber-300">${w.amount}</td>
                   <td className="py-3 px-4">
                     <button onClick={() => copy(w.address)} className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-300 hover:text-cyan-300">
