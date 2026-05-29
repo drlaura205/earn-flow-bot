@@ -13,11 +13,6 @@ function Withdrawals() {
   const { withdrawals, payWithdrawal, rejectWithdrawal } = useAdmin();
   const [pendingOnly, setPendingOnly] = useState(true);
   const list = pendingOnly ? withdrawals.filter((w) => w.status === "Pending") : withdrawals;
-  const copy = (t: string) => { navigator.clipboard.writeText(t); toast.success("Address copied"); };
-function Withdrawals() {
-  const { withdrawals, payWithdrawal, rejectWithdrawal } = useAdmin();
-  const [pendingOnly, setPendingOnly] = useState(true);
-  const list = pendingOnly ? withdrawals.filter((w) => w.status === "Pending") : withdrawals;
   const pendingList = withdrawals.filter((w) => w.status === "Pending");
   const pendingCount = pendingList.length;
   const uniqueUsersCount = new Set(pendingList.map((w) => w.userId)).size;
