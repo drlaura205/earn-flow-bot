@@ -13,19 +13,32 @@ function Withdrawals() {
   const { withdrawals, payWithdrawal, rejectWithdrawal } = useAdmin();
   const [pendingOnly, setPendingOnly] = useState(true);
   const list = pendingOnly ? withdrawals.filter((w) => w.status === "Pending") : withdrawals;
+  const pendingList = withdrawals.filter((w) => w.status === "Pending");
+  const pendingCount = pendingList.length;
+  const uniqueUsersCount = new Set(pendingList.map((w) => w.userId)).size;
   const copy = (t: string) => { navigator.clipboard.writeText(t); toast.success("Address copied"); };
 
   return (
     <div className="space-y-5">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-100">Withdrawal Requests</h1>
           <p className="text-sm text-slate-400 mt-1">Process outgoing TRC-20 USDT payouts</p>
         </div>
-        <label className="flex items-center gap-2 text-sm text-slate-300">
-          <input type="checkbox" checked={pendingOnly} onChange={(e) => setPendingOnly(e.target.checked)} className="accent-cyan-500" />
-          Pending only
-        </label>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className="rounded-md border border-amber-500/30 bg-amber-500/10 text-amber-300 px-2.5 py-1 text-xs font-semibold">
+              {pendingCount} pending
+            </span>
+            <span className="rounded-md border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 px-2.5 py-1 text-xs font-semibold">
+              {uniqueUsersCount} {uniqueUsersCount === 1 ? "person" : "people"}
+            </span>
+          </div>
+          <label className="flex items-center gap-2 text-sm text-slate-300">
+            <input type="checkbox" checked={pendingOnly} onChange={(e) => setPendingOnly(e.target.checked)} className="accent-cyan-500" />
+            Pending only
+          </label>
+        </div>
       </header>
 
       <div className="rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden">
