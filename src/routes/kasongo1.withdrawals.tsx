@@ -14,10 +14,13 @@ function Withdrawals() {
   const [pendingOnly, setPendingOnly] = useState(true);
   const list = pendingOnly ? withdrawals.filter((w) => w.status === "Pending") : withdrawals;
   const copy = (t: string) => { navigator.clipboard.writeText(t); toast.success("Address copied"); };
-
-  return (
-    <div className="space-y-5">
-      <header className="flex items-center justify-between">
+function Withdrawals() {
+  const { withdrawals, payWithdrawal, rejectWithdrawal } = useAdmin();
+  const [pendingOnly, setPendingOnly] = useState(true);
+  const list = pendingOnly ? withdrawals.filter((w) => w.status === "Pending") : withdrawals;
+  const pendingList = withdrawals.filter((w) => w.status === "Pending");
+  const pendingCount = pendingList.length;
+  const uniqueUsersCount = new Set(pendingList.map((w) => w.userId)).size;
         <div>
           <h1 className="text-2xl font-bold text-slate-100">Withdrawal Requests</h1>
           <p className="text-sm text-slate-400 mt-1">Process outgoing TRC-20 USDT payouts</p>
