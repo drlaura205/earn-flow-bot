@@ -63,6 +63,7 @@ interface AdminState {
   payWithdrawal: (id: string) => Promise<void>;
   rejectWithdrawal: (id: string) => Promise<void>;
   adjustBalance: (userId: string, delta: number) => Promise<void>;
+  adjustCommission: (userId: string, delta: number) => Promise<void>;
   setUserTier: (userId: string, tier: AdminTier) => Promise<void>;
   toggleSuspend: (userId: string) => Promise<void>;
   toggleWithdraw: (userId: string) => Promise<void>;
