@@ -31,6 +31,8 @@ export interface AdminUser {
   id: string;
   phone: string;
   balance: number;
+  mainBalance: number;
+  commissionBalance: number;
   tier: AdminTier;
   upline: string;
   joined: string;
