@@ -80,8 +80,10 @@ function UsersPage() {
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex justify-end gap-1.5">
-                      <button onClick={() => adjust(u.id, 1)} title="Add balance" className="p-1.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"><Plus size={12} /></button>
-                      <button onClick={() => adjust(u.id, -1)} title="Subtract balance" className="p-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25"><Minus size={12} /></button>
+                      <button onClick={() => adjust(u.id, 1, "main")} title="Add to main" className="p-1.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"><Plus size={12} /></button>
+                      <button onClick={() => adjust(u.id, -1, "main")} title="Subtract from main" className="p-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25"><Minus size={12} /></button>
+                      <button onClick={() => adjust(u.id, 1, "commission")} title="Add to commission" className="p-1.5 rounded bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/25 border border-amber-500/30"><Plus size={12} /></button>
+                      <button onClick={() => adjust(u.id, -1, "commission")} title="Subtract from commission" className="p-1.5 rounded bg-amber-500/15 text-amber-200 hover:bg-amber-500/25 border border-amber-500/30"><Minus size={12} /></button>
                       <button onClick={() => { toggleWithdraw(u.id); toast.success(`Withdraw ${u.withdrawEnabled ? "disabled" : "enabled"} for ${u.phone}`); }} title={u.withdrawEnabled ? "Disable withdrawals" : "Enable withdrawals"}
                         className={`p-1.5 rounded ${u.withdrawEnabled ? "bg-slate-500/15 text-slate-300 hover:bg-slate-500/25" : "bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"}`}>
                         {u.withdrawEnabled ? <WalletMinimal size={12} /> : <Wallet size={12} />}
