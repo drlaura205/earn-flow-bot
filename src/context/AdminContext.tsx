@@ -122,18 +122,24 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       (profilesR.data || []).forEach((p: any) => profileMap.set(p.id, p));
 
       setUsers(
-        (profilesR.data || []).map((p: any) => ({
-          id: p.id,
-          phone: p.phone,
-          balance: Number(p.balance) || 0,
-          tier: (p.tier || "Intern") as AdminTier,
-          upline: p.invitation_code || "—",
-          joined: (p.created_at || "").slice(0, 10),
-          status: p.suspended ? "Suspended" : "Active",
-          totalEarnings: Number(p.total_earnings) || 0,
-          taskCount: Number(p.task_count) || 0,
-          withdrawEnabled: !!p.withdraw_enabled,
-        })),
+        (profilesR.data || []).map((p: any) => {
+          const bal = Number(p.balance) || 0;
+          const comm = Number(p.referral_rewards) || 0;
+          return {
+            id: p.id,
+            phone: p.phone,
+            balance: bal,
+            mainBalance: Math.max(0, bal - comm),
+            commissionBalance: comm,
+            tier: (p.tier || "Intern") as AdminTier,
+            upline: p.invitation_code || "—",
+            joined: (p.created_at || "").slice(0, 10),
+            status: p.suspended ? "Suspended" : "Active",
+            totalEarnings: Number(p.total_earnings) || 0,
+            taskCount: Number(p.task_count) || 0,
+            withdrawEnabled: !!p.withdraw_enabled,
+          };
+        }),
       );
 
       setDeposits(
