@@ -47,7 +47,8 @@ function UsersPage() {
               <tr>
                 <th className="text-left py-3 px-4">User ID</th>
                 <th className="text-left py-3 px-4">Phone</th>
-                <th className="text-left py-3 px-4">Balance</th>
+                <th className="text-left py-3 px-4">Main</th>
+                <th className="text-left py-3 px-4">Commission</th>
                 <th className="text-left py-3 px-4">Tier</th>
                 <th className="text-left py-3 px-4">Upline</th>
                 <th className="text-left py-3 px-4">Joined</th>
