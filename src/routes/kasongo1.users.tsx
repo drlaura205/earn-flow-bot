@@ -12,16 +12,17 @@ export const Route = createFileRoute("/kasongo1/users")({
 const TIERS: AdminTier[] = ["Intern", "C1", "C2", "C3", "C4", "C5"];
 
 function UsersPage() {
-  const { users, adjustBalance, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
+  const { users, adjustBalance, adjustCommission, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
   const [q, setQ] = useState("");
   const filtered = users.filter((u) => u.id.toLowerCase().includes(q.toLowerCase()) || u.phone.toLowerCase().includes(q.toLowerCase()));
 
-  const adjust = (id: string, sign: 1 | -1) => {
-    const v = window.prompt(`${sign === 1 ? "Add" : "Subtract"} amount (USDT):`, "10");
+  const adjust = (id: string, sign: 1 | -1, kind: "main" | "commission") => {
+    const v = window.prompt(`${sign === 1 ? "Add" : "Subtract"} ${kind} balance (USDT):`, "10");
     const n = parseFloat(v || "");
     if (!isNaN(n) && n > 0) {
-      adjustBalance(id, sign * n);
-      toast.success(`${sign === 1 ? "Added" : "Subtracted"} $${n} for ${id}`);
+      if (kind === "main") adjustBalance(id, sign * n);
+      else adjustCommission(id, sign * n);
+      toast.success(`${sign === 1 ? "Added" : "Subtracted"} $${n} (${kind}) for ${id}`);
     }
   };
 
@@ -46,7 +47,8 @@ function UsersPage() {
               <tr>
                 <th className="text-left py-3 px-4">User ID</th>
                 <th className="text-left py-3 px-4">Phone</th>
-                <th className="text-left py-3 px-4">Balance</th>
+                <th className="text-left py-3 px-4">Main</th>
+                <th className="text-left py-3 px-4">Commission</th>
                 <th className="text-left py-3 px-4">Tier</th>
                 <th className="text-left py-3 px-4">Upline</th>
                 <th className="text-left py-3 px-4">Joined</th>
@@ -60,7 +62,8 @@ function UsersPage() {
                 <tr key={u.id} className="border-t border-slate-800/60 hover:bg-slate-800/30">
                   <td className="py-3 px-4 font-mono text-xs">{u.id}</td>
                   <td className="py-3 px-4 text-slate-300">{u.phone}</td>
-                  <td className="py-3 px-4 font-bold text-cyan-300">${u.balance.toFixed(2)}</td>
+                  <td className="py-3 px-4 font-bold text-cyan-300">${u.mainBalance.toFixed(2)}</td>
+                  <td className="py-3 px-4 font-bold text-amber-300">${u.commissionBalance.toFixed(2)}</td>
                   <td className="py-3 px-4">
                     <select value={u.tier} onChange={(e) => { setUserTier(u.id, e.target.value as AdminTier); toast.success(`Tier updated for ${u.id}`); }}
                       className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs">
@@ -77,8 +80,10 @@ function UsersPage() {
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex justify-end gap-1.5">
-                      <button onClick={() => adjust(u.id, 1)} title="Add balance" className="p-1.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"><Plus size={12} /></button>
-                      <button onClick={() => adjust(u.id, -1)} title="Subtract balance" className="p-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25"><Minus size={12} /></button>
+                      <button onClick={() => adjust(u.id, 1, "main")} title="Add to main" className="p-1.5 rounded bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"><Plus size={12} /></button>
+                      <button onClick={() => adjust(u.id, -1, "main")} title="Subtract from main" className="p-1.5 rounded bg-amber-500/15 text-amber-300 hover:bg-amber-500/25"><Minus size={12} /></button>
+                      <button onClick={() => adjust(u.id, 1, "commission")} title="Add to commission" className="p-1.5 rounded bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/25 border border-amber-500/30"><Plus size={12} /></button>
+                      <button onClick={() => adjust(u.id, -1, "commission")} title="Subtract from commission" className="p-1.5 rounded bg-amber-500/15 text-amber-200 hover:bg-amber-500/25 border border-amber-500/30"><Minus size={12} /></button>
                       <button onClick={() => { toggleWithdraw(u.id); toast.success(`Withdraw ${u.withdrawEnabled ? "disabled" : "enabled"} for ${u.phone}`); }} title={u.withdrawEnabled ? "Disable withdrawals" : "Enable withdrawals"}
                         className={`p-1.5 rounded ${u.withdrawEnabled ? "bg-slate-500/15 text-slate-300 hover:bg-slate-500/25" : "bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"}`}>
                         {u.withdrawEnabled ? <WalletMinimal size={12} /> : <Wallet size={12} />}
@@ -92,7 +97,7 @@ function UsersPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={9} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
+                <tr><td colSpan={10} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
               )}
             </tbody>
           </table>

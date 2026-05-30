@@ -263,6 +263,10 @@ export type Database = {
         Args: { _delta: number; _user_id: string }
         Returns: undefined
       }
+      admin_adjust_commission: {
+        Args: { _delta: number; _user_id: string }
+        Returns: undefined
+      }
       admin_approve_deposit: {
         Args: { _deposit_id: string }
         Returns: undefined

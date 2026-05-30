@@ -31,6 +31,8 @@ export interface AdminUser {
   id: string;
   phone: string;
   balance: number;
+  mainBalance: number;
+  commissionBalance: number;
   tier: AdminTier;
   upline: string;
   joined: string;
@@ -61,6 +63,7 @@ interface AdminState {
   payWithdrawal: (id: string) => Promise<void>;
   rejectWithdrawal: (id: string) => Promise<void>;
   adjustBalance: (userId: string, delta: number) => Promise<void>;
+  adjustCommission: (userId: string, delta: number) => Promise<void>;
   setUserTier: (userId: string, tier: AdminTier) => Promise<void>;
   toggleSuspend: (userId: string) => Promise<void>;
   toggleWithdraw: (userId: string) => Promise<void>;
@@ -119,18 +122,24 @@ export function AdminProvider({ children }: { children: ReactNode }) {
       (profilesR.data || []).forEach((p: any) => profileMap.set(p.id, p));
 
       setUsers(
-        (profilesR.data || []).map((p: any) => ({
-          id: p.id,
-          phone: p.phone,
-          balance: Number(p.balance) || 0,
-          tier: (p.tier || "Intern") as AdminTier,
-          upline: p.invitation_code || "—",
-          joined: (p.created_at || "").slice(0, 10),
-          status: p.suspended ? "Suspended" : "Active",
-          totalEarnings: Number(p.total_earnings) || 0,
-          taskCount: Number(p.task_count) || 0,
-          withdrawEnabled: !!p.withdraw_enabled,
-        })),
+        (profilesR.data || []).map((p: any) => {
+          const bal = Number(p.balance) || 0;
+          const comm = Number(p.referral_rewards) || 0;
+          return {
+            id: p.id,
+            phone: p.phone,
+            balance: bal,
+            mainBalance: Math.max(0, bal - comm),
+            commissionBalance: comm,
+            tier: (p.tier || "Intern") as AdminTier,
+            upline: p.invitation_code || "—",
+            joined: (p.created_at || "").slice(0, 10),
+            status: p.suspended ? "Suspended" : "Active",
+            totalEarnings: Number(p.total_earnings) || 0,
+            taskCount: Number(p.task_count) || 0,
+            withdrawEnabled: !!p.withdraw_enabled,
+          };
+        }),
       );
 
       setDeposits(
@@ -268,6 +277,10 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     await supabase.rpc("admin_adjust_balance", { _user_id: userId, _delta: delta });
     await refresh();
   };
+  const adjustCommission = async (userId: string, delta: number) => {
+    await supabase.rpc("admin_adjust_commission", { _user_id: userId, _delta: delta });
+    await refresh();
+  };
   const setUserTier = async (userId: string, tier: AdminTier) => {
     await supabase.rpc("admin_set_tier", { _user_id: userId, _tier: tier });
     await refresh();
@@ -301,7 +314,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         isAdmin, loading, login, logout,
         deposits, withdrawals, users, settings,
         approveDeposit, rejectDeposit, payWithdrawal, rejectWithdrawal,
-        adjustBalance, setUserTier, toggleSuspend, toggleWithdraw, updateSettings, refresh,
+        adjustBalance, adjustCommission, setUserTier, toggleSuspend, toggleWithdraw, updateSettings, refresh,
       }}
     >
       {children}
