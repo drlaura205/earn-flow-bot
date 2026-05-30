@@ -314,7 +314,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         isAdmin, loading, login, logout,
         deposits, withdrawals, users, settings,
         approveDeposit, rejectDeposit, payWithdrawal, rejectWithdrawal,
-        adjustBalance, setUserTier, toggleSuspend, toggleWithdraw, updateSettings, refresh,
+        adjustBalance, adjustCommission, setUserTier, toggleSuspend, toggleWithdraw, updateSettings, refresh,
       }}
     >
       {children}
