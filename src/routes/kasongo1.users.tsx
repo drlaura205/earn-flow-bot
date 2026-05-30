@@ -62,7 +62,8 @@ function UsersPage() {
                 <tr key={u.id} className="border-t border-slate-800/60 hover:bg-slate-800/30">
                   <td className="py-3 px-4 font-mono text-xs">{u.id}</td>
                   <td className="py-3 px-4 text-slate-300">{u.phone}</td>
-                  <td className="py-3 px-4 font-bold text-cyan-300">${u.balance.toFixed(2)}</td>
+                  <td className="py-3 px-4 font-bold text-cyan-300">${u.mainBalance.toFixed(2)}</td>
+                  <td className="py-3 px-4 font-bold text-amber-300">${u.commissionBalance.toFixed(2)}</td>
                   <td className="py-3 px-4">
                     <select value={u.tier} onChange={(e) => { setUserTier(u.id, e.target.value as AdminTier); toast.success(`Tier updated for ${u.id}`); }}
                       className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-xs">
