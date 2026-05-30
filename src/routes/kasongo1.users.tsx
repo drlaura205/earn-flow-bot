@@ -12,16 +12,17 @@ export const Route = createFileRoute("/kasongo1/users")({
 const TIERS: AdminTier[] = ["Intern", "C1", "C2", "C3", "C4", "C5"];
 
 function UsersPage() {
-  const { users, adjustBalance, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
+  const { users, adjustBalance, adjustCommission, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
   const [q, setQ] = useState("");
   const filtered = users.filter((u) => u.id.toLowerCase().includes(q.toLowerCase()) || u.phone.toLowerCase().includes(q.toLowerCase()));
 
-  const adjust = (id: string, sign: 1 | -1) => {
-    const v = window.prompt(`${sign === 1 ? "Add" : "Subtract"} amount (USDT):`, "10");
+  const adjust = (id: string, sign: 1 | -1, kind: "main" | "commission") => {
+    const v = window.prompt(`${sign === 1 ? "Add" : "Subtract"} ${kind} balance (USDT):`, "10");
     const n = parseFloat(v || "");
     if (!isNaN(n) && n > 0) {
-      adjustBalance(id, sign * n);
-      toast.success(`${sign === 1 ? "Added" : "Subtracted"} $${n} for ${id}`);
+      if (kind === "main") adjustBalance(id, sign * n);
+      else adjustCommission(id, sign * n);
+      toast.success(`${sign === 1 ? "Added" : "Subtracted"} $${n} (${kind}) for ${id}`);
     }
   };
 
