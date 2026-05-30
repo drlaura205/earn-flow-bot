@@ -277,6 +277,10 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     await supabase.rpc("admin_adjust_balance", { _user_id: userId, _delta: delta });
     await refresh();
   };
+  const adjustCommission = async (userId: string, delta: number) => {
+    await supabase.rpc("admin_adjust_commission", { _user_id: userId, _delta: delta });
+    await refresh();
+  };
   const setUserTier = async (userId: string, tier: AdminTier) => {
     await supabase.rpc("admin_set_tier", { _user_id: userId, _tier: tier });
     await refresh();
