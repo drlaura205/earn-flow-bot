@@ -97,7 +97,7 @@ function UsersPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={9} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
+                <tr><td colSpan={10} className="py-12 text-center text-sm text-slate-500">No users found</td></tr>
               )}
             </tbody>
           </table>
