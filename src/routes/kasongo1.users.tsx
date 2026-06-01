@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, Plus, Minus, Ban, ShieldCheck, Wallet, WalletMinimal } from "lucide-react";
+import { Search, Plus, Minus, Ban, ShieldCheck, Wallet, WalletMinimal, KeyRound } from "lucide-react";
 import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin, AdminTier } from "@/context/AdminContext";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { adminResetUserPassword } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/kasongo1/users")({
   component: () => (<AdminGate><UsersPage /></AdminGate>),
@@ -13,8 +15,22 @@ const TIERS: AdminTier[] = ["Intern", "C1", "C2", "C3", "C4", "C5"];
 
 function UsersPage() {
   const { users, adjustBalance, adjustCommission, setUserTier, toggleSuspend, toggleWithdraw } = useAdmin();
+  const resetPassword = useServerFn(adminResetUserPassword);
   const [q, setQ] = useState("");
   const filtered = users.filter((u) => u.id.toLowerCase().includes(q.toLowerCase()) || u.phone.toLowerCase().includes(q.toLowerCase()));
+
+  const handleResetPassword = async (userId: string, phone: string) => {
+    const pwd = window.prompt(`Enter NEW password for ${phone} (min 6 chars):`, "");
+    if (!pwd) return;
+    if (pwd.length < 6) { toast.error("Password must be at least 6 characters"); return; }
+    if (!window.confirm(`Reset password for ${phone}? This will immediately change their login password.`)) return;
+    try {
+      await resetPassword({ data: { userId, newPassword: pwd } });
+      toast.success(`Password reset for ${phone}`);
+    } catch (e: any) {
+      toast.error(e?.message || "Failed to reset password");
+    }
+  };
 
   const adjust = (id: string, sign: 1 | -1, kind: "main" | "commission") => {
     const v = window.prompt(`${sign === 1 ? "Add" : "Subtract"} ${kind} balance (USDT):`, "10");
@@ -87,6 +103,10 @@ function UsersPage() {
                       <button onClick={() => { toggleWithdraw(u.id); toast.success(`Withdraw ${u.withdrawEnabled ? "disabled" : "enabled"} for ${u.phone}`); }} title={u.withdrawEnabled ? "Disable withdrawals" : "Enable withdrawals"}
                         className={`p-1.5 rounded ${u.withdrawEnabled ? "bg-slate-500/15 text-slate-300 hover:bg-slate-500/25" : "bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"}`}>
                         {u.withdrawEnabled ? <WalletMinimal size={12} /> : <Wallet size={12} />}
+                      </button>
+                      <button onClick={() => handleResetPassword(u.id, u.phone)} title="Reset password"
+                        className="p-1.5 rounded bg-indigo-500/15 text-indigo-300 hover:bg-indigo-500/25">
+                        <KeyRound size={12} />
                       </button>
                       <button onClick={() => { toggleSuspend(u.id); toast.success(`Status toggled for ${u.id}`); }} title="Suspend / Activate"
                         className={`p-1.5 rounded ${u.status === "Active" ? "bg-red-500/15 text-red-300 hover:bg-red-500/25" : "bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25"}`}>
