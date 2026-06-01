@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, Plus, Minus, Ban, ShieldCheck, Wallet, WalletMinimal } from "lucide-react";
+import { Search, Plus, Minus, Ban, ShieldCheck, Wallet, WalletMinimal, KeyRound } from "lucide-react";
 import { AdminGate } from "@/components/AdminLayout";
 import { useAdmin, AdminTier } from "@/context/AdminContext";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
+import { adminResetUserPassword } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/kasongo1/users")({
   component: () => (<AdminGate><UsersPage /></AdminGate>),
