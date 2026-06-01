@@ -104,6 +104,10 @@ function UsersPage() {
                         className={`p-1.5 rounded ${u.withdrawEnabled ? "bg-slate-500/15 text-slate-300 hover:bg-slate-500/25" : "bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25"}`}>
                         {u.withdrawEnabled ? <WalletMinimal size={12} /> : <Wallet size={12} />}
                       </button>
+                      <button onClick={() => handleResetPassword(u.id, u.phone)} title="Reset password"
+                        className="p-1.5 rounded bg-indigo-500/15 text-indigo-300 hover:bg-indigo-500/25">
+                        <KeyRound size={12} />
+                      </button>
                       <button onClick={() => { toggleSuspend(u.id); toast.success(`Status toggled for ${u.id}`); }} title="Suspend / Activate"
                         className={`p-1.5 rounded ${u.status === "Active" ? "bg-red-500/15 text-red-300 hover:bg-red-500/25" : "bg-cyan-500/15 text-cyan-300 hover:bg-cyan-500/25"}`}>
                         {u.status === "Active" ? <Ban size={12} /> : <ShieldCheck size={12} />}
